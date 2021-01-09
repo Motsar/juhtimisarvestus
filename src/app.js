@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config({path:'./src/.env'});
+require('dotenv').config({path:'../src/.env'});
 
 const app = express();
 
@@ -11,7 +11,6 @@ const Users = require('./routes/users');
 mongoose.connect(process.env.DB_CONNECT,
     {
         useNewUrlParser: true,
-        useUnifiedTopology: true,
         useUnifiedTopology: true,
         useCreateIndex: true
     },
