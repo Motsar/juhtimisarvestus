@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const router = require('express').Router();
 const User = require('../models/User')
 
-router.post('/users',async(req,res) => {
+router.post('/',async(req,res) => {
     console.log(req.body)
     //Checking if the user is already in database
     const emailExists = await User.findOne({email: req.body.email});
