@@ -12,8 +12,6 @@ const {notAuth} = require('./middlewares')
 require('dotenv').config({path:'../src/.env'});
 var flash = require('connect-flash');
 
-
-
 const app = express();
 app.use(flash());
 app.use(bodyParser.json());
@@ -39,12 +37,11 @@ mongoose.connect("mongodb+srv://study001:Kakapyks1@cluster0.ul2kc.mongodb.net/ju
     },
     () => {
         console.log('connected to db')
-    });
+});
 
 //express-sessions setup
 
-app.use(
-    session({
+app.use(session({
         name: "sid",
         resave: false,
         rolling: true,
@@ -75,9 +72,11 @@ app.get('/', notAuth, function(req, res) {
 
 const Users = require('./routes/users');
 const Sessions = require('./routes/sessions');
+const Companies =require('./routes/companies');
 
 //Route middlewares
 
+app.use('/companies', Companies);
 app.use('/users', Users);
 app.use('/', Sessions);
 
@@ -86,9 +85,3 @@ app.use('/', Sessions);
 app.listen(3000, ()=>{
     console.log('Server is up and running');
 })
-
-
-
-
-
-
