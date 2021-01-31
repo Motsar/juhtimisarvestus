@@ -1,27 +1,37 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+require('dotenv').config({path:'./src/.env'});
 const session = require('express-session');
 const hbs  = require('express-handlebars');
+const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
+const path = require('path');
 const env = require('dotenv').config();
+const {notAuth} = require('./middlewares')
 require('dotenv').config({path:'../src/.env'});
+var flash = require('connect-flash');
+
+
 
 const app = express();
+app.use(flash());
+app.use(bodyParser.json());
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+const viewsDirectoryPath = path.join(__dirname, './views');
+
+//View engine
 
 app.engine('hbs', hbs({ extname: 'hbs', defaultLayout: 'main', layoutsDir: __dirname + '/views/layouts/' }));
 app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname+'/views'))
 
-app.use(session({
-    resave: false,
-    saveUninitialized: true,
-    secret: 'SECRET'
-}));
+//Setup static directory to serv
+app.use(express.static(viewsDirectoryPath))
 
-//Import routes
-const Users = require('./routes/users');
-
-//Connect to database
-mongoose.connect(process.env.DB_CONNECT,
+//Connect to db
+mongoose.connect("mongodb+srv://study001:Kakapyks1@cluster0.ul2kc.mongodb.net/juhtimisarvestus?retryWrites=true&w=majority",
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -31,55 +41,54 @@ mongoose.connect(process.env.DB_CONNECT,
         console.log('connected to db')
     });
 
-//Route middlewares
-app.use('/', Users);
-app.use(express.json());
-app.get('/', function(req, res) {
-    res.render('auth', {layout: false});
-});
+//express-sessions setup
 
-//Setup serer
-app.listen(3000, ()=>{
-    console.log('Server is up and running');
-})
+app.use(
+    session({
+        name: "sid",
+        resave: false,
+        rolling: true,
+        saveUninitialized:true,
+        secret: process.env.SESS_SECRET,
+        store: new MongoStore({mongooseConnection: mongoose.connection}),
+        cookie:{
+            maxAge: 1000 * 60 * 5,
+            secure: false,
+        }
+    })
+)
+passport.serializeUser(function(user, cb) { cb(null, user); });
+passport.deserializeUser(function(obj, cb) { cb(null, obj); })
 
 // Passport setup
-
-let userProfile;
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/success', (req, res) => res.render('success', { user: userProfile } ));
-app.get('/error', (req, res) => res.send('Viga sisse logimisel'));
+//views
 
-passport.serializeUser(function(user, cb) {
-    cb(null, user);
+app.get('/', notAuth, function(req, res) {
+    res.render('auth', {layout: false});
 });
 
-passport.deserializeUser(function(obj, cb) {
-    cb(null, obj);
+//Import routes
+
+const Users = require('./routes/users');
+const Sessions = require('./routes/sessions');
+
+//Route middlewares
+
+app.use('/users', Users);
+app.use('/', Sessions);
+
+//Setup serer
+
+app.listen(3000, ()=>{
+    console.log('Server is up and running');
 })
 
-// Google auth
 
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-passport.use(new GoogleStrategy({
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/auth/google/callback"
-    },
-    function (accessToken, refreshToken, profile, done) {
-        userProfile = profile;
-        return done(null, userProfile);
-    }
-));
 
-app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
-app.get('/auth/google/callback',
-    passport.authenticate('google', {failureRedirect: '/error'}),
-    function (req, res) {
-        // Successful authentification, redirect success
-        res.redirect('/success');
-});
+
+
