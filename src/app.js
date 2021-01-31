@@ -29,7 +29,7 @@ app.set('views', path.join(__dirname+'/views'))
 app.use(express.static(viewsDirectoryPath))
 
 //Connect to db
-mongoose.connect("mongodb+srv://study001:Kakapyks1@cluster0.ul2kc.mongodb.net/juhtimisarvestus?retryWrites=true&w=majority",
+mongoose.connect(process.env.DB_CONNECT,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,

@@ -34,6 +34,74 @@ router.post('/',apiAuth, async (req, res)=>{
     }catch(err){
         res.json({error:err});
     }
-})
+});
+
+router.get('/', async (req, res, next) => {
+
+    // Get user object from database
+    //const company = await Company.findOne({ _id: req.companyId });
+
+    // Get user's accounts
+    //const balances = await Balance.find({ companyId: req.companyId });
+
+    Company
+        .find()
+        .select('compName regNum address email phone vat yearLength Profit_report_schema additional_info')
+        .exec()
+        .then(docs => {
+            const response = {
+                count: docs.length,
+                companies: docs.map(doc => {
+                    return {
+                        //id: doc.id,
+                        compName: doc.compName,
+                        regNum: doc.regNum,
+                        address: doc.address,
+                        email: doc.email,
+                        phone: doc.phone,
+                        vat: doc.vat,
+                        yearLength: doc.yearLength,
+                        Profit_report_schema: doc.Profit_report_schema,
+                        //date: doc.date,
+                        //balances: [balances]
+                        additional_info: doc.additional_info
+                    }
+                })
+            };
+            if(docs.length > 0) {
+                res.status(200).json(response);
+            }
+            else {
+                res.status(200).json({
+                    message: "Andmeid ei leitud"
+                });
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        });
+});
+
+router.delete('/:companyId', (req, res, next) => {
+    const id = req.params.companyId;
+
+    Company
+        .deleteOne({ _id: id })
+        .exec()
+        .then(result => {
+            res.status(200).json({
+                message: "Ettevõte on kustutatud"
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        })
+});
 
 module.exports = router;
