@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Company = require('../models/Company');
 const {apiAuth} = require('../middlewares');
+const Balance = require('../models/Balance');
 
 //post and save company data to database
 
@@ -14,6 +15,7 @@ router.post('/',apiAuth, async (req, res)=>{
     let useridJSON= JSON.parse(req.user);
 
     let email= req.body.email
+
     //create a new user
     const company = new Company({
         user_id: req.userId,
@@ -38,11 +40,10 @@ router.post('/',apiAuth, async (req, res)=>{
 
 router.get('/', async (req, res, next) => {
 
-    // Get user object from database
-    //const company = await Company.findOne({ _id: req.companyId });
 
-    // Get user's accounts
-    //const balances = await Balance.find({ companyId: req.companyId });
+    const balances = await Balance.find();
+
+    // Otsitakse ettevõtte andmed koos bilansiga. Hetkel ei seota bilanssi konkreetse ettevõttega. Vaja parandada
 
     Company
         .find()
@@ -53,7 +54,7 @@ router.get('/', async (req, res, next) => {
                 count: docs.length,
                 companies: docs.map(doc => {
                     return {
-                        //id: doc.id,
+                        id: doc.id,
                         compName: doc.compName,
                         regNum: doc.regNum,
                         address: doc.address,
@@ -62,9 +63,8 @@ router.get('/', async (req, res, next) => {
                         vat: doc.vat,
                         yearLength: doc.yearLength,
                         Profit_report_schema: doc.Profit_report_schema,
-                        //date: doc.date,
-                        //balances: [balances]
-                        additional_info: doc.additional_info
+                        additional_info: doc.additional_info,
+                        balances: balances
                     }
                 })
             };
@@ -86,6 +86,7 @@ router.get('/', async (req, res, next) => {
 });
 
 router.delete('/:companyId', (req, res, next) => {
+
     const id = req.params.companyId;
 
     Company

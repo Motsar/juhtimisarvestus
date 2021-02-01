@@ -9,6 +9,7 @@ const passport = require('passport');
 const path = require('path');
 const env = require('dotenv').config();
 const {notAuth} = require('./middlewares')
+const Balances = require('./routes/balances');
 require('dotenv').config({path:'../src/.env'});
 var flash = require('connect-flash');
 
@@ -77,6 +78,7 @@ const Companies =require('./routes/companies');
 //Route middlewares
 
 app.use('/companies', Companies);
+app.use('/balances', Balances);
 app.use('/users', Users);
 app.use('/', Sessions);
 

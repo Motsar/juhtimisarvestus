@@ -11,7 +11,8 @@ let companySchema = new mongoose.Schema({
         yearLength: {type: 'Number', required: true, enum: [360, 365]},
         analyse_date: {type: Date, required: true, default: Date.now},
         Profit_report_schema: {type: 'Number', required: true, enum: [1 , 2]},
-        additional_info: {type: 'String', required: false, max:500}
+        additional_info: {type: 'String', required: false, max:500},
+        balance: { type: mongoose.Schema.Types.ObjectId, ref: 'Balance'}
     }
 );
 
