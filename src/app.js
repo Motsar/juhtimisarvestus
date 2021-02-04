@@ -8,7 +8,7 @@ const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 const path = require('path');
 const env = require('dotenv').config();
-const {notAuth} = require('./middlewares')
+const {notAuth} = require('./middlewares');
 require('dotenv').config({path:'../src/.env'});
 var flash = require('connect-flash');
 
@@ -29,7 +29,7 @@ app.set('views', path.join(__dirname+'/views'))
 app.use(express.static(viewsDirectoryPath))
 
 //Connect to db
-mongoose.connect("mongodb+srv://study001:Kakapyks1@cluster0.ul2kc.mongodb.net/juhtimisarvestus?retryWrites=true&w=majority",
+mongoose.connect(process.env.DB_CONNECT,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -49,11 +49,12 @@ app.use(session({
         secret: process.env.SESS_SECRET,
         store: new MongoStore({mongooseConnection: mongoose.connection}),
         cookie:{
-            maxAge: 1000 * 60 * 5,
+            maxAge: 1000 * 60 * 15,
             secure: false,
         }
     })
 )
+
 passport.serializeUser(function(user, cb) { cb(null, user); });
 passport.deserializeUser(function(obj, cb) { cb(null, obj); })
 
@@ -73,9 +74,11 @@ app.get('/', notAuth, function(req, res) {
 const Users = require('./routes/users');
 const Sessions = require('./routes/sessions');
 const Companies =require('./routes/companies');
+const Balances =require('./routes/balances');
 
 //Route middlewares
 
+app.use('/balances', Balances);
 app.use('/companies', Companies);
 app.use('/users', Users);
 app.use('/', Sessions);
