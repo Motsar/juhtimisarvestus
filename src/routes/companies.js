@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const Company = require('../models/Company');
 const {apiAuth} = require('../middlewares');
-const balance = require('../models/balance');
+const balance = require('../models/Balance');
+const profitReport = require('../models/ProfitReport');
 
 //post and save company data to database
 
@@ -12,10 +13,10 @@ router.post('/',apiAuth, async (req, res)=>{
     const compExists = await Company.findOne({compName: req.body.compName, user_id:req.userId});
     if(compExists) return res.status(401).json({"error": "analysis with this company name already exists!"});
 
-    let useridJSON= JSON.parse(req.user);
-
     let email= req.body.comp_email
+
     //create a new user
+
     const company = new Company({
         user_id: req.userId,
         compName: req.body.compName,
@@ -29,11 +30,12 @@ router.post('/',apiAuth, async (req, res)=>{
         additional_info: req.body.additional_info,
     });
 
-
     try{
         const savedCompany = await company.save();
         const newBalance = new balance({_id: savedCompany._id,});
+        const newProfitReport = new profitReport({_id: savedCompany._id});
         await newBalance.save();
+        await newProfitReport.save();
         res.status(201).json(company);
     }catch(err){
         console.log(err)
@@ -63,16 +65,15 @@ router.get('/', apiAuth ,async (req, res, next) => {
 //Update company document
 
 router.patch('/',apiAuth,async (req, res) => {
+
     //error handling
-    if(Object.keys(req.body).length===0) return res.status(400).json({error:"cant update without data"})
+
+    if(Object.keys(req.body).length===0) return res.status(400).json({error:"cant update without data"});
     let id = req.body.company_id;
     if(!id)return res.status(404).json({error:"no company id added!"});
     let company = await Company.findOne({_id: id, user_id:req.userId});
-    if(!company) return res.status(401).json({error:"no company analysis found"})
-
-
+    if(!company) return res.status(401).json({error:"no company analysis found"});
 })
-
 
 //Delete analysis
 
@@ -93,6 +94,7 @@ router.delete('/',apiAuth , async (req, res) => {
     }catch(err){
         res.status(401).json({error: err});
     }
+
 });
 
 

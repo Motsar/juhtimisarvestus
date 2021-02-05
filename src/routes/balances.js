@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const {apiAuth} = require('../middlewares');
-const balance = require('../models/balance');
-const balanceChildren= require('../models/balanceChildren');
+const balance = require('../models/Balance');
+const balanceChildren= require('../models/BalanceChildren');
 
-//post request for balance data
+//Get request for balance data
 
 router.post('/', apiAuth ,async (req, res)=>{
 
@@ -20,26 +20,26 @@ router.post('/', apiAuth ,async (req, res)=>{
 
 //put request to update or add data
 
-router.put('/', apiAuth,async (req, res) => {
+router.put('/', apiAuth ,async (req, res) => {
 
     //Find balance document with company document id
 
     const findBalance = await balance.findOne({_id:req.body.companyId});
     if(!findBalance) return res.status(404).json({error:"no such balance found!"});
 
-    //Check if the dates array contains anything, and empty it if it does
-
-    if(findBalance.dates.length<2) return res.status(404).json({error:"Atleast 2 years data is needed to be added"});
-
-    //Check if the dates array contains anything, and empty it if it does
-
-    if(findBalance.dates.length!=0){
-        findBalance.dates=[];
-    }
-
     //Get balances array from request body
 
-    let balancesArray = req.body.balances;
+    let balancesArray = req.body.dates;
+
+    //Check if the dates array contains atleast 2 balances
+
+    if(balancesArray<2) return res.status(404).json({error:"Atleast 2 years data is needed to be added"});
+
+    //Check if the dates array contains anything, and empty array
+
+    if(findBalance.dates.length!==0){
+        findBalance.dates=[];
+    }
 
     //Push each balance object from balance array to findBalance objects dates array
 
@@ -126,7 +126,7 @@ router.put('/', apiAuth,async (req, res) => {
 
     try{
         await findBalance.save();
-        res.status(200).json({success:"balances added"});
+        res.status(200).json(findBalance);
     }catch(err){
         res.status(500).json({error:err});
         console.log(err)

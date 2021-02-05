@@ -75,9 +75,11 @@ const Users = require('./routes/users');
 const Sessions = require('./routes/sessions');
 const Companies =require('./routes/companies');
 const Balances =require('./routes/balances');
+const ProfitReports = require('./routes/profitReports');
 
 //Route middlewares
 
+app.use('/profitReports',ProfitReports)
 app.use('/balances', Balances);
 app.use('/companies', Companies);
 app.use('/users', Users);
