@@ -6,7 +6,7 @@ router.post('/',async(req,res) => {
     console.log(req.body)
     //Checking if the user is already in database
     const emailExists = await User.findOne({email: req.body.email});
-    if(emailExists) return res.status(401).json({error: "Email already exists!"});
+    if(emailExists) return res.status(401).json({error: "Vastav e-mail on juba olemas."});
 
     //Hash the password
     const salt = await bcrypt.genSalt(10);

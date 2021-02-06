@@ -66,6 +66,7 @@ module.exports = mongoose.model ('balanceChildren',{
     ltTaxesPayable: { type: Number, required: true },
     ltOtherPayables: { type: Number, required: true },
     ltOtherIncome: { type: Number, required: true },
+    ltProvisions: { type: Number, required: true},
     ltTargetedFinancings: { type: Number, required: true },
     shareCapital: { type: Number, required: true },
     unregisteredShare: { type: Number, required: true },

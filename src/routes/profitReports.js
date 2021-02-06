@@ -11,7 +11,7 @@ router.post('/', apiAuth ,async (req, res)=>{
     //Find balance document with company document id
 
     const findProfitReport = await profitReport.findOne({_id:req.body.companyId});
-    if(!findProfitReport) return res.status(404).json({error:"no such profit report found!"});
+    if(!findProfitReport) return res.status(404).json({error: "Sellist kasumiaruannet ei leitud." });
 
     //Send balances back
 
@@ -26,7 +26,7 @@ router.put('/', apiAuth,async (req, res) => {
         //Find balance document with company document id
 
         const findProfitReports = await profitReport.findOne({_id:req.body.companyId});
-        if(!findProfitReports) return res.status(404).json({error:"no such balance found!"});
+        if(!findProfitReports) return res.status(404).json({error: "Sellist bilanssi ei leitud." });
 
         //Get balances array from request body
 
@@ -34,7 +34,7 @@ router.put('/', apiAuth,async (req, res) => {
 
         //Check if the dates array contains atleast 2 balances
 
-        if(profitReports.length<2) return res.status(404).json({error:"Atleast 2 years data is needed to be added"});
+        if(profitReports.length<2) return res.status(404).json({error: "Tuleb lisada vähemalt kahe aasta andmed." });
 
         //Check if the dates array contains anything, and empty array
 
@@ -45,8 +45,8 @@ router.put('/', apiAuth,async (req, res) => {
         //find which profit report schema company uses
 
         let companyReportSchemaType = req.body.companyReportSchemaType;
-        if(!companyReportSchemaType) return res.status(400).json({error:"company profit report schema type required"});
-        if(companyReportSchemaType<1 || companyReportSchemaType>2) return res.status(400).json({error:"company profit report schema type needs to be 1 or 2"})
+        if(!companyReportSchemaType) return res.status(400).json({error: "Tuleb valida ettevõtte kasumiaruande skeem" });
+        if(companyReportSchemaType<1 || companyReportSchemaType>2) return res.status(400).json({error: "Kasumiaruande skeem peab olema 1 või 2" });
 
 
 
@@ -56,24 +56,29 @@ router.put('/', apiAuth,async (req, res) => {
                 let newProfitReportChild = new profitReportChildren1({
                     year: profitReports.year,
                     salesRevenue: profitReports.salesRevenue,
+                    creditSalesRevenue0: profitReports.creditSalesRevenue0,
+                    creditSalesRevenue9: profitReports.creditSalesRevenue9,
+                    creditSalesRevenue20: profitReports.creditSalesRevenue20,
+                    retailRevenue: profitReports.retailRevenue,
                     otherOperatingRevenue: profitReports.otherOperatingRevenue,
+                    agriGoodsWip: profitReports.agriGoodsWip,
+                    bioAssetsProfitLoss: profitReports.bioAssetsProfitLoss,
                     changesGoodsWip: profitReports.changesGoodsWip,
                     ownPurposeCapitalised: profitReports.ownPurposeCapitalised,
                     goodsRawMaterialsServices: profitReports.goodsRawMaterialsServices,
                     otherOperatingExpenses: profitReports.otherOperatingExpenses,
                     wagesSalaries: profitReports.wagesSalaries,
-                    socialSecurityCosts: profitReports.socialSecurityCosts,
-                    pensionExpenses: profitReports.pensionExpenses,
                     fixedAssetsDepreciationImpairment: profitReports.fixedAssetsDepreciationImpairment,
+                    currentAssetsDiscounts: profitReports.currentAssetsDiscounts,
                     otherOperatingCharges: profitReports.otherOperatingCharges,
-                    financialSubsidiariesShares: profitReports.financialSubsidiariesShares,
-                    financialAssociatedShares: profitReports.financialAssociatedShares,
-                    financialLtFinancialInvestments: profitReports.financialLtFinancialInvestments,
+                    profitLossSubsidiaries: profitReports.profitLossSubsidiaries,
+                    profitLossAssociated: profitReports.profitLossAssociated,
+                    profitLossFinancialInvestments: profitReports.profitLossFinancialInvestments,
+                    interestIncome: profitReports.interestIncome,
                     interestExpense: profitReports.interestExpense,
-                    profitLossesForeignCurrencies: profitReports.profitLossesForeignCurrencies,
                     otherFinancialIncomeExpenses: profitReports.otherFinancialIncomeExpenses,
                     incomeTaxExpense: profitReports.incomeTaxExpense
-                })
+                });
                 findProfitReports.years.push(newProfitReportChild);
             });
         }else{
@@ -81,20 +86,24 @@ router.put('/', apiAuth,async (req, res) => {
                 let newProfitReportChild = new profitReportChildren2({
                     year: profitReports.year,
                     salesRevenue: profitReports.salesRevenue,
+                    creditSalesRevenue0: profitReports.creditSalesRevenue0,
+                    creditSalesRevenue9: profitReports.creditSalesRevenue9,
+                    creditSalesRevenue20: profitReports.creditSalesRevenue20,
+                    retailRevenue: profitReports.retailRevenue,
                     salesCost: profitReports.salesCost,
+                    bioAssetsProfitLoss: profitReports.bioAssetsProfitLoss,
                     marketingExpenses: profitReports.marketingExpenses,
                     administrativeExpenses: profitReports.administrativeExpenses,
                     otherOperatingRevenue: profitReports.otherOperatingCharges,
                     otherOperatingCharges: profitReports.otherOperatingCharges,
-                    financialSubsidiariesShares: profitReports.financialSubsidiariesShares,
-                    financialAssociatedShares: profitReports.financialAssociatedShares,
-                    financialLtFinancialInvestments: profitReports.financialLtFinancialInvestments,
+                    profitLossSubsidiaries: profitReports.profitLossSubsidiaries,
+                    profitLossAssociated: profitReports.profitLossAssociated,
+                    profitLossFinancialInvestments: profitReports.profitLossFinancialInvestments,
+                    interestIncome: profitReports.interestIncome,
                     interestExpense: profitReports.interestExpense,
-                    protLossesForeignCurrencies: profitReports.protLossesForeignCurrencies,
                     otherFinancialIncomeExpenses: profitReports.otherFinancialIncomeExpenses,
                     incomeTaxExpense: profitReports.incomeTaxExpense,
-                    minorityHolding:  profitReports.minorityHolding,
-                })
+                });
                 findProfitReports.years.push(newProfitReportChild);
             });
         }
@@ -102,7 +111,7 @@ router.put('/', apiAuth,async (req, res) => {
 
         try{
             await findProfitReports.save();
-            res.status(201).json({success:"profit reports saved"});
+            res.status(201).json({success: "Kasumiaruanne salvestatud" });
         }catch(err){
             res.status(500).json({error:err});
             console.log(err)

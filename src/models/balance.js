@@ -3,4 +3,4 @@ const mongoose = require('mongoose');
 
 module.exports = mongoose.model ('balance',{
     dates: []
-})
+});
