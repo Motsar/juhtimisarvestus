@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 let companySchema = new mongoose.Schema({
         user_id: { type: 'String', required: true, max:50 },
-        compName: { type: 'String' ,unique: true , required: true, min: 2, max: 50 },
+        compName: { type: 'String', required: true, max: 100 },
         regNum: { type: 'String', required: true, max:30 },
         address: { type: 'String', required: true ,max:100 },
-        email: { type: 'String', required: true, max:50 },
+        comp_email: { type: 'String', required: true, max:50 },
         phone: { type: 'String', required: true, max:30 },
         vat_obligatory: { type: 'String', required: true, enum: ['no', 'yes'] },
         yearLength: {type: 'Number', required: true, enum: [360, 365]},
@@ -16,14 +16,5 @@ let companySchema = new mongoose.Schema({
     }
 );
 
-companySchema.method('transform', function() {
-    var obj = this.toObject();
-
-    //Rename fields
-    obj.company_id = obj._id;
-    delete obj._id;
-
-    return obj;
-});
 
 module.exports = mongoose.model('Company', companySchema);
