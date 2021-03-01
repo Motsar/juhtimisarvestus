@@ -61,6 +61,7 @@ router.put('/', apiAuth ,async (req, res) => {
                 goodsForResale: balance.goodsForResale,
                 inventoriesPrepayments: balance.inventoriesPrepayments,
                 stBiologicalAssets: balance.stBiologicalAssets,
+                totalCurrentAssets: balance.totalCurrentAssets, //added -----------> 15.02.2021
                 investmentsSubUnder: balance.investmentsSubUnder,
                 subsidiaryShares: balance.subsidiaryShares,
                 associateShares: balance.associateShares,
@@ -85,6 +86,8 @@ router.put('/', apiAuth ,async (req, res) => {
                 developmentCost: balance.developmentCost,
                 otherIntangibleAssets: balance.otherIntangibleAssets,
                 intanglibleAssetsPrepayments: balance.intanglibleAssetsPrepayments,
+                totalFixedAssets: balance.totalFixedAssets,//added --------------> 15.02.2021
+                totalAssets: balance.totalAssets,  //added --------------> 15.02.2021
                 stLoanLiabilities: balance.stLoanLiabilities,
                 stLoansNotes: balance.stLoansNotes,
                 ltCurrentLoanLiabilities : balance.ltCurrentLoanLiabilities,
@@ -100,6 +103,7 @@ router.put('/', apiAuth ,async (req, res) => {
                 taxProvisions: balance.taxProvisions,
                 otherProvisions: balance.otherProvisions,
                 stTargetedFinancings: balance.stTargetedFinancings,
+                totalCurrentLiabilities: balance.totalCurrentLiabilities, //added --------------> 15.02.2021
                 ltLoanLiabilities: balance.ltLoanLiabilities,
                 loansNotesFinancialLeasePayables: balance.loansNotesFinancialLeasePayables,
                 convertibleDebt: balance.convertibleDebt,
@@ -111,6 +115,8 @@ router.put('/', apiAuth ,async (req, res) => {
                 ltOtherIncome: balance.ltOtherIncome,
                 ltProvisions: balance.ltProvisions,
                 ltTargetedFinancings: balance.ltTargetedFinancings,
+                ltLiabilitiesTotal: balance.ltLiabilitiesTotal, //added --------------> 15.02.2021
+                totalLiabilities: balance.totalLiabilities,//added --------------> 15.02.2021
                 shareCapital: balance.shareCapital,
                 unregisteredShare: balance.unregisteredShare,
                 unpaidShareCapital: balance.unpaidShareCapital,
@@ -120,7 +126,9 @@ router.put('/', apiAuth ,async (req, res) => {
                 otherReserves: balance.otherReserves,
                 otherOwnersEquity: balance.otherOwnersEquity,
                 retainedProfitLoss: balance.retainedProfitLoss,
-                financialYearNetProfitLoss: balance.financialYearNetProfitLoss
+                financialYearNetProfitLoss: balance.financialYearNetProfitLoss,
+                ownersEquityTotal: balance.ownersEquityTotal,//added --------------> 15.02.2021
+                totalLiabilitiesOwnersEquity: balance.totalLiabilitiesOwnersEquity//added --------------> 15.02.2021
             })
             findBalance.dates.push(newBalanceChild);
         });

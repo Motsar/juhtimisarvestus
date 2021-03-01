@@ -76,10 +76,12 @@ const Sessions = require('./routes/sessions');
 const Companies =require('./routes/companies');
 const Balances =require('./routes/balances');
 const ProfitReports = require('./routes/profitReports');
+const AnalysisResults = require('./routes/analysisResults')
 
 //Route middlewares
 
-app.use('/profitReports',ProfitReports)
+app.use('/analysisResults', AnalysisResults);
+app.use('/profitReports',ProfitReports);
 app.use('/balances', Balances);
 app.use('/companies', Companies);
 app.use('/users', Users);

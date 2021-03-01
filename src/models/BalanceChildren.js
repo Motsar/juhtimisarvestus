@@ -18,6 +18,7 @@ module.exports = mongoose.model ('balanceChildren',{
     goodsForResale: { type: Number, required: true },
     inventoriesPrepayments: { type: Number, required: true },
     stBiologicalAssets: { type: Number, required: true },
+    totalCurrentAssets: { type: Number , required: true}, //added -----------> 15.02.2021
     investmentsSubUnder: { type: Number, required: true },
     subsidiaryShares: { type: Number, required: true },
     associateShares: { type: Number, required: true },
@@ -42,6 +43,8 @@ module.exports = mongoose.model ('balanceChildren',{
     developmentCost: { type: Number, required: true },
     otherIntangibleAssets: { type: Number, required: true },
     intanglibleAssetsPrepayments: { type: Number, required: true },
+    totalFixedAssets: { type: Number, required: true }, //added --------------> 15.02.2021
+    totalAssets:{ type: Number, required: true },  //added --------------> 15.02.2021
     stLoanLiabilities: { type: Number, required: true },
     stLoansNotes: { type: Number, required: true },
     ltCurrentLoanLiabilities : { type: Number, required: true },
@@ -57,6 +60,7 @@ module.exports = mongoose.model ('balanceChildren',{
     taxProvisions: { type: Number, required: true },
     otherProvisions: { type: Number, required: true },
     stTargetedFinancings: { type: Number, required: true },
+    totalCurrentLiabilities: { type: Number, required: true}, //added --------------> 15.02.2021
     ltLoanLiabilities: { type: Number, required: true },
     loansNotesFinancialLeasePayables: { type: Number, required: true },
     convertibleDebt: { type: Number, required: true },
@@ -68,6 +72,8 @@ module.exports = mongoose.model ('balanceChildren',{
     ltOtherIncome: { type: Number, required: true },
     ltProvisions: { type: Number, required: true},
     ltTargetedFinancings: { type: Number, required: true },
+    ltLiabilitiesTotal: { type: Number, required: true}, //added --------------> 15.02.2021
+    totalLiabilities:{ type: Number, required: true},//added --------------> 15.02.2021
     shareCapital: { type: Number, required: true },
     unregisteredShare: { type: Number, required: true },
     unpaidShareCapital: { type: Number, required: true },
@@ -77,5 +83,7 @@ module.exports = mongoose.model ('balanceChildren',{
     otherReserves: { type: Number, required: true },
     otherOwnersEquity: { type: Number, required: true },
     retainedProfitLoss: { type: Number, required: true },
-    financialYearNetProfitLoss: { type: Number, required: true }
+    financialYearNetProfitLoss: { type: Number, required: true },
+    ownersEquityTotal: { type: Number, required: true },//added --------------> 15.02.2021
+    totalLiabilitiesOwnersEquity: { type: Number, required: true }//added --------------> 15.02.2021
 });
