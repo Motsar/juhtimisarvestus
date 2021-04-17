@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const { apiAuth } = require('../middlewares');
 const router = require('express').Router();
 const User = require('../models/User')
 
@@ -28,6 +29,12 @@ router.post('/',async(req,res) => {
         res.json({error:err});
     }
 
+})
+
+router.get('/',apiAuth,async(req,res)=>{
+    let userData= await User.findOne({_id:req.userId})
+    if(!userData) return res.status(401).json({error:"cant find user"})
+    return res.status(200).json({email:userData.email})
 })
 
 module.exports = router;

@@ -1,0 +1,1910 @@
+<div class="container reports col text-primary ">
+    <div class="row">
+        <div class="card shadow compDataCard">
+            <h5 class="card-header bg-primary text-light">Ettevõtte andmed</h5>
+            <form id="compData">
+                <div class="card-body">
+                    <div class="cardInner">
+                        <div class="alert alert-success d-none" role="alert"></div>
+                        <div class="row">
+                            <div class="col-lg-4 companyData">
+                                <div class="row">
+                                    <input type="text" class="form-control" id="compName" name="compName"
+                                        placeholder="Ettevõtte nimi" aria-label="Ettevõtte nimi" required>
+                                    <div id="compDataErr" class="invalid-feedback">
+                                        Lisage ettevõtte nimi!
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label for="regNum">Registri number:</label>
+                                    <input type="text" class="form-control" id="regNum" name="regNum"
+                                        placeholder="Registri number" aria-label="Ettevõtte nimi" required>
+                                    <div class="invalid-feedback">
+                                        Lisage ettevõtte registrinumber!
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label for="adress">Aadress:</label>
+                                    <input type="text" class="form-control" id="adress" name="adress"
+                                        placeholder="Aadress" aria-label="Aadress" required>
+                                    <div class="invalid-feedback">
+                                        Lisage ettevõtte aadress!
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label for="comp_email">Email:</label>
+                                    <input type="email" class="form-control" id="comp_email" name="comp_email"
+                                        placeholder="Email" aria-label="Email" required>
+                                    <div class="invalid-feedback">
+                                        Lisage ettevõtte email!
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label for="phone">Telefon:</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Telefon"
+                                        aria-label="Telefon" required>
+                                    <div class="invalid-feedback">
+                                        Lisage ettevõtte telefon!
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="additional_info">Lisainfo:</label>
+                                <textarea class="form-control" id="additional_info" name="additional_info"
+                                    rows="3"></textarea>
+                            </div>
+                            <div class="col-lg-4 compData3">
+                                <div class="row schemaSelect">
+                                    <p>Vali kasumiaruande skeem:</p>
+                                    <div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="Profit_report_schema"
+                                                id="Profit_report_schema1" value=1 checked>
+                                            <label class="form-check-label" for="Profit_report_schema1">
+                                                Skeem 1
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="Profit_report_schema"
+                                                id="Profit_report_schema2" value=2>
+                                            <label class="form-check-label" for="Profit_report_schema2">
+                                                Skeem 2
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label for="vat_obligatory">Käibemaksukohustuslane:</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="yes" id="vat_obligatory"
+                                            name="vat_obligatory">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <p>Vali ettevõtte tegevusaasta pikkus:</p>
+                                    <div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="yearLength"
+                                                id="yearLength1" value=360 checked>
+                                            <label class="form-check-label" for="yearLength1">
+                                                360
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="yearLength"
+                                                id="yearLength2" value=365>
+                                            <label class="form-check-label" for="yearLength2">
+                                                365
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <button type="submit" id="Salvesta" class="btn btn-primary">SALVESTA</button>
+            </form>
+            <button type="button" id="kasumiaruanne" data-bs-toggle="modal" data-bs-target="#kasumiAruandeModal"
+                class="btn btn-primary disabled" disabled>KASUMIARUANNE</button>
+            <button type="button" id="bilanss" data-bs-toggle="modal" data-bs-target="#balanceModal"
+                class="btn btn-primary disabled" disabled>BILANSS</button>
+            <button type="button" id="tasuvuspunkt" data-bs-toggle="modal" data-bs-target="#breakEvenModal"
+                class="btn btn-primary disabled" disabled>TASUVUSPUNKT</button>
+        </div>
+    </div>
+</div>
+
+<!--Kasumiaruande modal-->
+<div class="modal fade" id="kasumiAruandeModal" tabindex="-1" aria-labelledby="exampleModalLabel" data-compid=""
+    aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Kasumiaruanne skeem </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success d-none" role="alert"></div>
+                <button class="newProfitCol btn btn-primary">LISA VEERG</button>
+                <form id="profitReport">
+                    <table id="schema1">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Aasta</th>
+                                <td>
+                                    <input type="number" class="form-control" id="year" name="year" aria-label="Aasta"
+                                        min="1900" max="2099" step="1">
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" id="year" name="year" aria-label="Aasta"
+                                        min="1900" max="2099" step="1">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Müügitulu kokku</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="salesRevenue"
+                                        name="salesRevenue" aria-label="Müügitulu kokku">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="salesRevenue"
+                                        name="salesRevenue" aria-label="Müügitulu kokku">
+                                </td>
+                            </tr>
+                            <tr class="creditSalesRevenue0">
+                                <th>Krediitmüügitulu 0%</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="creditSalesRevenue0"
+                                        name="creditSalesRevenue0" aria-label="Krediitmüügitulu 0%">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="creditSalesRevenue0"
+                                        name="creditSalesRevenue0" aria-label="Krediitmüügitulu 0%">
+                                </td>
+                            </tr>
+                            <tr class="creditSalesRevenue9">
+                                <th>Krediitmüügitulu 9%</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="creditSalesRevenue9"
+                                        name="creditSalesRevenue9" aria-label="Krediitmüügitulu 9%">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="creditSalesRevenue9"
+                                        name="creditSalesRevenue9" aria-label="Krediitmüügitulu 9%">
+                                </td>
+                            </tr>
+                            <tr class="creditSalesRevenue20">
+                                <th>Krediitmüügitulu 20%</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="creditSalesRevenue20"
+                                        name="creditSalesRevenue20" aria-label="Krediitmüügitulu 20%">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="creditSalesRevenue20"
+                                        name="creditSalesRevenue20" aria-label="Krediitmüügitulu 20%">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Krediitmüügitulu kokku</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="creditSalesRevenueTotal"
+                                        name="creditSalesRevenueTotal" aria-label="Krediitmüügitulu kokku">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="creditSalesRevenueTotal"
+                                        name="creditSalesRevenueTotal" aria-label="Krediitmüügitulu kokku">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Jaemüügitulu kokku</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="retailRevenueTotal"
+                                        name="retailRevenueTotal" aria-label="Jaemüügitulu kokku">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="retailRevenueTotal"
+                                        name="retailRevenueTotal" aria-label="Jaemüügitulu kokku">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Muud äritulud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherOperatingRevenue"
+                                        name="otherOperatingRevenue" aria-label="Muud äritulud">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherOperatingRevenue"
+                                        name="otherOperatingRevenue" aria-label="Muud äritulud">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Põllumajandusliku toodangu varude jääkide muutus</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="agriGoodsWip"
+                                        name="agriGoodsWip"
+                                        aria-label="Põllumajandusliku toodangu varude jääkide muutus">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="agriGoodsWip"
+                                        name="agriGoodsWip"
+                                        aria-label="Põllumajandusliku toodangu varude jääkide muutus">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kasum (-kahjum bioloogilistelt varadelt)</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="bioAssetsProfitLoss"
+                                        name="bioAssetsProfitLoss"
+                                        aria-label="Kasum (-kahjum bioloogilistelt varadelt)">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="bioAssetsProfitLoss"
+                                        name="bioAssetsProfitLoss"
+                                        aria-label="Kasum (-kahjum bioloogilistelt varadelt)">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Valmis- ja lõpetamata toodangu varude jääkide muutus</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="changesGoodsWip"
+                                        name="changesGoodsWip"
+                                        aria-label="Valmis- ja lõpetamata toodangu varude jääkide muutus">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="changesGoodsWip"
+                                        name="changesGoodsWip"
+                                        aria-label="Valmis- ja lõpetamata toodangu varude jääkide muutus">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kapitaliseeritud väljaminekud oma tarbeks põhivara valmistamisel</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ownPurposeCapitalised"
+                                        name="ownPurposeCapitalised"
+                                        aria-label="Kapitaliseeritud väljaminekud oma tarbeks põhivara valmistamisel">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ownPurposeCapitalised"
+                                        name="ownPurposeCapitalised"
+                                        aria-label="Kapitaliseeritud väljaminekud oma tarbeks põhivara valmistamisel">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kaubad, toore, materjal ja teenused</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="goodsRawMaterialsServices"
+                                        name="goodsRawMaterialsServices"
+                                        aria-label="Kaubad, toore, materjal ja teenused">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="goodsRawMaterialsServices"
+                                        name="goodsRawMaterialsServices"
+                                        aria-label="Kaubad, toore, materjal ja teenused">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Mitmesugused tegevuskulud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherOperatingExpenses"
+                                        name="otherOperatingExpenses" aria-label="Mitmesugused tegevuskulud">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherOperatingExpenses"
+                                        name="otherOperatingExpenses" aria-label="Mitmesugused tegevuskulud">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Tööjõukulud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="wagesSalaries"
+                                        name="wagesSalaries" aria-label="Tööjõukulud">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="wagesSalaries"
+                                        name="wagesSalaries" aria-label="Tööjõukulud">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Põhivara kulum ja väärtuse langus</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="fixedAssetsDepreciationImpairment" name="fixedAssetsDepreciationImpairment"
+                                        aria-label="Põhivara kulum ja väärtuse langus">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="fixedAssetsDepreciationImpairment" name="fixedAssetsDepreciationImpairment"
+                                        aria-label="Põhivara kulum ja väärtuse langus">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Olulised käibevara allahindlused</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="currentAssetsDiscounts"
+                                        name="currentAssetsDiscounts" aria-label="Olulised käibevara allahindlused">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="currentAssetsDiscounts"
+                                        name="currentAssetsDiscounts" aria-label="Olulised käibevara allahindlused">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Muud ärikulud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherOperatingCharges"
+                                        name="otherOperatingCharges" aria-label="Muud ärikulud">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherOperatingCharges"
+                                        name="otherOperatingCharges" aria-label="Muud ärikulud">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>ÄRIKASUM (-KAHJUM)</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="earningsMinusLosses"
+                                        name="earningsMinusLosses" aria-label="ÄRIKASUM (-KAHJUM)">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="earningsMinusLosses"
+                                        name="earningsMinusLosses" aria-label="ÄRIKASUM (-KAHJUM)">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kasum (kahjum) tütarettevõtjatelt</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="profitLossSubsidiaries"
+                                        name="profitLossSubsidiaries" aria-label="Kasum (kahjum) tütarettevõtjatelt">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="profitLossSubsidiaries"
+                                        name="profitLossSubsidiaries" aria-label="Kasum (kahjum) tütarettevõtjatelt">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kasum (kahjum) sidusettevõtjatelt</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="profitLossAssociated"
+                                        name="profitLossAssociated" aria-label="Kasum (kahjum) sidusettevõtjatelt">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="profitLossAssociated"
+                                        name="profitLossAssociated" aria-label="Kasum (kahjum) sidusettevõtjatelt">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kasum (kahjum) finantsinvesteeringutelt</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="profitLossFinancialInvestments" name="profitLossFinancialInvestments"
+                                        aria-label="Kasum (kahjum) finantsinvesteeringutelt">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="profitLossFinancialInvestments" name="profitLossFinancialInvestments"
+                                        aria-label="Kasum (kahjum) finantsinvesteeringutelt">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Intressitulud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="interestIncome"
+                                        name="interestIncome" aria-label="Intressitulud">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="interestIncome"
+                                        name="interestIncome" aria-label="Intressitulud">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Intressikulud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="interestExpense"
+                                        name="interestExpense" aria-label="Intressikulud">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="interestExpense"
+                                        name="interestExpense" aria-label="Intressikulud">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Muud finantstulud ja -kulud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="otherFinancialIncomeExpenses" name="otherFinancialIncomeExpenses"
+                                        aria-label="Muud finantstulud ja -kulud">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="otherFinancialIncomeExpenses" name="otherFinancialIncomeExpenses"
+                                        aria-label="Muud finantstulud ja -kulud">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>KASUM (-KAHJUM) ENNE TULUMAKSUSTAMIST</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="earningsMinusLossesBeforeIncomeExpenses"
+                                        name="earningsMinusLossesBeforeIncomeExpenses"
+                                        aria-label="KASUM (-KAHJUM) ENNE TULUMAKSUSTAMIST ">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="earningsMinusLossesBeforeIncomeExpenses"
+                                        name="earningsMinusLossesBeforeIncomeExpenses"
+                                        aria-label="KASUM (-KAHJUM) ENNE TULUMAKSUSTAMIST ">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Tulumaks</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="incomeTaxExpense"
+                                        name="incomeTaxExpense" aria-label="Tulumaks">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="incomeTaxExpense"
+                                        name="incomeTaxExpense" aria-label="Tulumaks">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>ARUANDEAASTA KASUM (-KAHUJM)</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="financialYearEarningsMinusLosses" name="financialYearEarningsMinusLosses"
+                                        aria-label="ARUANDEAASTA KASUM (-KAHUJM)">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="financialYearEarningsMinusLosses" name="financialYearEarningsMinusLosses"
+                                        aria-label="ARUANDEAASTA KASUM (-KAHUJM)">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table id="schema2">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Aasta</th>
+                                <td>
+                                    <input type="number" class="form-control" id="year" name="yaer" aria-label="Aasta"
+                                        min="1900" max="2099" step="1">
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control" id="year" name="yaer" aria-label="Aasta"
+                                        min="1900" max="2099" step="1">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Müügitulu kokku</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="salesRevenue"
+                                        name="salesRevenue" aria-label="Müügitulu kokku">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="salesRevenue"
+                                        name="salesRevenue" aria-label="Müügitulu kokku">
+                                </td>
+                            </tr>
+                            <tr class="creditSalesRevenue0">
+                                <th>Krediitmüügitulu 0%</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="creditSalesRevenue0"
+                                        name="creditSalesRevenue0" aria-label="Krediitmüügitulu 0%">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" step="0.01" class="form-control"
+                                        id="creditSalesRevenue0" name="creditSalesRevenue0"
+                                        aria-label="Krediitmüügitulu 0%">
+                                </td>
+                            </tr>
+                            <tr class="creditSalesRevenue9">
+                                <th>Krediitmüügitulu 9%</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="creditSalesRevenue9"
+                                        name="creditSalesRevenue9" aria-label="Krediitmüügitulu 9%">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="creditSalesRevenue9"
+                                        name="creditSalesRevenue9" aria-label="Krediitmüügitulu 9%">
+                                </td>
+                            </tr>
+                            <tr class="creditSalesRevenue20">
+                                <th>Krediitmüügitulu 20%</th>
+                                <td>
+                                    <input type="number" step="0.01" step="0.01" class="form-control"
+                                        id="creditSalesRevenue20" name="creditSalesRevenue20"
+                                        aria-label="Krediitmüügitulu 20%">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" step="0.01" class="form-control"
+                                        id="creditSalesRevenue20" name="creditSalesRevenue20"
+                                        aria-label="Krediitmüügitulu 20%">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Krediitmüügitulu kokku</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="creditSalesRevenueTotal"
+                                        name="creditSalesRevenueTotal" aria-label="Krediitmüügitulu kokku">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="creditSalesRevenueTotal"
+                                        name="creditSalesRevenueTotal" aria-label="Krediitmüügitulu kokku">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Jaemüügitulu kokku</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="retailRevenueTotal"
+                                        name="retailRevenueTotal" aria-label="Jaemüügitulu kokku">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="retailRevenueTotal"
+                                        name="retailRevenueTotal" aria-label="Jaemüügitulu kokku">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Müüdud toodangu (kaupade, teenuste) kulu</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="salesCost"
+                                        name="salesCost" aria-label="Müüdud toodangu (kaupade, teenuste) kulu">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="salesCost"
+                                        name="salesCost" aria-label="Müüdud toodangu (kaupade, teenuste) kulu">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>BRUTOKASUM (-KAHJUM)</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="grossProfitMinusLoss"
+                                        name="grossProfitMinusLoss" aria-label="BRUTOKASUM (-KAHJUM)">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="grossProfitMinusLoss"
+                                        name="grossProfitMinusLoss" aria-label="BRUTOKASUM (-KAHJUM)">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kasum (-kahjum bioloogilistelt varadelt)</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="bioAssetsProfitLoss"
+                                        name="bioAssetsProfitLoss"
+                                        aria-label="Kasum (-kahjum bioloogilistelt varadelt)">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="bioAssetsProfitLoss"
+                                        name="bioAssetsProfitLoss"
+                                        aria-label="Kasum (-kahjum bioloogilistelt varadelt)">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Turustuskulud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="marketingExpenses"
+                                        name="marketingExpenses" aria-label="Turustuskulud">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="marketingExpenses"
+                                        name="marketingExpenses" aria-label="Turustuskulud">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Üldhalduskulud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="administrativeExpenses"
+                                        name="administrativeExpenses" aria-label="Üldhalduskulud">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="administrativeExpenses"
+                                        name="administrativeExpenses" aria-label="Üldhalduskulud">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Muud äritulud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherOperatingRevenue"
+                                        name="otherOperatingRevenue" aria-label="Muud äritulud">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherOperatingRevenue"
+                                        name="otherOperatingRevenue" aria-label="Muud äritulud">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Muud ärikulud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherOperatingCharges"
+                                        name="otherOperatingCharges" aria-label="Muud ärikulud">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherOperatingCharges"
+                                        name="otherOperatingCharges" aria-label="Muud ärikulud">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>ÄRIKASUM (-KAHJUM)</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="earningsMinusLosses"
+                                        name="earningsMinusLosses" aria-label="ÄRIKASUM (-KAHJUM)">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="earningsMinusLosses"
+                                        name="earningsMinusLosses" aria-label="ÄRIKASUM (-KAHJUM)">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kasum (kahjum) tütarettevõtjatelt</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="profitLossSubsidiaries"
+                                        name="profitLossSubsidiaries" aria-label="Kasum (kahjum) tütarettevõtjatelt">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="profitLossSubsidiaries"
+                                        name="profitLossSubsidiaries" aria-label="Kasum (kahjum) tütarettevõtjatelt">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kasum (kahjum) sidusettevõtjatelt</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="profitLossAssociated"
+                                        name="profitLossAssociated" aria-label="Kasum (kahjum) sidusettevõtjatelt">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="profitLossAssociated"
+                                        name="profitLossAssociated" aria-label="Kasum (kahjum) sidusettevõtjatelt">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kasum (kahjum) finantsinvesteeringutelt</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="profitLossFinancialInvestments" name="profitLossFinancialInvestments"
+                                        aria-label="Kasum (kahjum) finantsinvesteeringutelt">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="profitLossFinancialInvestments" name="profitLossFinancialInvestments"
+                                        aria-label="Kasum (kahjum) finantsinvesteeringutelt">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Intressitulud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="interestIncome"
+                                        name="interestIncome" aria-label="Intressitulud">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="interestIncome"
+                                        name="interestIncome" aria-label="Intressitulud">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Intressikulud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="interestExpense"
+                                        name="interestExpense" aria-label="Intressikulud">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="interestExpense"
+                                        name="interestExpense" aria-label="Intressikulud">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Muud finantstulud ja -kulud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="otherFinancialIncomeExpenses" name="otherFinancialIncomeExpenses"
+                                        aria-label="Muud finantstulud ja -kulud">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="otherFinancialIncomeExpenses" name="otherFinancialIncomeExpenses"
+                                        aria-label="Muud finantstulud ja -kulud">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>KASUM (-KAHJUM) ENNE TULUMAKSUSTAMIST</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="earningsMinusLossesBeforeIncomeExpenses"
+                                        name="earningsMinusLossesBeforeIncomeExpenses"
+                                        aria-label="KASUM (-KAHJUM) ENNE TULUMAKSUSTAMIST">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="earningsMinusLossesBeforeIncomeExpenses"
+                                        name="earningsMinusLossesBeforeIncomeExpenses"
+                                        aria-label="KASUM (-KAHJUM) ENNE TULUMAKSUSTAMIST">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Tulumaks</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="incomeTaxExpense"
+                                        name="incomeTaxExpense" aria-label="Tulumaks">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="incomeTaxExpense"
+                                        name="incomeTaxExpense" aria-label="Tulumaks">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>ARUANDEAASTA KASUM (-KAHUJM)</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="financialYearEarningsMinusLosses" name="financialYearEarningsMinusLosses"
+                                        aria-label="ARUANDEAASTA KASUM (-KAHUJM)">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="financialYearEarningsMinusLosses" name="financialYearEarningsMinusLosses"
+                                        aria-label="ARUANDEAASTA KASUM (-KAHUJM)">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary salvesta">SALVESTA</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">SULGE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--bilansi modal-->
+<div class="modal fade" id="balanceModal" tabindex="-1" aria-labelledby="Balance" data-compid="" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Bilanss</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success d-none" role="alert"></div>
+                <button class="newProfitCol btn btn-primary">LISA VEERG</button>
+                <form id="balances">
+                    <table id="schema1">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Kuupäev</th>
+                                <td>
+                                    <input type="date" class="form-control" id="date" name="date" aria-label="date"
+                                        required>
+                                </td>
+                                <td>
+                                    <input type="date" class="form-control" id="date" name="date" aria-label="date"
+                                        required>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Raha</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="cash" name="cash"
+                                        aria-label="cash">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="cash" name="cash"
+                                        aria-label="cash">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Lühiajalised finantsinvesteeringud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stInvestments"
+                                        name="stInvestments" aria-label="stInvestments">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stInvestments"
+                                        name="stInvestments" aria-label="stInvestments">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Nõuded ja tehtud ettemaksed</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="receivablesPrepayments"
+                                        name="receivablesPrepayments" aria-label="receivablesPrepayments">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="receivablesPrepayments"
+                                        name="receivablesPrepayments" aria-label="receivablesPrepayments">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Nõuded ostjate vastu</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stTradeReceivables"
+                                        name="stTradeReceivables" aria-label="stTradeReceivables">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stTradeReceivables"
+                                        name="stTradeReceivables" aria-label="stTradeReceivables">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Nõudes seotud osapoolte vastu</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stRelatedPartyReceivables"
+                                        name="stRelatedPartyReceivables" aria-label="stRelatedPartyReceivables">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stRelatedPartyReceivables"
+                                        name="stRelatedPartyReceivables" aria-label="stRelatedPartyReceivables">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Maksude ettemaksed ja tagasinõuded</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stPrepaidDeferredTaxes"
+                                        name="stPrepaidDeferredTaxes" aria-label="stPrepaidDeferredTaxes">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stPrepaidDeferredTaxes"
+                                        name="stPrepaidDeferredTaxes" aria-label="stPrepaidDeferredTaxes">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Muud lühiajalised nõuded</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stOtherReceivables"
+                                        name="stOtherReceivables" aria-label="stOtherReceivables">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stOtherReceivables"
+                                        name="stOtherReceivables" aria-label="stOtherReceivables">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Ettemaksed teenuste eest</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stServicesPrepayments"
+                                        name="stServicesPrepayments" aria-label="stServicesPrepayments">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stServicesPrepayments"
+                                        name="stServicesPrepayments" aria-label="stServicesPrepayments">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Varud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="inventories"
+                                        name="inventories" aria-label="inventories">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="inventories"
+                                        name="inventories" aria-label="inventories">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Tooraine ja materjal</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="rawMaterials"
+                                        name="rawMaterials" aria-label="rawMaterials">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="rawMaterials"
+                                        name="rawMaterials" aria-label="rawMaterials">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Lõpetamata toodang</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="wip" name="wip"
+                                        aria-label="wip">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="wip" name="wip"
+                                        aria-label="wip">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Valmistoodang</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="finishedGoods"
+                                        name="finishedGoods" aria-label="finishedGoods">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="finishedGoods"
+                                        name="finishedGoods" aria-label="finishedGoods">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Müügiks ostetud kaubad</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="goodsForResale"
+                                        name="goodsForResale" aria-label="goodsForResale">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="goodsForResale"
+                                        name="goodsForResale" aria-label="goodsForResale">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Ettemaksed varude eest</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="inventoriesPrepayments"
+                                        name="inventoriesPrepayments" aria-label="inventoriesPrepayments">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="inventoriesPrepayments"
+                                        name="inventoriesPrepayments" aria-label="inventoriesPrepayments">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Lühiajalised bioloogilised varad</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stBiologicalAssets"
+                                        name="stBiologicalAssets" aria-label="stBiologicalAssets">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stBiologicalAssets"
+                                        name="stBiologicalAssets" aria-label="stBiologicalAssets">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Käibevara kokku</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="totalCurrentAssets"
+                                        name="totalCurrentAssets" aria-label="totalCurrentAssets">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="totalCurrentAssets"
+                                        name="totalCurrentAssets" aria-label="totalCurrentAssets">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Investeeringud tütar- ja sidusettevõtjatesse</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="investmentsSubUnder"
+                                        name="investmentsSubUnder" aria-label="investmentsSubUnder">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="investmentsSubUnder"
+                                        name="investmentsSubUnder" aria-label="investmentsSubUnder">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Tütarettevõtjate aktsiad või osad</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="subsidiaryShares"
+                                        name="subsidiaryShares" aria-label="subsidiaryShares">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="subsidiaryShares"
+                                        name="subsidiaryShares" aria-label="subsidiaryShares">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Sidusettevõtjate aktsiad või osad</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="associateShares"
+                                        name="associateShares" aria-label="associateShares">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="associateShares"
+                                        name="associateShares" aria-label="associateShares">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Pikaajalised finantsinvesteeringud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltInvestments"
+                                        name="ltInvestments" aria-label="ltInvestments">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltInvestments"
+                                        name="ltInvestments" aria-label="ltInvestments">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Pikaajalised nõuded ja tehtud ettemaksed</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltReceivablesPrepayments"
+                                        name="ltReceivablesPrepayments" aria-label="ltReceivablesPrepayments">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltReceivablesPrepayments"
+                                        name="ltReceivablesPrepayments" aria-label="ltReceivablesPrepayments">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Nõuded ostjate vastu</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltTradeReceivables"
+                                        name="ltTradeReceivables" aria-label="ltTradeReceivables">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltTradeReceivables"
+                                        name="ltTradeReceivables" aria-label="ltTradeReceivables">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Nõudes seotud osapoolte vastu</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltRelatedPartyReceivables"
+                                        name="ltRelatedPartyReceivables" aria-label="ltRelatedPartyReceivables">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltRelatedPartyReceivables"
+                                        name="ltRelatedPartyReceivables" aria-label="ltRelatedPartyReceivables">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Maksude ettemaksed ja tagasinõuded</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltPrepaidDeferredTaxes"
+                                        name="ltPrepaidDeferredTaxes" aria-label="ltPrepaidDeferredTaxes">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltPrepaidDeferredTaxes"
+                                        name="ltPrepaidDeferredTaxes" aria-label="ltPrepaidDeferredTaxes">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Muud lühiajalised nõuded</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltOtherReceivables"
+                                        name="ltOtherReceivables" aria-label="ltOtherReceivables">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltOtherReceivables"
+                                        name="ltOtherReceivables" aria-label="ltOtherReceivables">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Ettemaksed teenuste eest</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltServicesPrepayments"
+                                        name="ltServicesPrepayments" aria-label="ltServicesPrepayments">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltServicesPrepayments"
+                                        name="ltServicesPrepayments" aria-label="ltServicesPrepayments">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kinnisvarainvesteeringud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="realEstateInv"
+                                        name="realEstateInv" aria-label="realEstateInv">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="realEstateInv"
+                                        name="realEstateInv" aria-label="realEstateInv">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Materiaalne põhivara</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="tangibleAssets"
+                                        name="tangibleAssets" aria-label="tangibleAssets">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="tangibleAssets"
+                                        name="tangibleAssets" aria-label="tangibleAssets">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Maa</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="land" name="land"
+                                        aria-label="land">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="land" name="land"
+                                        aria-label="land">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Ehitised</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="buildings"
+                                        name="buildings" aria-label="buildings">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="buildings"
+                                        name="buildings" aria-label="buildings">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Masinad ja seadmed</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="machineryEquipment"
+                                        name="machineryEquipment" aria-label="machineryEquipment">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="machineryEquipment"
+                                        name="machineryEquipment" aria-label="machineryEquipment">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Muu materiaalne põhivara</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherTangibleAssets"
+                                        name="otherTangibleAssets" aria-label="otherTangibleAssets">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherTangibleAssets"
+                                        name="otherTangibleAssets" aria-label="otherTangibleAssets">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Lõpetamata ehitised ja ettemaksed</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="cipPrepayments"
+                                        name="cipPrepayments" aria-label="cipPrepayments">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="cipPrepayments"
+                                        name="cipPrepayments" aria-label="cipPrepayments">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Tehtud ettemkased põhivara eest</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="assetsPrepayments"
+                                        name="assetsPrepayments" aria-label="assetsPrepayments">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="assetsPrepayments"
+                                        name="assetsPrepayments" aria-label="assetsPrepayments">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Pikaajalised bioloogilised varad</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltBiologicalAssets"
+                                        name="ltBiologicalAssets" aria-label="ltBiologicalAssets">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltBiologicalAssets"
+                                        name="ltBiologicalAssets" aria-label="ltBiologicalAssets">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Immateriaalne põhivara</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="intangibleFixedAssets"
+                                        name="intangibleFixedAssets" aria-label="intangibleFixedAssets">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="intangibleFixedAssets"
+                                        name="intangibleFixedAssets" aria-label="intangibleFixedAssets">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Firmaväärtus</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="goodwill" name="goodwill"
+                                        aria-label="goodwill">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="goodwill" name="goodwill"
+                                        aria-label="goodwill">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Arenguväljaminekud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="developmentCost"
+                                        name="developmentCost" aria-label="developmentCost">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="developmentCost"
+                                        name="developmentCost" aria-label="developmentCost">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Muu immateriaalne põhivara</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherIntangibleAssets"
+                                        name="otherIntangibleAssets" aria-label="otherIntangibleAssets">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherIntangibleAssets"
+                                        name="otherIntangibleAssets" aria-label="otherIntangibleAssets">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Ettemaksed immateriaalse põhivara eest</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="intanglibleAssetsPrepayments" name="intanglibleAssetsPrepayments"
+                                        aria-label="intanglibleAssetsPrepayments">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="intanglibleAssetsPrepayments" name="intanglibleAssetsPrepayments"
+                                        aria-label="intanglibleAssetsPrepayments">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Põhivara kokku</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="totalFixedAssets"
+                                        name="totalFixedAssets" aria-label="totalFixedAssets">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="totalFixedAssets"
+                                        name="totalFixedAssets" aria-label="totalFixedAssets">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Aktiva kokku</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="totalAssets"
+                                        name="totalAssets" aria-label="totalAssets">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="totalAssets"
+                                        name="totalAssets" aria-label="totalAssets">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Lühiajalised laenukohustised</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stLoanLiabilities"
+                                        name="stLoanLiabilities" aria-label="stLoanLiabilities">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stLoanLiabilities"
+                                        name="stLoanLiabilities" aria-label="stLoanLiabilities">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Lühiajalised laenud ja võlakirjad</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stLoansNotes"
+                                        name="stLoansNotes" aria-label="stLoansNotes">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stLoansNotes"
+                                        name="stLoansNotes" aria-label="stLoansNotes">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Pikaajaliste laenukohustiste tagasimaksed järgmisel perioodil</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltCurrentLoanLiabilities"
+                                        name="ltCurrentLoanLiabilities" aria-label="ltCurrentLoanLiabilities">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltCurrentLoanLiabilities"
+                                        name="ltCurrentLoanLiabilities" aria-label="ltCurrentLoanLiabilities">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Võlad ja saadud ettemaksed</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="debtsPrepaymentsReceived"
+                                        name="debtsPrepaymentsReceived" aria-label="debtsPrepaymentsReceived">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="debtsPrepaymentsReceived"
+                                        name="debtsPrepaymentsReceived" aria-label="debtsPrepaymentsReceived">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Võlad tarnijatele</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stTradeCreditors"
+                                        name="stTradeCreditors" aria-label="stTradeCreditors">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stTradeCreditors"
+                                        name="stTradeCreditors" aria-label="stTradeCreditors">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Võlad töövõtjatele</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stEmployeeLiabilities"
+                                        name="stEmployeeLiabilities" aria-label="stEmployeeLiabilities">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stEmployeeLiabilities"
+                                        name="stEmployeeLiabilities" aria-label="stEmployeeLiabilities">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Maksuvõlad</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stTaxesPayable"
+                                        name="stTaxesPayable" aria-label="stTaxesPayable">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stTaxesPayable"
+                                        name="stTaxesPayable" aria-label="stTaxesPayable">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Muud võlad</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stOtherPayables"
+                                        name="stOtherPayables" aria-label="stOtherPayables">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stOtherPayables"
+                                        name="stOtherPayables" aria-label="stOtherPayables">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Muud tulevaste perioodide tulud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stOtherIncome"
+                                        name="stOtherIncome" aria-label="stOtherIncome">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stOtherIncome"
+                                        name="stOtherIncome" aria-label="stOtherIncome">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Saadud ostjate ettemaksed</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="stBuyersPrepaymentsReceived" name="stBuyersPrepaymentsReceived"
+                                        aria-label="stBuyersPrepaymentsReceived">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="stBuyersPrepaymentsReceived" name="stBuyersPrepaymentsReceived"
+                                        aria-label="stBuyersPrepaymentsReceived">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Lühiajalised eraldised kokku</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stProvisions"
+                                        name="stProvisions" aria-label="stProvisions">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stProvisions"
+                                        name="stProvisions" aria-label="stProvisions">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Garantiieraldised</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="guaranteeProvisions"
+                                        name="guaranteeProvisions" aria-label="guaranteeProvisions">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="guaranteeProvisions"
+                                        name="guaranteeProvisions" aria-label="guaranteeProvisions">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Maksueraldised</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="taxProvisions"
+                                        name="taxProvisions" aria-label="taxProvisions">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="taxProvisions"
+                                        name="taxProvisions" aria-label="taxProvisions">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Muud eraldised</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherProvisions"
+                                        name="otherProvisions" aria-label="otherProvisions">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherProvisions"
+                                        name="otherProvisions" aria-label="otherProvisions">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Lühiajalised sihtfinantseerimised</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stTargetedFinancings"
+                                        name="stTargetedFinancings" aria-label="stTargetedFinancings">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="stTargetedFinancings"
+                                        name="stTargetedFinancings" aria-label="stTargetedFinancings">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Lühiajalised kohustised kokku</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="totalCurrentLiabilities"
+                                        name="totalCurrentLiabilities" aria-label="totalCurrentLiabilities">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="totalCurrentLiabilities"
+                                        name="totalCurrentLiabilities" aria-label="totalCurrentLiabilities">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Pikaajalised kohustised</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltLoanLiabilities"
+                                        name="ltLoanLiabilities" aria-label="ltLoanLiabilities">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltLoanLiabilities"
+                                        name="ltLoanLiabilities" aria-label="ltLoanLiabilities">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Laenud, võlakirjad ja kapitalirendi kohustised</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="loansNotesFinancialLeasePayables" name="loansNotesFinancialLeasePayables"
+                                        aria-label="loansNotesFinancialLeasePayables">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="loansNotesFinancialLeasePayables" name="loansNotesFinancialLeasePayables"
+                                        aria-label="loansNotesFinancialLeasePayables">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Konverteeritavad võlakohustised</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="convertibleDebt"
+                                        name="convertibleDebt" aria-label="convertibleDebt">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="convertibleDebt"
+                                        name="convertibleDebt" aria-label="convertibleDebt">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Pikaajalised võlad ja saadud ettemaksed</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltDebtsPrepayments"
+                                        name="ltDebtsPrepayments" aria-label="ltDebtsPrepayments">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltDebtsPrepayments"
+                                        name="ltDebtsPrepayments" aria-label="ltDebtsPrepayments">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Võlad tarnijatele</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltTradeCreditors"
+                                        name="ltTradeCreditors" aria-label="ltTradeCreditors">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltTradeCreditors"
+                                        name="ltTradeCreditors" aria-label="ltTradeCreditors">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Võlad töövõtjatele</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltEmployeeLiabilities"
+                                        name="ltEmployeeLiabilities" aria-label="ltEmployeeLiabilities">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltEmployeeLiabilities"
+                                        name="ltEmployeeLiabilities" aria-label="ltEmployeeLiabilities">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Maksuvõlad</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltTaxesPayable"
+                                        name="ltTaxesPayable" aria-label="ltTaxesPayable">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltTaxesPayable"
+                                        name="ltTaxesPayable" aria-label="ltTaxesPayable">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Muud võlad</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltOtherPayables"
+                                        name="ltOtherPayables" aria-label="ltOtherPayables">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltOtherPayables"
+                                        name="ltOtherPayables" aria-label="ltOtherPayables">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Muud tulevaste perioodide tulud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltOtherIncome"
+                                        name="ltOtherIncome" aria-label="ltOtherIncome">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltOtherIncome"
+                                        name="ltOtherIncome" aria-label="ltOtherIncome">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Pikaajalised eraldised</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltProvisions"
+                                        name="ltProvisions" aria-label="ltProvisions">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltProvisions"
+                                        name="ltProvisions" aria-label="ltProvisions">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Pikaajalised sihtfinantseeringud</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltTargetedFinancings"
+                                        name="ltTargetedFinancings" aria-label="ltTargetedFinancings">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltTargetedFinancings"
+                                        name="ltTargetedFinancings" aria-label="ltTargetedFinancings">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Pikaajalised kohustised kokku</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltLiabilitiesTotal"
+                                        name="ltLiabilitiesTotal" aria-label="ltLiabilitiesTotal">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ltLiabilitiesTotal"
+                                        name="ltLiabilitiesTotal" aria-label="ltLiabilitiesTotal">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kohustised kokku</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="totalLiabilities"
+                                        name="totalLiabilities" aria-label="totalLiabilities">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="totalLiabilities"
+                                        name="totalLiabilities" aria-label="totalLiabilities">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Aktsiakapital või osakapital nimiväärtuses</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="shareCapital"
+                                        name="shareCapital" aria-label="shareCapital">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="shareCapital"
+                                        name="shareCapital" aria-label="shareCapital">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Registreerimata aktsia või osakapital</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="unregisteredShare"
+                                        name="unregisteredShare" aria-label="unregisteredShare">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="unregisteredShare"
+                                        name="unregisteredShare" aria-label="unregisteredShare">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Sissemaksmata osakapital (miinusega)</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="unpaidShareCapital"
+                                        name="unpaidShareCapital" aria-label="unpaidShareCapital">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="unpaidShareCapital"
+                                        name="unpaidShareCapital" aria-label="unpaidShareCapital">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Ülekurss</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="sharePremium"
+                                        name="sharePremium" aria-label="sharePremium">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="sharePremium"
+                                        name="sharePremium" aria-label="sharePremium">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Oma osad või aktsiad (miinus)</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="lessOwnShares"
+                                        name="lessOwnShares" aria-label="lessOwnShares">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="lessOwnShares"
+                                        name="lessOwnShares" aria-label="lessOwnShares">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kohustuslik reservkapital</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="legalReserve"
+                                        name="legalReserve" aria-label="legalReserve">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="legalReserve"
+                                        name="legalReserve" aria-label="legalReserve">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Muud reservid</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherReserves"
+                                        name="otherReserves" aria-label="otherReserves">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherReserves"
+                                        name="otherReserves" aria-label="otherReserves">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Muu omakapital</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherOwnersEquity"
+                                        name="otherOwnersEquity" aria-label="otherOwnersEquity">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="otherOwnersEquity"
+                                        name="otherOwnersEquity" aria-label="otherOwnersEquity">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Eelmiste perioodide jaotamata kasum (kahjum)</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="retainedProfitLoss"
+                                        name="retainedProfitLoss" aria-label="retainedProfitLoss">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="retainedProfitLoss"
+                                        name="retainedProfitLoss" aria-label="retainedProfitLoss">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Aruandeaasta kasum (kahjum)</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="financialYearNetProfitLoss" name="financialYearNetProfitLoss"
+                                        aria-label="financialYearNetProfitLoss">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="financialYearNetProfitLoss" name="financialYearNetProfitLoss"
+                                        aria-label="financialYearNetProfitLoss">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Omakapital kokku</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ownersEquityTotal"
+                                        name="ownersEquityTotal" aria-label="ownersEquityTotal">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control" id="ownersEquityTotal"
+                                        name="ownersEquityTotal" aria-label="ownersEquityTotal">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Passiva kokku</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="totalLiabilitiesOwnersEquity" name="totalLiabilitiesOwnersEquity"
+                                        aria-label="totalLiabilitiesOwnersEquity">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control"
+                                        id="totalLiabilitiesOwnersEquity" name="totalLiabilitiesOwnersEquity"
+                                        aria-label="totalLiabilitiesOwnersEquity">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary salvesta">SALVESTA</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">SULGE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--tasuvuspunkti modal-->
+<div class="modal fade" id="breakEvenModal" tabindex="-1" aria-labelledby="exampleModalLabel" data-compid=""
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tasuvuspunkti graafiku andmed</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success d-none" role="alert"></div>
+                <button type="button" class="btn btn-primary addRow">LISA RIDA</button>
+                <form id="breakEvenPoint">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Müügikäive</th>
+                                <th>Kulud</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Kuu 1</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control salesTurnover"
+                                        name="salesTurnover" aria-label="salesTurnover">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control expenses" name="expenses"
+                                        aria-label="expenses">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kuu 2</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control salesTurnover"
+                                        name="salesTurnover" aria-label="salesTurnover">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control expenses" name="expenses"
+                                        aria-label="expenses">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kuu 3</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control salesTurnover"
+                                        name="salesTurnover" aria-label="salesTurnover">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control expenses" name="expenses"
+                                        aria-label="expenses">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kuu 4</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control salesTurnover"
+                                        name="salesTurnover" aria-label="salesTurnover">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control expenses" name="expenses"
+                                        aria-label="expenses">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kuu 5</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control salesTurnover"
+                                        name="salesTurnover" aria-label="salesTurnover">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control expenses" name="expenses"
+                                        aria-label="expenses">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kuu 6</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control salesTurnover"
+                                        name="salesTurnover" aria-label="salesTurnover">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control expenses" name="expenses"
+                                        aria-label="expenses">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kuu 7</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control salesTurnover"
+                                        name="salesTurnover" aria-label="salesTurnover">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control expenses" name="expenses"
+                                        aria-label="expenses">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kuu 8</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control salesTurnover"
+                                        name="salesTurnover" aria-label="salesTurnover">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control expenses" name="expenses"
+                                        aria-label="expenses">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kuu 9</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control salesTurnover"
+                                        name="salesTurnover" aria-label="salesTurnover">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control expenses" name="expenses"
+                                        aria-label="expenses">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kuu 10</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control salesTurnover"
+                                        name="salesTurnover" aria-label="salesTurnover">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control expenses" name="expenses"
+                                        aria-label="expenses">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kuu 11</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control salesTurnover"
+                                        name="salesTurnover" aria-label="salesTurnover">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control expenses" name="expenses"
+                                        aria-label="expenses">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Kuu 12</th>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control salesTurnover"
+                                        name="salesTurnover" aria-label="salesTurnover">
+                                </td>
+                                <td>
+                                    <input type="number" step="0.01" class="form-control expenses" name="expenses"
+                                        aria-label="expenses">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary salvesta">SALVESTA</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">SULGE</button>
+            </div>
+        </div>
+    </div>
+</div>

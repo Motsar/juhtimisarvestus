@@ -1,17 +1,14 @@
 const router = require('express').Router();
-const {auth} = require('../middlewares')
+const {auth, notAuth} = require('../middlewares')
 const passport = require('../config/passport.js');
 
 
-//global variable for DEVELOPMENT ONLY
 
-global.userProfile;
-
-//Success redirect DEVELOPMENT ONLY
-
-router.get('/success', auth, (req, res)=> {
-    return res.render('success', {user:JSON.parse(userProfile)});
+router.get('/home',notAuth, (req, res)=> {
+    return res.render('home', {layout:'dashboard'})
 });
+
+
 
 //Google auth
 
@@ -21,13 +18,13 @@ router.get('/auth/google/callback',
     passport.authenticate('google', {failureRedirect: '/error'}),
     function (req, res) {
         // Successful authentification, redirect success
-        res.redirect('/success' );
+        res.redirect('/home' );
     });
 
 //Localauth
 
 router.post('/auth/login',
-    passport.authenticate('local', { successRedirect: '/success',
+    passport.authenticate('local', { successRedirect: '/home',
         failureRedirect: '/',
         failureFlash: true })
 );

@@ -1,0 +1,728 @@
+<div data-router-view="" class="container reports col text-primary">
+    <div class="row">
+        <div class="card shadow">
+            <h5 class="card-header bg-primary text-light">Koostatud raportid</h5>
+            <div class="card-body">
+                <table class="table reportsTable">
+                    <thead>
+                        <tr>
+                            <th scope="col">Ettevõte</th>
+                            <th scope="col">Registrikood </th>
+                            <th scope="col">Koostatud</th>
+                        </tr>
+                    </thead>
+                    <tbody class="nav__list"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container reportResult reports col text-primary d-none">
+    <div class="row">
+        <div class="card shadow">
+            <h5 id="reportHead" class="card-header bg-primary text-light"></h5>
+            <div class="card-body">
+                <button class="btn-primary" class="nav__item" data-router-link="">raportid</button>
+                <hr>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="accordion" id="reportsAcordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Suhtarvude analüüs
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h4>lühiajalised maksevõime suhtarvud</h4>
+                        <table class="table" id="stSolvencyRatios">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Aasta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="netWorkingCapital">
+                                    <th>Puhas käibekapital</th>
+                                </tr>
+                                <tr id="currentRatio">
+                                    <th>Lühiajalise võlgnevuse kattekordaja</th>
+                                </tr>
+                                <tr id="quickRatio">
+                                    <th>Likviidsuskordaja ehk Happetest</th>
+                                </tr>
+                                <tr id="cashRatio">
+                                    <th>Kohene maksevalmiduse kordaja</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr>
+                        <h4>Efektiivsuse suhtarvud</h4>
+                        <table class="table" id="efficiencyRatios">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Aasta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="totalAssetTurnover">
+                                    <th>Varade käibekordaja</th>
+                                </tr>
+                                <tr id="daysAssetsHold">
+                                    <th>Varade käibevälde</th>
+                                </tr>
+                                <tr id="fixedAssetTurnover">
+                                    <th>Põhivarade käibekordaja</th>
+                                </tr>
+                                <tr id="daysFixedAssetsHold">
+                                    <th>Põhivarade käibevälde</th>
+                                </tr>
+                                <tr id="accountsReceivablesTurnover">
+                                    <th>Ostjate debitoorse võlgnevuse käibekordaja</th>
+                                </tr>
+                                <tr id="daysSalesOutstanding">
+                                    <th>Ostjate debitoorse võlgnevuse käibevälde</th>
+                                </tr>
+                                <tr id="inventoryTurnover">
+                                    <th>Varude käibekordaja</th>
+                                </tr>
+                                </tr>
+                                <tr id="daysInventoryHeld">
+                                    <th>Varude käibevälde</th>
+                                </tr>
+                                <tr id="accountsPayableTurnover">
+                                    <th>Tarnijate lühiajaliste kohustiste käibekordaja</th>
+                                </tr>
+                                <tr id="daysAccountsPayableOutstanding">
+                                    <th>Lühiajaliste kohustiste käibevälde</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr>
+                        <h4>Tasuvuse suhtarvud</h4>
+                        <table class="table" id="profitabilityRatios">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Aasta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="returnOnTotalAssets">
+                                    <th>Koguvara puhasrentaablus ROA</th>
+                                </tr>
+                                <tr id="returnOnInvestment">
+                                    <th>Investeeringute rentaablus ROI</th>
+                                </tr>
+                                <tr id="roeOnEquity">
+                                    <th>Omakapitali rentaablus ROE</th>
+                                </tr>
+                                <tr id="roeOnSales">
+                                    <th>Müügikäibe puhasrentaablus ROS</th>
+                                </tr>
+                                <tr id="grossProfitMargin">
+                                    <th>Müügikäibe brutorentaablus</th>
+                                </tr>
+                                <tr id="operatingProfitMargin">
+                                    <th>Müügikäibe ärirentaablus</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr>
+                        <h4>Pikaajalised maksevõime suhtarvud</h4>
+                        <table class="table" id="ltSolvencyRatios">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Aasta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="totalDeptRatio">
+                                    <th>Võlakordaja ehk võlakoormus</th>
+                                </tr>
+                                <tr id="solidityEquityRatio">
+                                    <th>Soliidsuskordaja</th>
+                                </tr>
+                                <tr id="ltDebtRatio">
+                                    <th>Kapitaliseerituse kordaja</th>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Horisontaalanalüüsid
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h4>Bilansi horisontaalanalüüsid</h4>
+                        <table class="table" id="balanceHorizontal">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Aasta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="cashHa">
+                                    <th>Raha</th>
+                                </tr>
+                                <tr id="stInvestmentsHa">
+                                    <th>Lühiajalised finantsinvesteeringud</th>
+                                </tr>
+                                <tr id="receivablesPrepaymentsHa">
+                                    <th>Nõuded ja tehtud ettemaksed</th>
+                                </tr>
+                                <tr id="inventoriesHa">
+                                    <th>Varud</th>
+                                </tr>
+                                <tr id="stBiologicalAssetsHa">
+                                    <th>Lühiajalised bioloogilised varad</th>
+                                </tr>
+                                <tr id="totalCurrentAssetsHa">
+                                    <th>Käibevara kokku</th>
+                                </tr>
+                                <tr id="investmentsSubUnderHa">
+                                    <th>Investeeringud tütar- ja sidusettevõtjatesse</th>
+                                </tr>
+                                <tr id="ltInvestmentsHa">
+                                    <th>Pikaajalised finantsinvesteeringud</th>
+                                </tr>
+                                <tr id="ltReceivablesPrepaymentsHa">
+                                    <th>Pikaajalised nõuded ja tehtud ettemaksed</th>
+                                </tr>
+                                <tr id="realEstateInvHa">
+                                    <th>Kinnisvarainvesteeringud</th>
+                                </tr>
+                                <tr id="tangibleAssetsHa">
+                                    <th>Materiaalne põhivara</th>
+                                </tr>
+                                <tr id="ltBiologicalAssetsHa">
+                                    <th>Pikaajalised bioloogilised varad</th>
+                                </tr>
+                                <tr id="intangibleFixedAssetsHa">
+                                    <th>Immateriaalne põhivara</th>
+                                </tr>
+                                <tr id="totalFixedAssetsHa">
+                                    <th>Põhivara kokku</th>
+                                </tr>
+                                <tr id="totalAssetsHa">
+                                    <th>Aktiva kokku</th>
+                                </tr>
+                                <tr id="stLoanLiabilitiesHa">
+                                    <th>Lühiajalised laenukohustised</th>
+                                </tr>
+                                <tr id="debtsPrepaymentsReceivedHa">
+                                    <th>Võlad ja saadud ettemaksed</th>
+                                </tr>
+                                <tr id="stProvisionsHa">
+                                    <th>Lühiajalised eraldised kokku</th>
+                                </tr>
+                                <tr id="stTargetedFinancingsHa">
+                                    <th>Lühiajalised sihtfinantseerimised</th>
+                                </tr>
+                                <tr id="totalCurrentLiabilitiesHa">
+                                    <th>Lühiajalised kohustised kokku</th>
+                                </tr>
+                                <tr id="ltLoanLiabilitiesHa">
+                                    <th>Pikaajalised kohustised</th>
+                                </tr>
+                                <tr id="ltDebtsPrepaymentsHa">
+                                    <th>Pikaajalised võlad ja saadud ettemaksed</th>
+                                </tr>
+                                <tr id="ltProvisionsHa">
+                                    <th>Pikaajalised eraldised</th>
+                                </tr>
+                                <tr id="ltTargetedFinancingsHa">
+                                    <th>Pikaajalised sihtfinantseeringud</th>
+                                </tr>
+                                <tr id="ltLiabilitiesTotalHa">
+                                    <th>Pikaajalised kohustised kokku</th>
+                                </tr>
+                                <tr id="totalLiabilitiesHa">
+                                    <th>Kohustised kokku</th>
+                                </tr>
+                                <tr id="shareCapitalHa">
+                                    <th>Aktsiakapital või osakapital nimiväärtuses</th>
+                                </tr>
+                                <tr id="unregisteredShareHa">
+                                    <th>Registreerimata aktsia või osakapital</th>
+                                </tr>
+                                <tr id="unpaidShareCapitalHa">
+                                    <th>Sissemaksmata osakapital (miinusega)</th>
+                                </tr>
+                                <tr id="sharePremiumHa">
+                                    <th>Ülekurss</th>
+                                </tr>
+                                <tr id="lessOwnSharesHa">
+                                    <th>Oma osad või aktsiad (miinus)</th>
+                                </tr>
+                                <tr id="legalReserveHa">
+                                    <th>Kohustuslik reservkapital</th>
+                                </tr>
+                                <tr id="otherReservesHa">
+                                    <th>Muud reservid</th>
+                                </tr>
+                                <tr id="otherOwnersEquityHa">
+                                    <th>Muu omakapital</th>
+                                </tr>
+                                <tr id="retainedProfitLossHa">
+                                    <th>Eelmiste perioodide jaotamata kasum (kahjum)</th>
+                                </tr>
+                                <tr id="financialYearNetProfitLossHa">
+                                    <th>Aruandeaasta kasum (kahjum)</th>
+                                </tr>
+                                <tr id="ownersEquityTotalHa">
+                                    <th>Omakapital kokku</th>
+                                </tr>
+                                <tr id="totalLiabilitiesOwnersEquityHa">
+                                    <th>Passiva kokku</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr>
+                        <h4>Kasumiaruande Horisontaalanalüüs</h4>
+                        <table class="table" id="profReportsHorizontal">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Aasta</th>
+                                </tr>
+                            </thead>
+                            <tbody id="schema1Ha">
+                                <tr id="salesRevenueHa">
+                                    <th>Müügitulu kokku</th>
+                                </tr>
+                                <tr id="creditSalesRevenueTotalHa">
+                                    <th>Krediitmüügitulu kokku</th>
+                                </tr>
+                                <tr id="otherOperatingRevenueHa">
+                                    <th>Muud äritulud</th>
+                                </tr>
+                                <tr id="agriGoodsWipHa">
+                                    <th>Põllumajandusliku toodangu varude jääkide muutus</th>
+                                </tr>
+                                <tr id="bioAssetsProfitLossHa">
+                                    <th>Kasum (-kahjum bioloogilistelt varadelt)</th>
+                                </tr>
+                                <tr id="changesGoodsWipHa">
+                                    <th>Valmis- ja lõpetamata toodangu varude jääkide muutus</th>
+                                </tr>
+                                <tr id="ownPurposeCapitalisedHa">
+                                    <th>Kapitaliseeritud väljaminekud oma tarbeks põhivara valmistamisel</th>
+                                </tr>
+                                <tr id="goodsRawMaterialsServicesHa">
+                                    <th>Kaubad, toore, materjal ja teenused</th>
+                                </tr>
+                                <tr id="otherOperatingExpensesHa">
+                                    <th>Mitmesugused tegevuskulud</th>
+                                </tr>
+                                <tr id="wagesSalariesHa">
+                                    <th>Tööjõukulud</th>
+                                </tr>
+                                <tr id="fixedAssetsDepreciationImpairmentHa">
+                                    <th>Põhivara kulum ja väärtuse langus</th>
+                                </tr>
+                                <tr id="currentAssetsDiscountsHa">
+                                    <th>Olulised käibevara allahindlused</th>
+                                </tr>
+                                <tr id="otherOperatingChargesHa">
+                                    <th>Muud ärikulud</th>
+                                </tr>
+                                <tr id="earningsMinusLossesHa">
+                                    <th>ÄRIKASUM (-KAHJUM)</th>
+                                </tr>
+                                <tr id="profitLossSubsidiariesHa">
+                                    <th>Kasum (kahjum) tütarettevõtjatelt</th>
+                                </tr>
+                                <tr id="profitLossAssociatedHa">
+                                    <th>Kasum (kahjum) sidusettevõtjatelt</th>
+                                </tr>
+                                <tr id="profitLossFinancialInvestmentsHa">
+                                    <th>Kasum (kahjum) finantsinvesteeringutelt</th>
+                                </tr>
+                                <tr id="interestIncomeHa">
+                                    <th>Intressitulud</th>
+                                </tr>
+                                <tr id="interestExpenseHa">
+                                    <th>Intressikulud</th>
+                                </tr>
+                                <tr id="otherFinancialIncomeExpensesHa">
+                                    <th>Muud finantstulud ja -kulud</th>
+                                </tr>
+                                <tr id="earningsMinusLossesBeforeIncomeExpensesHa">
+                                    <th>KASUM (-KAHJUM) ENNE TULUMAKSUSTAMIST</th>
+                                </tr>
+                                <tr id="incomeTaxExpenseHa">
+                                    <th>Tulumaks</th>
+                                </tr>
+                                <tr id="financialYearEarningsMinusLossesHa">
+                                    <th>ARUANDEAASTA KASUM (-KAHUJM)</th>
+                                </tr>
+                            </tbody>
+                            <tbody id="schema2Ha">
+                                <tr id="salesRevenueHa">
+                                    <th>Müügitulu kokku</th>
+                                </tr>
+                                <tr id="creditSalesRevenueTotalHa">
+                                    <th>Krediitmüügitulu kokku</th>
+                                </tr>
+                                <tr id="salesCostHa">
+                                    <th>Müüdud toodangu (kaupade, teenuste) kulu</th>
+                                </tr>
+                                <tr id="grossProfitMinusLossHa">
+                                    <th>BRUTOKASUM (-KAHJUM)</th>
+                                </tr>
+                                <tr id="bioAssetsProfitLossHa">
+                                    <th>Kasum (-kahjum bioloogilistelt varadelt)</th>
+                                </tr>
+                                <tr id="marketingExpensesHa">
+                                    <th>Turustuskulud</th>
+                                </tr>
+                                <tr id="administrativeExpensesHa">
+                                    <th>Üldhalduskulud</th>
+                                </tr>
+                                <tr id="otherOperatingRevenueHa">
+                                    <th>Muud äritulud</th>
+                                </tr>
+                                <tr id="otherOperatingChargesHa">
+                                    <th>Muud ärikulud</th>
+                                </tr>
+                                <tr id="earningsMinusLossesHa">
+                                    <th>ÄRIKASUM (-KAHJUM)</th>
+                                </tr>
+                                <tr id="profitLossSubsidiariesHa">
+                                    <th>Kasum (kahjum) tütarettevõtjatelt</th>
+                                </tr>
+                                <tr id="profitLossAssociatedHa">
+                                    <th>Kasum (kahjum) sidusettevõtjatelt</th>
+                                </tr>
+                                <tr id="profitLossFinancialInvestmentsHa">
+                                    <th>Kasum (kahjum) finantsinvesteeringutelt</th>
+                                </tr>
+                                <tr id="interestIncomeHa">
+                                    <th>Intressitulud</th>
+                                </tr>
+                                <tr id="interestExpenseHa">
+                                    <th>Intressikulud</th>
+                                </tr>
+                                <tr id="otherFinancialIncomeExpensesHa">
+                                    <th>Muud finantstulud ja -kulud</th>
+                                </tr>
+                                <tr id="earningsMinusLossesBeforeIncomeExpensesHa">
+                                    <th>KASUM (-KAHJUM) ENNE TULUMAKSUSTAMIST</th>
+                                </tr>
+                                <tr id="incomeTaxExpenseHa">
+                                    <th>Tulumaks</th>
+                                </tr>
+                                <tr id="financialYearEarningsMinusLossesHa">
+                                    <th>ARUANDEAASTA KASUM (-KAHUJM)</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Verikaalanalüüsid
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <h4>Bilansi vertikaalanalüüs</h4>
+                        <table class="table" id="balanceVertical">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Aasta</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="cashVa">
+                                    <th>Raha</th>
+                                </tr>
+                                <tr id="stInvestmentsVa">
+                                    <th>Lühiajalised finantsinvesteeringud</th>
+                                </tr>
+                                <tr id="receivablesPrepaymentsVa">
+                                    <th>Nõuded ja tehtud ettemaksed</th>
+                                </tr>
+                                <tr id="inventoriesVa">
+                                    <th>Varud</th>
+                                </tr>
+                                <tr id="stBiologicalAssetsVa">
+                                    <th>Lühiajalised bioloogilised varad</th>
+                                </tr>
+                                <tr id="totalCurrentAssetsVa">
+                                    <th>Käibevara kokku</th>
+                                </tr>
+                                <tr id="investmentsSubUnderVa">
+                                    <th>Investeeringud tütar- ja sidusettevõtjatesse</th>
+                                </tr>
+                                <tr id="ltInvestmentsVa">
+                                    <th>Pikaajalised finantsinvesteeringud</th>
+                                </tr>
+                                <tr id="ltReceivablesPrepaymentsVa">
+                                    <th>Pikaajalised nõuded ja tehtud ettemaksed</th>
+                                </tr>
+                                <tr id="realEstateInvVa">
+                                    <th>Kinnisvarainvesteeringud</th>
+                                </tr>
+                                <tr id="tangibleAssetsVa">
+                                    <th>Materiaalne põhivara</th>
+                                </tr>
+                                <tr id="ltBiologicalAssetsVa">
+                                    <th>Pikaajalised bioloogilised varad</th>
+                                </tr>
+                                <tr id="intangibleFixedAssetsVa">
+                                    <th>Immateriaalne põhivara</th>
+                                </tr>
+                                <tr id="totalFixedAssetsVa">
+                                    <th>Põhivara kokku</th>
+                                </tr>
+                                <tr id="totalAssetsVa">
+                                    <th>Aktiva kokku</th>
+                                </tr>
+                                <tr id="stLoanLiabilitiesVa">
+                                    <th>Lühiajalised laenukohustised</th>
+                                </tr>
+                                <tr id="debtsPrepaymentsReceivedVa">
+                                    <th>Võlad ja saadud ettemaksed</th>
+                                </tr>
+                                <tr id="stProvisionsVa">
+                                    <th>Lühiajalised eraldised kokku</th>
+                                </tr>
+                                <tr id="stTargetedFinancingsVa">
+                                    <th>Lühiajalised sihtfinantseerimised</th>
+                                </tr>
+                                <tr id="totalCurrentLiabilitiesVa">
+                                    <th>Lühiajalised kohustised kokku</th>
+                                </tr>
+                                <tr id="ltLoanLiabilitiesVa">
+                                    <th>Pikaajalised kohustised</th>
+                                </tr>
+                                <tr id="ltDebtsPrepaymentsVa">
+                                    <th>Pikaajalised võlad ja saadud ettemaksed</th>
+                                </tr>
+                                <tr id="ltProvisionsVa">
+                                    <th>Pikaajalised eraldised</th>
+                                </tr>
+                                <tr id="ltTargetedFinancingsVa">
+                                    <th>Pikaajalised sihtfinantseeringud</th>
+                                </tr>
+                                <tr id="ltLiabilitiesTotalVa">
+                                    <th>Pikaajalised kohustised kokku</th>
+                                </tr>
+                                <tr id="totalLiabilitiesVa">
+                                    <th>Kohustised kokku</th>
+                                </tr>
+                                <tr id="shareCapitalVa">
+                                    <th>Aktsiakapital või osakapital nimiväärtuses</th>
+                                </tr>
+                                <tr id="unregisteredShareVa">
+                                    <th>Registreerimata aktsia või osakapital</th>
+                                </tr>
+                                <tr id="unpaidShareCapitalVa">
+                                    <th>Sissemaksmata osakapital (miinusega)</th>
+                                </tr>
+                                <tr id="sharePremiumVa">
+                                    <th>Ülekurss</th>
+                                </tr>
+                                <tr id="lessOwnSharesVa">
+                                    <th>Oma osad või aktsiad (miinus)</th>
+                                </tr>
+                                <tr id="legalReserveVa">
+                                    <th>Kohustuslik reservkapital</th>
+                                </tr>
+                                <tr id="otherReservesVa">
+                                    <th>Muud reservid</th>
+                                </tr>
+                                <tr id="otherOwnersEquityVa">
+                                    <th>Muu omakapital</th>
+                                </tr>
+                                <tr id="retainedProfitLossVa">
+                                    <th>Eelmiste perioodide jaotamata kasum (kahjum)</th>
+                                </tr>
+                                <tr id="financialYearNetProfitLossVa">
+                                    <th>Aruandeaasta kasum (kahjum)</th>
+                                </tr>
+                                <tr id="ownersEquityTotalVa">
+                                    <th>Omakapital kokku</th>
+                                </tr>
+                                <tr id="totalLiabilitiesOwnersEquityVa">
+                                    <th>Passiva kokku</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr>
+                        <h4>Kasumiaruande vertikaalanalüüs</h4>
+                        <table class="table" id="profReportsVertical">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Aasta</th>
+                                </tr>
+                            </thead>
+                            <tbody id="schema1Va">
+                                <tr id="salesRevenueVa">
+                                    <th>Müügitulu kokku</th>
+                                </tr>
+                                <tr id="creditSalesRevenueTotalVa">
+                                    <th>Krediitmüügitulu kokku</th>
+                                </tr>
+                                <tr id="otherOperatingRevenueVa">
+                                    <th>Muud äritulud</th>
+                                </tr>
+                                <tr id="agriGoodsWipVa">
+                                    <th>Põllumajandusliku toodangu varude jääkide muutus</th>
+                                </tr>
+                                <tr id="bioAssetsProfitLossVa">
+                                    <th>Kasum (-kahjum bioloogilistelt varadelt)</th>
+                                </tr>
+                                <tr id="changesGoodsWipVa">
+                                    <th>Valmis- ja lõpetamata toodangu varude jääkide muutus</th>
+                                </tr>
+                                <tr id="ownPurposeCapitalisedVa">
+                                    <th>Kapitaliseeritud väljaminekud oma tarbeks põhivara valmistamisel</th>
+                                </tr>
+                                <tr id="goodsRawMaterialsServicesVa">
+                                    <th>Kaubad, toore, materjal ja teenused</th>
+                                </tr>
+                                <tr id="otherOperatingExpensesVa">
+                                    <th>Mitmesugused tegevuskulud</th>
+                                </tr>
+                                <tr id="wagesSalariesVa">
+                                    <th>Tööjõukulud</th>
+                                </tr>
+                                <tr id="fixedAssetsDepreciationImpairmentVa">
+                                    <th>Põhivara kulum ja väärtuse langus</th>
+                                </tr>
+                                <tr id="currentAssetsDiscountsVa">
+                                    <th>Olulised käibevara allahindlused</th>
+                                </tr>
+                                <tr id="otherOperatingChargesVa">
+                                    <th>Muud ärikulud</th>
+                                </tr>
+                                <tr id="earningsMinusLossesVa">
+                                    <th>ÄRIKASUM (-KAHJUM)</th>
+                                </tr>
+                                <tr id="profitLossSubsidiariesVa">
+                                    <th>Kasum (kahjum) tütarettevõtjatelt</th>
+                                </tr>
+                                <tr id="profitLossAssociatedVa">
+                                    <th>Kasum (kahjum) sidusettevõtjatelt</th>
+                                </tr>
+                                <tr id="profitLossFinancialInvestmentsVa">
+                                    <th>Kasum (kahjum) finantsinvesteeringutelt</th>
+                                </tr>
+                                <tr id="interestIncomeVa">
+                                    <th>Intressitulud</th>
+                                </tr>
+                                <tr id="interestExpenseVa">
+                                    <th>Intressikulud</th>
+                                </tr>
+                                <tr id="otherFinancialIncomeExpensesVa">
+                                    <th>Muud finantstulud ja -kulud</th>
+                                </tr>
+                                <tr id="earningsMinusLossesBeforeIncomeExpensesVa">
+                                    <th>KASUM (-KAHJUM) ENNE TULUMAKSUSTAMIST</th>
+                                </tr>
+                                <tr id="incomeTaxExpenseVa">
+                                    <th>Tulumaks</th>
+                                </tr>
+                                <tr id="financialYearEarningsMinusLossesVa">
+                                    <th>ARUANDEAASTA KASUM (-KAHUJM)</th>
+                                </tr>
+                            </tbody>
+                            <tbody id="schema2Va">
+                                <tr id="salesRevenueVa">
+                                    <th>Müügitulu kokku</th>
+                                </tr>
+                                <tr id="creditSalesRevenueTotalVa">
+                                    <th>Krediitmüügitulu kokku</th>
+                                </tr>
+                                <tr id="salesCostVa">
+                                    <th>Müüdud toodangu (kaupade, teenuste) kulu</th>
+                                </tr>
+                                <tr id="grossProfitMinusLossVa">
+                                    <th>BRUTOKASUM (-KAHJUM)</th>
+                                </tr>
+                                <tr id="bioAssetsProfitLossVa">
+                                    <th>Kasum (-kahjum bioloogilistelt varadelt)</th>
+                                </tr>
+                                <tr id="marketingExpensesVa">
+                                    <th>Turustuskulud</th>
+                                </tr>
+                                <tr id="administrativeExpensesVa">
+                                    <th>Üldhalduskulud</th>
+                                </tr>
+                                <tr id="otherOperatingRevenueVa">
+                                    <th>Muud äritulud</th>
+                                </tr>
+                                <tr id="otherOperatingChargesVa">
+                                    <th>Muud ärikulud</th>
+                                </tr>
+                                <tr id="earningsMinusLossesVa">
+                                    <th>ÄRIKASUM (-KAHJUM)</th>
+                                </tr>
+                                <tr id="profitLossSubsidiariesVa">
+                                    <th>Kasum (kahjum) tütarettevõtjatelt</th>
+                                </tr>
+                                <tr id="profitLossAssociatedVa">
+                                    <th>Kasum (kahjum) sidusettevõtjatelt</th>
+                                </tr>
+                                <tr id="profitLossFinancialInvestmentsVa">
+                                    <th>Kasum (kahjum) finantsinvesteeringutelt</th>
+                                </tr>
+                                <tr id="interestIncomeVa">
+                                    <th>Intressitulud</th>
+                                </tr>
+                                <tr id="interestExpenseVa">
+                                    <th>Intressikulud</th>
+                                </tr>
+                                <tr id="otherFinancialIncomeExpensesVa">
+                                    <th>Muud finantstulud ja -kulud</th>
+                                </tr>
+                                <tr id="earningsMinusLossesBeforeIncomeExpensesVa">
+                                    <th>KASUM (-KAHJUM) ENNE TULUMAKSUSTAMIST</th>
+                                </tr>
+                                <tr id="incomeTaxExpenseVa">
+                                    <th>Tulumaks</th>
+                                </tr>
+                                <tr id="financialYearEarningsMinusLossesVa">
+                                    <th>ARUANDEAASTA KASUM (-KAHUJM)</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Tasuvuspunkti graafik
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <canvas id="myChart" width="400" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,15 +1,24 @@
 const router = require('express').Router();
 const {apiAuth} = require('../middlewares');
 const balance = require('../models/Balance');
+const Company = require('../models/Company');
 const balanceChildren= require('../models/BalanceChildren');
+require('dotenv').config('../.env');
 
 //Get request for balance data
 
 router.post('/', apiAuth ,async (req, res)=>{
 
+    //check if the given company_id is related to user
+
+    let id = req.body.company_id;
+    if(!id)return res.status(404).json({error:"Ettevõtte ID puudub."});
+    let company = await Company.findOne({_id: id, user_id:req.userId});
+    if(!company) return res.status(401).json({error:"kasutajaga seotud ettevõtte analüüsi ei leitud."});
+
     //Find balance document with company document id
 
-    const findBalance = await balance.findOne({_id:req.body.companyId});
+    const findBalance = await balance.findOne({_id:id});
     if(!findBalance) return res.status(404).json({error: "Sellist bilanssi ei leitud." });
 
     //Send balances back
@@ -22,9 +31,16 @@ router.post('/', apiAuth ,async (req, res)=>{
 
 router.put('/', apiAuth ,async (req, res) => {
 
+    //check if the given company_id is related to user
+
+    let id = req.body.company_id;
+    if(!id)return res.status(404).json({error:"Ettevõtte ID puudub."});
+    let company = await Company.findOne({_id: id, user_id:req.userId});
+    if(!company) return res.status(401).json({error:"kasutajaga seotud ettevõtte analüüsi ei leitud."});
+
         //Find balance document with company document id
 
-        const findBalance = await balance.findOne({_id:req.body.companyId});
+        const findBalance = await balance.findOne({_id:req.body.company_id});
         if(!findBalance) return res.status(404).json({error: "Sellist bilanssi ei leitud" });
 
         //Get balances array from request body
@@ -134,8 +150,9 @@ router.put('/', apiAuth ,async (req, res) => {
         });
 
         try{
+            if (process.env.DEVELOPEMENT === 'true') return res.status(201).json({success:"Bilansi andmed on salvestatud"});
             await findBalance.save();
-            res.status(200).json(findBalance);
+            res.status(200).json({success:"Bilansi andmed on salvestatud"});
         }catch(err){
             res.status(500).json({error:err});
             console.log(err)

@@ -8,16 +8,17 @@ exports.auth = function(req, res, next) {
 
 
 exports.notAuth = function(req, res, next) {
-    if (req.user) {
-        res.redirect('/success');
+    if (!req.user) {
+        res.redirect('/');
     } else {
         next();
     }
 }
 
 exports.apiAuth = function(req, res, next) {
-    if(!req.user) return res.status(403).json({error:"you are not signed in"});
-    let useridJSON= JSON.parse(req.user);
+    if(!req.user) return res.status(403).json({error:"Te olete välja logitud"});
+    console.log(req.user) 
+    let useridJSON= req.user;
     req.userId = useridJSON._id;
     next();
 }
@@ -40,3 +41,4 @@ exports.verticalProcentageCalc = (entryLine, entryTotal) => {
     if(entryLine===0) return 0;
     return (entryLine/entryTotal)*100;
 }
+

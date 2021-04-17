@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const bcrypt = require('bcryptjs');
 const passport = require('passport')
     , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
     , LocalStrategy = require('passport-local').Strategy;
@@ -17,9 +18,8 @@ passport.use(new GoogleStrategy({
         User.findOne({googleId: profile.id}).then((currentUser)=>{
             if(currentUser){
                 //if we already have a record with the given profile ID
-                userProfile = JSON.stringify(currentUser);
-                console.log(currentUser);
-                done(null, userProfile);
+                
+                done(null, currentUser);
             } else{
                 //if not, create a new user
                 new User({
@@ -28,8 +28,7 @@ passport.use(new GoogleStrategy({
                     googleId:   profile.id,
                     email: profile.emails[0].value
                 }).save().then((newUser) =>{
-                    userProfile=JSON.stringify(newUser);;
-                    done(null, userProfile);
+                    done(null, newUser);
                 });
             }
         })
@@ -43,18 +42,19 @@ passport.use('local',new LocalStrategy({
         passwordField : 'password'
     },
     function(username, password, done) {
-        User.findOne({ email: username }, function(err, user) {
-            if (err) { return done(err); }
+        User.findOne({ email: username }, async function(err, user) {
+            if (err) { return done(err);}
             if (!user) {
                 return done(null, false, { message: 'Incorrect username.' });
             }
-            if (user.password!==password) {
+            if (await bcrypt.compare(password, user.password)===false){
                 return done(null, false, { message: 'Incorrect password.' });
             }
-            userProfile = JSON.stringify(user);;
-            return done(null, userProfile);
+            return done(null, user);
         });
     },
 ));
 
+
+module.exports.userProfile;
 module.exports = passport;

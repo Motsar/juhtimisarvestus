@@ -1,0 +1,83 @@
+.sidebar-sticky{
+    min-height: 100vh;
+    max-width: 230px !important;
+    min-width: 230px !important;
+}
+
+.sidebar-sticky ul li .nav-link{
+    color: #fafafa !important;
+    font-size: 20px;
+}
+
+.compData3 .row{
+    min-height: 50px !important;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.companyData .row label{
+    margin-right: 15px;
+}
+
+.compDataCard .card-footer{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.compDataCard button{
+    margin-left: 20px;
+}
+
+.compDataCard{
+    padding: 0px !important;   
+}
+
+.sidebar-sticky ul li .nav-link:hover{
+    color: #009dff !important;
+}
+
+.sidebar-sticky ul li .nav-link:active{
+    color: #bb0c0c !important;
+    border-bottom: 3px #bb0c0c !important;
+}
+
+.companyData label {
+    float: left;
+}
+
+
+.companyData .row{
+    min-height: 50px !important;
+}
+
+
+
+.navbar-brand img{
+    max-height: 30px;
+    margin:20px;
+    margin-bottom: 100px;
+    
+}
+
+.cardInner{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.reports{
+    padding: 30px;
+}
+
+.sidebar-sticky p{
+    position: absolute;
+    top:95%;
+    left: 20px;
+    color: #fafafa !important;
+    font-size: 15px;
+}
+
+.reportsTable tbody tr:hover{
+    cursor: pointer;
+    background-color: #0d6efd;
+    color:white;
+}

@@ -1,19 +1,34 @@
 const router = require('express').Router();
 const balance = require('../models/Balance');
 const profitReport = require('../models/ProfitReport');
-const company = require('../models/Company');
+const breakEvenAnalysis = require('../models/BreakEvenAnalysis');
+const Company = require('../models/Company');
 const {apiAuth,roundOff,absoluteHorizontal,procentageHorizontal,verticalProcentageCalc} = require('../middlewares');
 
 router.post('/',apiAuth,async (req, res) => {
-    let findBalance =await balance.findOne({_id: req.body.companyId});
+
+    let id = req.body.company_id;
+    if(!id)return res.status(404).json({error:"Ettevõtte ID puudub."});
+    let company = await Company.findOne({_id: id, user_id:req.userId});
+    if(!company) return res.status(401).json({error:"kasutajaga seotud ettevõtte analüüsi ei leitud."});
+
+    let findBalance =await balance.findOne({_id: id});
     if (!findBalance) return res.status(404).json({error: "Bilanssi ei leitud"});
-    let findProfitReport = await profitReport.findOne({_id: req.body.companyId});
+
+    let findProfitReport = await profitReport.findOne({_id: id});
     if (!findProfitReport) return res.status(404).json({error: "Kasumiaruannet ei leitud"});
+
     let balances = findBalance.dates;
-    let findCompany = await company.findOne({_id:req.body.companyId})
+
+    const findBreakEvenAnalysis = await breakEvenAnalysis.findOne({_id:id});
+
+    let findCompany = await Company.findOne({_id:id})
     let yearLength = findCompany.yearLength;
     let profitReports = findProfitReport.years;
     let results = {
+        company_id:findCompany._id,
+        compName:findCompany.compName,
+        compReportSchema:findCompany.Profit_report_schema,
         NetWorkingCapitals:[],
         CurrentRatio:[],
         QuickRatio:[],
@@ -40,7 +55,8 @@ router.post('/',apiAuth,async (req, res) => {
         HorizontalAnalysisBalances:[],
         HorizontalAnalysisProfitReps:[],
         VerticalAnalysisBalances:[],
-        VerticalAnalysisProfitReps:[]
+        VerticalAnalysisProfitReps:[],
+        BreakEvenAnalysis:[]
     };
 
     //Lühiajalise maksevõime suhtarvud
@@ -230,7 +246,7 @@ router.post('/',apiAuth,async (req, res) => {
         let inventoryTurnover = results.InventoryTurnover;
         for(let i=0;i<inventoryTurnover.length;i++){
             let daysInventoryHeld = roundOff(yearLength/inventoryTurnover[i].inventoryTurnover,2);
-            results.DaysInventoryHeld.push({"year":inventoryTurnover[i].year, "daysSalesOutstanding": daysInventoryHeld});
+            results.DaysInventoryHeld.push({"year":inventoryTurnover[i].year, "daysInventoryHeld": daysInventoryHeld});
         }
     }
     daysInventoryHeld();
@@ -530,92 +546,59 @@ router.post('/',apiAuth,async (req, res) => {
 
     horizontalAnalysisProfitReps();
 
+    //Balance vertical analysis
+
     let verticalAnalysisBalances = () => {
         for(let i=0;i<balances.length;i++) {
             let balanceDate = balances[i].date.toString();
             let balanceYear = balanceDate.substr(11, 4);
             results.VerticalAnalysisBalances.push({
                 "year": balanceYear,
-                "cash": balances[i].cash,
-                "cashProcent": roundOff(verticalProcentageCalc(balances[i].cash,balances[i].totalAssets),2),
-                "stInvestments": balances[i].stInvestments,
-                "stInvestmentsProcent": roundOff(verticalProcentageCalc(balances[i].stInvestments,balances[i].totalAssets),2),
-                "receivablesPrepayments": balances[i].receivablesPrepayments,
-                "receivablesPrepaymentsProcent": roundOff(verticalProcentageCalc(balances[i].receivablesPrepayments,balances[i].totalAssets),2),
-                "inventories": balances[i].inventories,
-                "inventoriesProcent":roundOff(verticalProcentageCalc(balances[i].inventories,balances[i].totalAssets),2),
-                "stBiologicalAssets": balances[i].stBiologicalAssets,
-                "stBiologicalAssetsProcent":roundOff(verticalProcentageCalc(balances[i].stBiologicalAssets,balances[i].totalAssets),2),
-                "totalCurrentAssets": balances[i].totalCurrentAssets,
-                "totalCurrentAssetsProcent": roundOff(verticalProcentageCalc(balances[i].totalCurrentAssets,balances[i].totalAssets),2),
-                "investmentsSubUnder":balances[i].investmentsSubUnder,
-                "investmentsSubUnderProcent":roundOff(verticalProcentageCalc(balances[i].investmentsSubUnder,balances[i].totalAssets),2),
-                "ltInvestments": balances[i].ltInvestments,
-                "ltInvestmentsProcent": roundOff(verticalProcentageCalc(balances[i].ltInvestments,balances[i].totalAssets),2),
-                "ltReceivablesPrepayments": balances[i].ltReceivablesPrepayments,
-                "ltReceivablesPrepaymentsProcent": roundOff(verticalProcentageCalc(balances[i].ltReceivablesPrepayments,balances[i].totalAssets),2),
-                "realEstateInv": balances[i].realEstateInv,
-                "realEstateInvProcent": roundOff(verticalProcentageCalc(balances[i].realEstateInv,balances[i].totalAssets),2),
-                "tangibleAssets": balances[i].tangibleAssets,
-                "tangibleAssetsProcent": roundOff(verticalProcentageCalc(balances[i].tangibleAssets,balances[i].totalAssets),2),
-                "ltBiologicalAssets": balances[i].ltBiologicalAssets,
-                "ltBiologicalAssetsProcent": roundOff(verticalProcentageCalc(balances[i].ltBiologicalAssets,balances[i].totalAssets),2),
-                "intangibleFixedAssets": balances[i].intangibleFixedAssets,
-                "intangibleFixedAssetsProcent": roundOff(verticalProcentageCalc(balances[i].intangibleFixedAssets,balances[i].totalAssets),2),
-                "totalFixedAssets": balances[i].totalFixedAssets,
-                "totalFixedAssetsProcent": roundOff(verticalProcentageCalc(balances[i].totalFixedAssets,balances[i].totalAssets),2),
-                "totalAssets": balances[i].totalAssets,
-                "totalAssetsProcent": roundOff(verticalProcentageCalc(balances[i].totalAssets,balances[i].totalAssets),2),
-                "stLoanLiabilities": balances[i].stLoanLiabilities,
-                "stLoanLiabilitiesProcent": roundOff(verticalProcentageCalc(balances[i].stLoanLiabilities,balances[i].totalLiabilitiesOwnersEquity),2),
-                "debtsPrepaymentsReceived": balances[i].debtsPrepaymentsReceived,
-                "debtsPrepaymentsReceivedProcent": roundOff(verticalProcentageCalc(balances[i].debtsPrepaymentsReceived,balances[i].totalLiabilitiesOwnersEquity),2),
-                "stProvisions": balances[i].stProvisions,
-                "stProvisionsProcent": roundOff(verticalProcentageCalc(balances[i].stProvisions,balances[i].totalLiabilitiesOwnersEquity),2),
-                "stTargetedFinancings": balances[i].stTargetedFinancings,
-                "stTargetedFinancingsProcent": roundOff(verticalProcentageCalc(balances[i].stTargetedFinancings,balances[i].totalLiabilitiesOwnersEquity),2),
-                "totalCurrentLiabilities": balances[i].totalCurrentLiabilities,
-                "totalCurrentLiabilitiesProcent": roundOff(verticalProcentageCalc(balances[i].totalCurrentLiabilities,balances[i].totalLiabilitiesOwnersEquity),2),
-                "ltLoanLiabilities": balances[i].ltLoanLiabilities,
-                "ltLoanLiabilitiesProcent": roundOff(verticalProcentageCalc(balances[i].ltLoanLiabilities,balances[i].totalLiabilitiesOwnersEquity),2),
-                "ltDebtsPrepayments": balances[i].ltDebtsPrepayments,
-                "ltDebtsPrepaymentsProcent": roundOff(verticalProcentageCalc(balances[i].ltDebtsPrepayments,balances[i].totalLiabilitiesOwnersEquity),2),
-                "ltProvisions": balances[i].ltProvisions,
-                "ltProvisionsProcent": roundOff(verticalProcentageCalc(balances[i].ltProvisions,balances[i].totalLiabilitiesOwnersEquity),2),
-                "ltTargetedFinancings": balances[i].ltTargetedFinancings,
-                "ltTargetedFinancingsProcent": roundOff(verticalProcentageCalc(balances[i].ltTargetedFinancings,balances[i].totalLiabilitiesOwnersEquity),2),
-                "ltLiabilitiesTotal": balances[i].ltLiabilitiesTotal,
-                "ltLiabilitiesTotalProcent": roundOff(verticalProcentageCalc(balances[i].ltLiabilitiesTotal,balances[i].totalLiabilitiesOwnersEquity),2),
-                "totalLiabilities": balances[i].totalLiabilities,
-                "totalLiabilitiesProcent": roundOff(verticalProcentageCalc(balances[i].totalLiabilities,balances[i].totalLiabilitiesOwnersEquity),2),
-                "shareCapital": balances[i].shareCapital,
-                "shareCapitalProcent": roundOff(verticalProcentageCalc(balances[i].shareCapital,balances[i].totalLiabilitiesOwnersEquity),2),
-                "unregisteredShare": balances[i].unregisteredShare,
-                "unregisteredShareProcent": roundOff(verticalProcentageCalc(balances[i].unregisteredShare,balances[i].totalLiabilitiesOwnersEquity),2),
-                "unpaidShareCapital": balances[i].unpaidShareCapital,
-                "unpaidShareCapitalProcent": roundOff(verticalProcentageCalc(balances[i].unpaidShareCapital,balances[i].totalLiabilitiesOwnersEquity),2),
-                "sharePremium": balances[i].sharePremium,
-                "sharePremiumProcent": roundOff(verticalProcentageCalc(balances[i].sharePremium,balances[i].totalLiabilitiesOwnersEquity),2),
-                "lessOwnShares": balances[i].lessOwnShares,
-                "lessOwnSharesProcent": roundOff(verticalProcentageCalc(balances[i].lessOwnShares,balances[i].totalLiabilitiesOwnersEquity),2),
-                "legalReserve": balances[i].legalReserve,
-                "legalReserveProcent": roundOff(verticalProcentageCalc(balances[i].legalReserve,balances[i].totalLiabilitiesOwnersEquity),2),
-                "otherReserves": balances[i].otherReserves,
-                "otherReservesProcent": roundOff(verticalProcentageCalc(balances[i].otherReserves,balances[i].totalLiabilitiesOwnersEquity),2),
-                "otherOwnersEquity": balances[i].otherOwnersEquity,
-                "otherOwnersEquityProcent": roundOff(verticalProcentageCalc(balances[i].otherOwnersEquity,balances[i].totalLiabilitiesOwnersEquity),2),
-                "retainedProfitLoss": balances[i].retainedProfitLoss,
-                "retainedProfitLossProcent": roundOff(verticalProcentageCalc(balances[i].retainedProfitLoss,balances[i].totalLiabilitiesOwnersEquity),2),
-                "financialYearNetProfitLoss": balances[i].financialYearNetProfitLoss,
-                "financialYearNetProfitLossProcent": roundOff(verticalProcentageCalc(balances[i].financialYearNetProfitLoss,balances[i].totalLiabilitiesOwnersEquity),2),
-                "ownersEquityTotal": balances[i].ownersEquityTotal,
-                "ownersEquityTotalProcent": roundOff(verticalProcentageCalc(balances[i].ownersEquityTotal,balances[i].totalLiabilitiesOwnersEquity),2),
-                "totalLiabilitiesOwnersEquity": balances[i].totalLiabilitiesOwnersEquity,
-                "totalLiabilitiesOwnersEquityProcent": roundOff(verticalProcentageCalc(balances[i].totalLiabilitiesOwnersEquity,balances[i].totalLiabilitiesOwnersEquity),2)
+                "cash": [balances[i].cash,roundOff(verticalProcentageCalc(balances[i].cash,balances[i].totalAssets),2)],
+                "stInvestments": [balances[i].stInvestments,roundOff(verticalProcentageCalc(balances[i].stInvestments,balances[i].totalAssets),2)],
+                "receivablesPrepayments": [balances[i].receivablesPrepayments,roundOff(verticalProcentageCalc(balances[i].receivablesPrepayments,balances[i].totalAssets),2)],
+                "inventories":[balances[i].inventories,roundOff(verticalProcentageCalc(balances[i].inventories,balances[i].totalAssets),2)], 
+                "stBiologicalAssets": [balances[i].stBiologicalAssets,roundOff(verticalProcentageCalc(balances[i].stBiologicalAssets,balances[i].totalAssets),2)],
+                "totalCurrentAssets": [balances[i].totalCurrentAssets, roundOff(verticalProcentageCalc(balances[i].totalCurrentAssets,balances[i].totalAssets),2)],
+                "investmentsSubUnder":[balances[i].investmentsSubUnder,roundOff(verticalProcentageCalc(balances[i].investmentsSubUnder,balances[i].totalAssets),2)],
+                "ltInvestments":[balances[i].ltInvestments,roundOff(verticalProcentageCalc(balances[i].ltInvestments,balances[i].totalAssets),2)],
+                "ltReceivablesPrepayments":[balances[i].ltReceivablesPrepayments,roundOff(verticalProcentageCalc(balances[i].ltReceivablesPrepayments,balances[i].totalAssets),2)], 
+                "realEstateInv":[balances[i].realEstateInv,roundOff(verticalProcentageCalc(balances[i].realEstateInv,balances[i].totalAssets),2)],
+                "tangibleAssets": [balances[i].tangibleAssets,roundOff(verticalProcentageCalc(balances[i].tangibleAssets,balances[i].totalAssets),2)],
+                "ltBiologicalAssets": [balances[i].ltBiologicalAssets,roundOff(verticalProcentageCalc(balances[i].ltBiologicalAssets,balances[i].totalAssets),2)],
+                "intangibleFixedAssets": [balances[i].intangibleFixedAssets,roundOff(verticalProcentageCalc(balances[i].intangibleFixedAssets,balances[i].totalAssets),2)],
+                "totalFixedAssets":[balances[i].totalFixedAssets,roundOff(verticalProcentageCalc(balances[i].totalFixedAssets,balances[i].totalAssets),2)],
+                "totalAssets":[balances[i].totalAssets,roundOff(verticalProcentageCalc(balances[i].totalAssets,balances[i].totalAssets),2)],
+                "stLoanLiabilities":[balances[i].stLoanLiabilities,roundOff(verticalProcentageCalc(balances[i].stLoanLiabilities,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "debtsPrepaymentsReceived":[balances[i].debtsPrepaymentsReceived,roundOff(verticalProcentageCalc(balances[i].debtsPrepaymentsReceived,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "stProvisions":[balances[i].stProvisions,roundOff(verticalProcentageCalc(balances[i].stProvisions,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "stTargetedFinancings": [balances[i].stTargetedFinancings,roundOff(verticalProcentageCalc(balances[i].stTargetedFinancings,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "totalCurrentLiabilities": [balances[i].totalCurrentLiabilities,roundOff(verticalProcentageCalc(balances[i].totalCurrentLiabilities,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "ltLoanLiabilities":[balances[i].ltLoanLiabilities,roundOff(verticalProcentageCalc(balances[i].ltLoanLiabilities,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "ltDebtsPrepayments": [balances[i].ltDebtsPrepayments,roundOff(verticalProcentageCalc(balances[i].ltDebtsPrepayments,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "ltProvisions":[balances[i].ltProvisions,roundOff(verticalProcentageCalc(balances[i].ltProvisions,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "ltTargetedFinancings":[balances[i].ltTargetedFinancings,roundOff(verticalProcentageCalc(balances[i].ltTargetedFinancings,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "ltLiabilitiesTotal":[balances[i].ltLiabilitiesTotal,roundOff(verticalProcentageCalc(balances[i].ltLiabilitiesTotal,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "totalLiabilities":[balances[i].totalLiabilities,roundOff(verticalProcentageCalc(balances[i].totalLiabilities,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "shareCapital": [balances[i].shareCapital,roundOff(verticalProcentageCalc(balances[i].shareCapital,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "unregisteredShare":[balances[i].unregisteredShare,roundOff(verticalProcentageCalc(balances[i].unregisteredShare,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "unpaidShareCapital":[balances[i].unpaidShareCapital,roundOff(verticalProcentageCalc(balances[i].unpaidShareCapital,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "sharePremium":[balances[i].sharePremium,roundOff(verticalProcentageCalc(balances[i].sharePremium,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "lessOwnShares":[balances[i].lessOwnShares,roundOff(verticalProcentageCalc(balances[i].lessOwnShares,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "legalReserve":[balances[i].legalReserve,roundOff(verticalProcentageCalc(balances[i].legalReserve,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "otherReserves":[balances[i].otherReserves,roundOff(verticalProcentageCalc(balances[i].otherReserves,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "otherOwnersEquity":[balances[i].otherOwnersEquity,roundOff(verticalProcentageCalc(balances[i].otherOwnersEquity,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "retainedProfitLoss":[balances[i].retainedProfitLoss,roundOff(verticalProcentageCalc(balances[i].retainedProfitLoss,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "financialYearNetProfitLoss": [balances[i].financialYearNetProfitLoss,roundOff(verticalProcentageCalc(balances[i].financialYearNetProfitLoss,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "ownersEquityTotal":[balances[i].ownersEquityTotal,roundOff(verticalProcentageCalc(balances[i].ownersEquityTotal,balances[i].totalLiabilitiesOwnersEquity),2)],
+                "totalLiabilitiesOwnersEquity":[balances[i].totalLiabilitiesOwnersEquity,roundOff(verticalProcentageCalc(balances[i].totalLiabilitiesOwnersEquity,balances[i].totalLiabilitiesOwnersEquity),2)]
             });
         }
     };
+
     verticalAnalysisBalances();
+
+    //Profit reports vertical analysis
 
     verticalAnalysisProfitReps = () =>{
         for(let i=0;i<balances.length;i++) {
@@ -624,100 +607,63 @@ router.post('/',apiAuth,async (req, res) => {
             if(findCompany.Profit_report_schema === 1){
                 results.VerticalAnalysisProfitReps.push({
                     "year": profitReports[i].profitReportsYear,
-                    "salesRevenue":profitReports[i].salesRevenue,
-                    "salesRevenue%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].salesRevenue,profitReports[i].salesRevenue),2),
-                    "creditSalesRevenueTotal":profitReports[i].creditSalesRevenueTotal,
-                    "creditSalesRevenueTotal%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].creditSalesRevenueTotal,profitReports[i].salesRevenue),2),
-                    "otherOperatingRevenue":profitReports[i].otherOperatingRevenue,
-                    "otherOperatingRevenue%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].otherOperatingRevenue,profitReports[i].salesRevenue),2),
-                    "agriGoodsWip":profitReports[i].agriGoodsWip,
-                    "agriGoodsWip%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].agriGoodsWip,profitReports[i].salesRevenue),2),
-                    "bioAssetsProfitLoss":profitReports[i].bioAssetsProfitLoss,
-                    "bioAssetsProfitLoss%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].bioAssetsProfitLoss,profitReports[i].salesRevenue),2),
-                    "changesGoodsWip":profitReports[i].changesGoodsWip,
-                    "changesGoodsWip%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].changesGoodsWip,profitReports[i].salesRevenue),2),
-                    "ownPurposeCapitalised":profitReports[i].ownPurposeCapitalised,
-                    "ownPurposeCapitalised%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].ownPurposeCapitalised,profitReports[i].salesRevenue),2),
-                    "goodsRawMaterialsServices":profitReports[i].goodsRawMaterialsServices,
-                    "goodsRawMaterialsServices%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].goodsRawMaterialsServices,profitReports[i].salesRevenue),2),
-                    "otherOperatingExpenses":profitReports[i].otherOperatingExpenses,
-                    "otherOperatingExpenses%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].otherOperatingExpenses,profitReports[i].salesRevenue),2),
-                    "wagesSalaries":profitReports[i].wagesSalaries,
-                    "wagesSalaries%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].wagesSalaries,profitReports[i].salesRevenue),2),
-                    "fixedAssetsDepreciationImpairment":profitReports[i].fixedAssetsDepreciationImpairment,
-                    "fixedAssetsDepreciationImpairment%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].fixedAssetsDepreciationImpairment,profitReports[i].salesRevenue),2),
-                    "currentAssetsDiscounts":profitReports[i].currentAssetsDiscounts,
-                    "currentAssetsDiscounts%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].currentAssetsDiscounts,profitReports[i].salesRevenue),2),
-                    "otherOperatingCharges":profitReports[i].otherOperatingCharges,
-                    "otherOperatingCharges%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].otherOperatingCharges,profitReports[i].salesRevenue),2),
-                    "earningsMinusLosses":profitReports[i].earningsMinusLosses,
-                    "earningsMinusLosses%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].earningsMinusLosses,profitReports[i].salesRevenue),2),
-                    "profitLossSubsidiaries":profitReports[i].profitLossSubsidiaries,
-                    "profitLossSubsidiaries%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].profitLossSubsidiaries,profitReports[i].salesRevenue),2),
-                    "profitLossAssociated":profitReports[i].profitLossAssociated,
-                    "profitLossAssociated%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].profitLossAssociated,profitReports[i].salesRevenue),2),
-                    "profitLossFinancialInvestments":profitReports[i].profitLossFinancialInvestments,
-                    "profitLossFinancialInvestments%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].profitLossFinancialInvestments,profitReports[i].salesRevenue),2),
-                    "interestIncome":profitReports[i].interestIncome,
-                    "interestIncome%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].interestIncome,profitReports[i].salesRevenue),2),
-                    "interestExpense":profitReports[i].interestExpense,
-                    "interestExpense%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].interestExpense,profitReports[i].salesRevenue),2),
-                    "otherFinancialIncomeExpenses":profitReports[i].otherFinancialIncomeExpenses,
-                    "otherFinancialIncomeExpenses%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].otherFinancialIncomeExpenses,profitReports[i].salesRevenue),2),
-                    "earningsMinusLossesBeforeIncomeExpenses":profitReports[i].earningsMinusLossesBeforeIncomeExpenses,
-                    "earningsMinusLossesBeforeIncomeExpenses%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].earningsMinusLossesBeforeIncomeExpenses,profitReports[i].salesRevenue),2),
-                    "incomeTaxExpense":profitReports[i].incomeTaxExpense,
-                    "incomeTaxExpense%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].incomeTaxExpense,profitReports[i].salesRevenue),2),
-                    "financialYearEarningsMinusLosses":profitReports[i].financialYearEarningsMinusLosses,
-                    "financialYearEarningsMinusLosses%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].financialYearEarningsMinusLosses,profitReports[i].salesRevenue),2),
+                    "salesRevenue":[profitReports[i].salesRevenue,roundOff(verticalProcentageCalc(profitReports[i].salesRevenue,profitReports[i].salesRevenue),2)],
+                    "creditSalesRevenueTotal":[profitReports[i].creditSalesRevenueTotal,roundOff(verticalProcentageCalc(profitReports[i].creditSalesRevenueTotal,profitReports[i].salesRevenue),2)],
+                    "otherOperatingRevenue":[profitReports[i].otherOperatingRevenue,roundOff(verticalProcentageCalc(profitReports[i].otherOperatingRevenue,profitReports[i].salesRevenue),2)],
+                    "agriGoodsWip":[profitReports[i].agriGoodsWip,roundOff(verticalProcentageCalc(profitReports[i].agriGoodsWip,profitReports[i].salesRevenue),2)],
+                    "bioAssetsProfitLoss":[profitReports[i].bioAssetsProfitLoss,roundOff(verticalProcentageCalc(profitReports[i].bioAssetsProfitLoss,profitReports[i].salesRevenue),2)],
+                    "changesGoodsWip":[profitReports[i].changesGoodsWip,roundOff(verticalProcentageCalc(profitReports[i].changesGoodsWip,profitReports[i].salesRevenue),2)],
+                    "ownPurposeCapitalised":[profitReports[i].ownPurposeCapitalised,roundOff(verticalProcentageCalc(profitReports[i].ownPurposeCapitalised,profitReports[i].salesRevenue),2)],
+                    "goodsRawMaterialsServices":[profitReports[i].goodsRawMaterialsServices,roundOff(verticalProcentageCalc(profitReports[i].goodsRawMaterialsServices,profitReports[i].salesRevenue),2)],
+                    "otherOperatingExpenses":[profitReports[i].otherOperatingExpenses,roundOff(verticalProcentageCalc(profitReports[i].otherOperatingExpenses,profitReports[i].salesRevenue),2)],
+                    "wagesSalaries":[profitReports[i].wagesSalaries,roundOff(verticalProcentageCalc(profitReports[i].wagesSalaries,profitReports[i].salesRevenue),2)],
+                    "fixedAssetsDepreciationImpairment":[profitReports[i].fixedAssetsDepreciationImpairment,roundOff(verticalProcentageCalc(profitReports[i].fixedAssetsDepreciationImpairment,profitReports[i].salesRevenue),2)],
+                    "currentAssetsDiscounts":[profitReports[i].currentAssetsDiscounts,roundOff(verticalProcentageCalc(profitReports[i].currentAssetsDiscounts,profitReports[i].salesRevenue),2)],
+                    "otherOperatingCharges":[profitReports[i].otherOperatingCharges,roundOff(verticalProcentageCalc(profitReports[i].otherOperatingCharges,profitReports[i].salesRevenue),2)],
+                    "earningsMinusLosses":[profitReports[i].earningsMinusLosses,roundOff(verticalProcentageCalc(profitReports[i].earningsMinusLosses,profitReports[i].salesRevenue),2)],
+                    "profitLossSubsidiaries":[profitReports[i].profitLossSubsidiaries,roundOff(verticalProcentageCalc(profitReports[i].profitLossSubsidiaries,profitReports[i].salesRevenue),2)],
+                    "profitLossAssociated":[profitReports[i].profitLossAssociated,roundOff(verticalProcentageCalc(profitReports[i].profitLossAssociated,profitReports[i].salesRevenue),2)],
+                    "profitLossFinancialInvestments":[profitReports[i].profitLossFinancialInvestments,roundOff(verticalProcentageCalc(profitReports[i].profitLossFinancialInvestments,profitReports[i].salesRevenue),2)],
+                    "interestIncome":[profitReports[i].interestIncome,roundOff(verticalProcentageCalc(profitReports[i].interestIncome,profitReports[i].salesRevenue),2)],
+                    "interestExpense":[profitReports[i].interestExpense,roundOff(verticalProcentageCalc(profitReports[i].interestExpense,profitReports[i].salesRevenue),2)],
+                    "otherFinancialIncomeExpenses":[profitReports[i].otherFinancialIncomeExpenses,roundOff(verticalProcentageCalc(profitReports[i].otherFinancialIncomeExpenses,profitReports[i].salesRevenue),2)],
+                    "earningsMinusLossesBeforeIncomeExpenses":[profitReports[i].earningsMinusLossesBeforeIncomeExpenses,roundOff(verticalProcentageCalc(profitReports[i].earningsMinusLossesBeforeIncomeExpenses,profitReports[i].salesRevenue),2)],
+                    "incomeTaxExpense":[profitReports[i].incomeTaxExpense,roundOff(verticalProcentageCalc(profitReports[i].incomeTaxExpense,profitReports[i].salesRevenue),2)],
+                    "financialYearEarningsMinusLosses":[profitReports[i].financialYearEarningsMinusLosses,roundOff(verticalProcentageCalc(profitReports[i].financialYearEarningsMinusLosses,profitReports[i].salesRevenue),2)],
                 })
             }else{
                 results.VerticalAnalysisProfitReps.push({
                     "year": profitReportsYear,
-                    "salesRevenue":profitReports[i].salesRevenue,
-                    "salesRevenue%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].salesRevenue,profitReports[i].salesRevenue),2),
-                    "creditSalesRevenueTotal":profitReports[i].creditSalesRevenueTotal,
-                    "creditSalesRevenueTotal%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].creditSalesRevenueTotal,profitReports[i].salesRevenue),2),
-                    "salesCost":profitReports[i].salesCost,
-                    "salesCost%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].salesCost,profitReports[i].salesRevenue),2),
-                    "grossProfitMinusLoss":profitReports[i].grossProfitMinusLoss,
-                    "grossProfitMinusLoss%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].grossProfitMinusLoss,profitReports[i].salesRevenue),2),
-                    "bioAssetsProfitLoss":profitReports[i].bioAssetsProfitLoss,
-                    "bioAssetsProfitLoss%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].bioAssetsProfitLoss,profitReports[i].salesRevenue),2),
-                    "marketingExpenses":profitReports[i].marketingExpenses,
-                    "marketingExpenses%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].marketingExpenses,profitReports[i].salesRevenue),2),
-                    "administrativeExpenses":profitReports[i].administrativeExpenses,
-                    "administrativeExpenses%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].administrativeExpenses,profitReports[i].salesRevenue),2),
-                    "otherOperatingRevenue":profitReports[i].otherOperatingRevenue,
-                    "otherOperatingRevenue%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].otherOperatingRevenue,profitReports[i].salesRevenue),2),
-                    "otherOperatingCharges":profitReports[i].otherOperatingCharges,
-                    "otherOperatingCharges%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].otherOperatingCharges,profitReports[i].salesRevenue),2),
-                    "earningsMinusLosses":profitReports[i].earningsMinusLosses,
-                    "earningsMinusLosses%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].earningsMinusLosses,profitReports[i].salesRevenue),2),
-                    "profitLossSubsidiaries":profitReports[i].profitLossSubsidiaries,
-                    "profitLossSubsidiaries%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].profitLossSubsidiaries,profitReports[i].salesRevenue),2),
-                    "profitLossAssociated":profitReports[i].profitLossAssociated,
-                    "profitLossAssociated%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].profitLossAssociated,profitReports[i].salesRevenue),2),
-                    "profitLossFinancialInvestments":profitReports[i].profitLossFinancialInvestments,
-                    "profitLossFinancialInvestments%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].profitLossFinancialInvestments,profitReports[i].salesRevenue),2),
-                    "interestIncome":profitReports[i].interestIncome,
-                    "interestIncome%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].interestIncome,profitReports[i].salesRevenue),2),
-                    "interestExpense":profitReports[i].interestExpense,
-                    "interestExpense%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].interestExpense,profitReports[i].salesRevenue),2),
-                    "otherFinancialIncomeExpenses":profitReports[i].otherFinancialIncomeExpenses,
-                    "otherFinancialIncomeExpenses%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].otherFinancialIncomeExpenses,profitReports[i].salesRevenue),2),
-                    "earningsMinusLossesBeforeIncomeExpenses":profitReports[i].earningsMinusLossesBeforeIncomeExpenses,
-                    "earningsMinusLossesBeforeIncomeExpenses%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].earningsMinusLossesBeforeIncomeExpenses,profitReports[i].salesRevenue),2),
-                    "incomeTaxExpense":profitReports[i].incomeTaxExpense,
-                    "incomeTaxExpense%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].incomeTaxExpense,profitReports[i].salesRevenue),2),
-                    "financialYearEarningsMinusLosses":profitReports[i].financialYearEarningsMinusLosses,
-                    "financialYearEarningsMinusLosses%OfSalesRevenue":roundOff(verticalProcentageCalc(profitReports[i].financialYearEarningsMinusLosses,profitReports[i].salesRevenue),2),
+                    "salesRevenue":[profitReports[i].salesRevenue,roundOff(verticalProcentageCalc(profitReports[i].salesRevenue,profitReports[i].salesRevenue),2)],
+                    "creditSalesRevenueTotal":[profitReports[i].creditSalesRevenueTotal,roundOff(verticalProcentageCalc(profitReports[i].creditSalesRevenueTotal,profitReports[i].salesRevenue),2)],
+                    "salesCost":[profitReports[i].salesCost,roundOff(verticalProcentageCalc(profitReports[i].salesCost,profitReports[i].salesRevenue),2)],
+                    "grossProfitMinusLoss":[profitReports[i].grossProfitMinusLoss,roundOff(verticalProcentageCalc(profitReports[i].grossProfitMinusLoss,profitReports[i].salesRevenue),2)],
+                    "bioAssetsProfitLoss":[profitReports[i].bioAssetsProfitLoss,roundOff(verticalProcentageCalc(profitReports[i].bioAssetsProfitLoss,profitReports[i].salesRevenue),2)],
+                    "marketingExpenses":[profitReports[i].marketingExpenses,roundOff(verticalProcentageCalc(profitReports[i].marketingExpenses,profitReports[i].salesRevenue),2)],
+                    "administrativeExpenses":[profitReports[i].administrativeExpenses,roundOff(verticalProcentageCalc(profitReports[i].administrativeExpenses,profitReports[i].salesRevenue),2)],
+                    "otherOperatingRevenue":[profitReports[i].otherOperatingRevenue,roundOff(verticalProcentageCalc(profitReports[i].otherOperatingRevenue,profitReports[i].salesRevenue),2)],
+                    "otherOperatingCharges":[profitReports[i].otherOperatingCharges,roundOff(verticalProcentageCalc(profitReports[i].otherOperatingCharges,profitReports[i].salesRevenue),2)],
+                    "earningsMinusLosses":[profitReports[i].earningsMinusLosses,roundOff(verticalProcentageCalc(profitReports[i].earningsMinusLosses,profitReports[i].salesRevenue),2)],
+                    "profitLossSubsidiaries":[profitReports[i].profitLossSubsidiaries,roundOff(verticalProcentageCalc(profitReports[i].profitLossSubsidiaries,profitReports[i].salesRevenue),2)],
+                    "profitLossAssociated":[profitReports[i].profitLossAssociated,roundOff(verticalProcentageCalc(profitReports[i].profitLossAssociated,profitReports[i].salesRevenue),2)],
+                    "profitLossFinancialInvestments":[profitReports[i].profitLossFinancialInvestments,roundOff(verticalProcentageCalc(profitReports[i].profitLossFinancialInvestments,profitReports[i].salesRevenue),2)],
+                    "interestIncome":[profitReports[i].interestIncome,roundOff(verticalProcentageCalc(profitReports[i].interestIncome,profitReports[i].salesRevenue),2)],
+                    "interestExpense":[profitReports[i].interestExpense,roundOff(verticalProcentageCalc(profitReports[i].interestExpense,profitReports[i].salesRevenue),2)],
+                    "otherFinancialIncomeExpenses":[profitReports[i].otherFinancialIncomeExpenses,roundOff(verticalProcentageCalc(profitReports[i].otherFinancialIncomeExpenses,profitReports[i].salesRevenue),2)],
+                    "earningsMinusLossesBeforeIncomeExpenses":[profitReports[i].earningsMinusLossesBeforeIncomeExpenses,roundOff(verticalProcentageCalc(profitReports[i].earningsMinusLossesBeforeIncomeExpenses,profitReports[i].salesRevenue),2)],
+                    "incomeTaxExpense":[profitReports[i].incomeTaxExpense,roundOff(verticalProcentageCalc(profitReports[i].incomeTaxExpense,profitReports[i].salesRevenue),2)],
+                    "financialYearEarningsMinusLosses":[profitReports[i].financialYearEarningsMinusLosses,roundOff(verticalProcentageCalc(profitReports[i].financialYearEarningsMinusLosses,profitReports[i].salesRevenue),2)]
                 })
             }
         }
     }
 
     verticalAnalysisProfitReps();
+
+    let BreakEvenAnalysis = () => {
+        results.BreakEvenAnalysis.push({"salesTurnover":findBreakEvenAnalysis.salesTurnover},{"expenses":findBreakEvenAnalysis.expenses})
+    }
+
 
     console.log(results);
     res.status(200).json({results})

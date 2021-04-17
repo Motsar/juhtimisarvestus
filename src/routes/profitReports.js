@@ -24,9 +24,16 @@ router.post('/', apiAuth ,async (req, res)=>{
 
 router.put('/', apiAuth,async (req, res) => {
 
+        //check if the given company_id is related to user
+
+        let id = req.body.company_id;
+        if(!id)return res.status(404).json({error:"Ettevõtte ID puudub."});
+        let company = await Company.findOne({_id: id, user_id:req.userId});
+        if(!company) return res.status(401).json({error:"kasutajaga seotud ettevõtte analüüsi ei leitud."});
+
         //Find balance document with company document id
 
-        const findProfitReports = await profitReport.findOne({_id:req.body.companyId});
+        const findProfitReports = await profitReport.findOne({_id:id});
         if(!findProfitReports) return res.status(404).json({error: "Sellist bilanssi ei leitud." });
 
         //Get balances array from request body
@@ -44,8 +51,10 @@ router.put('/', apiAuth,async (req, res) => {
         }
 
         //find which profit report schema company uses
-        let findCompany = await Company.findOne({_id:req.body.companyId});
+        let findCompany = await Company.findOne({_id:req.body.company_id});
+        console.log(findCompany)
         let companyReportSchemaType = findCompany.Profit_report_schema;
+        
         if(!companyReportSchemaType) return res.status(400).json({error: "Tuleb valida ettevõtte kasumiaruande skeem" });
         if(companyReportSchemaType<1 || companyReportSchemaType>2) return res.status(400).json({error: "Kasumiaruande skeem peab olema 1 või 2" });
 
@@ -120,8 +129,9 @@ router.put('/', apiAuth,async (req, res) => {
 
 
         try{
+            if (process.env.DEVELOPEMENT === 'true') return res.status(201).json({success:"Kasumiaruanded on salvestatud"});
             await findProfitReports.save();
-            res.status(201).json({success: "Kasumiaruanded salvestatud" });
+            res.status(201).json({success: "Kasumiaruanded on salvestatud" });
         }catch(err){
             res.status(500).json({error:err});
             console.log(err)

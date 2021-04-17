@@ -8,10 +8,11 @@ const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 const path = require('path');
 const env = require('dotenv').config();
-const {notAuth} = require('./middlewares');
+const {auth} = require('./middlewares');
 require('dotenv').config({path:'../src/.env'});
 var flash = require('connect-flash');
 
+const port = 3000;
 const app = express();
 app.use(flash());
 app.use(bodyParser.json());
@@ -21,11 +22,12 @@ const viewsDirectoryPath = path.join(__dirname, './views');
 
 //View engine
 
-app.engine('hbs', hbs({ extname: 'hbs', defaultLayout: 'main', layoutsDir: __dirname + '/views/layouts/' }));
+app.engine('hbs', hbs({ extname: 'hbs', defaultLayout: 'dashboard', layoutsDir: __dirname + '/views/layouts/',}));
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname+'/views'))
+app.set('views', viewsDirectoryPath)
 
 //Setup static directory to serv
+
 app.use(express.static(viewsDirectoryPath))
 
 //Connect to db
@@ -65,9 +67,18 @@ app.use(passport.session());
 
 //views
 
-app.get('/', notAuth, function(req, res) {
-    res.render('auth', {layout: false});
+app.get('/',  function(req, res) {
+    res.render('login', {layout: false});
 });
+
+app.get('/newReport',auth, (req,res)=>{
+    res.render('newReport')
+})
+
+
+app.get('/raportid',auth, (req,res)=>{
+    res.render('raportid')
+})
 
 //Import routes
 
@@ -77,11 +88,13 @@ const Companies =require('./routes/companies');
 const Balances =require('./routes/balances');
 const ProfitReports = require('./routes/profitReports');
 const AnalysisResults = require('./routes/analysisResults')
+const BreakEvenAnalysis = require('./routes/breakEvenAnalysis')
 
 //Route middlewares
 
+app.use('/breakEvenAnalysis', BreakEvenAnalysis);
 app.use('/analysisResults', AnalysisResults);
-app.use('/profitReports',ProfitReports);
+app.use('/profitReports', ProfitReports);
 app.use('/balances', Balances);
 app.use('/companies', Companies);
 app.use('/users', Users);
@@ -89,6 +102,6 @@ app.use('/', Sessions);
 
 //Setup serer
 
-app.listen(3000, ()=>{
+app.listen(port, ()=>{
     console.log('Server is up and running');
 });
