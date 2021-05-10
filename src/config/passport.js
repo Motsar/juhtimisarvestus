@@ -1,17 +1,18 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+require('dotenv').config('../.env');
 const passport = require('passport')
     , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
     , LocalStrategy = require('passport-local').Strategy;
 
 
 
-//google auth strategy
+//google authentication strategy
 
 passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/auth/google/callback"
+        callbackURL: process.env.DEVELOPEMENT?"http://localhost:3000/auth/google/callback":process.env.CALLBACKURL
     }, (accessToken, refreshToken, profile, done) => {
         // passport callback function
         //check if user already exists in our db with the given profile ID
@@ -26,7 +27,8 @@ passport.use(new GoogleStrategy({
                     firstName:  profile.name.givenName,
                     lastName: profile.name.familyName,
                     googleId:   profile.id,
-                    email: profile.emails[0].value
+                    email: profile.emails[0].value,
+                    user_type: "user"
                 }).save().then((newUser) =>{
                     done(null, newUser);
                 });
@@ -35,7 +37,7 @@ passport.use(new GoogleStrategy({
     })
 );
 
-//local auth
+//Local authentication
 
 passport.use('local',new LocalStrategy({
         usernameField: 'email',
@@ -43,14 +45,19 @@ passport.use('local',new LocalStrategy({
     },
     function(username, password, done) {
         User.findOne({ email: username }, async function(err, user) {
-            if (err) { return done(err);}
-            if (!user) {
-                return done(null, false, { message: 'Incorrect username.' });
+            try {
+                if (err) { return done(err);}
+                if (!user) {
+                    return done(null, false, { message: 'Incorrect username.' });
+                }
+                if (await bcrypt.compare(password, user.password)===false){
+                    return done(null, false, { message: 'Incorrect password.' });
+                }
+                return done(null, user);
+            } catch (e) {
+                return done(null, false, { message: e });
             }
-            if (await bcrypt.compare(password, user.password)===false){
-                return done(null, false, { message: 'Incorrect password.' });
-            }
-            return done(null, user);
+            
         });
     },
 ));

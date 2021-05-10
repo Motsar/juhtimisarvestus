@@ -7,13 +7,13 @@ const hbs  = require('express-handlebars');
 const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 const path = require('path');
-const env = require('dotenv').config();
 const {auth} = require('./middlewares');
 require('dotenv').config({path:'../src/.env'});
 var flash = require('connect-flash');
 
-const port = 3000;
+const port = process.env.DEVELOPEMENT?3000:process.env.PORT;
 const app = express();
+
 app.use(flash());
 app.use(bodyParser.json());
 app.use(express.json());
@@ -22,9 +22,10 @@ const viewsDirectoryPath = path.join(__dirname, './views');
 
 //View engine
 
-app.engine('hbs', hbs({ extname: 'hbs', defaultLayout: 'dashboard', layoutsDir: __dirname + '/views/layouts/',}));
+app.engine('hbs', hbs({ extname: 'hbs',helpers: require('./config/handlebars-helpers'), defaultLayout: 'dashboard', layoutsDir: __dirname + '/views/layouts/',}));
 app.set('view engine', 'hbs');
 app.set('views', viewsDirectoryPath)
+
 
 //Setup static directory to serv
 
@@ -71,14 +72,10 @@ app.get('/',  function(req, res) {
     res.render('login', {layout: false});
 });
 
-app.get('/newReport',auth, (req,res)=>{
-    res.render('newReport')
-})
+app.get('/home',auth, (req, res)=>{
+    res.render('home', {email: req.user.email});
+});
 
-
-app.get('/raportid',auth, (req,res)=>{
-    res.render('raportid')
-})
 
 //Import routes
 
@@ -90,6 +87,13 @@ const ProfitReports = require('./routes/profitReports');
 const AnalysisResults = require('./routes/analysisResults')
 const BreakEvenAnalysis = require('./routes/breakEvenAnalysis')
 
+
+//Import view routes
+const Raportid = require('./view-routes/raportid')
+const newReport = require('./view-routes/newReport')
+const reportResult = require('./view-routes/reportResult')
+const settings = require('./view-routes/settings')
+
 //Route middlewares
 
 app.use('/breakEvenAnalysis', BreakEvenAnalysis);
@@ -99,6 +103,10 @@ app.use('/balances', Balances);
 app.use('/companies', Companies);
 app.use('/users', Users);
 app.use('/', Sessions);
+app.use('/raportid',Raportid)
+app.use('/uusRaport', newReport)
+app.use('/raport',reportResult)
+app.use('/seaded', settings)
 
 //Setup serer
 

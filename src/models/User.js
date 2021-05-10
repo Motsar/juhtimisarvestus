@@ -6,6 +6,8 @@ module.exports = mongoose.model('User', mongoose.Schema({
     googleId: { type: 'String', required: false},
     email: { type: 'String',unique: true, required: true },
     password: { type: 'String', required: function(){return this.googleId === undefined;}, minLength: 8},
+    register_date: {type: Date, required: true, default: Date.now},
+    admin:{ type: 'Boolean', required: true, default: false}
 }));
 
 

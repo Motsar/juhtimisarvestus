@@ -1,0 +1,63 @@
+<div class="card">
+    <div class="card-body">
+        <div class="cardInner">
+            <h1>Kasutaja seaded</h1>
+            <hr>
+            <div class="row">
+                <div class="col-6 userData">
+                    <div id="currentUser" class="alert alert-success d-none" role="alert"></div>
+                    <h5 class="text-primary">Sisselogitud Kasutaja</h5>
+                    <div class="row inline-block">
+                        <h6 class="col-6">Eesnimi:</h6>
+                        <h6 class="col-6">{{user.firstName}}</h6>
+                    </div>
+                    <div class="row inline-block">
+                        <h6 class="col-6">Perenimi:</h6>
+                        <h6 class="col-6">{{user.lastName}}</h6>
+                    </div>
+                    <div class="row inline-block">
+                        <h6 class="col-6">E-mail:</h6>
+                        <h6 class="col-6">{{user.email}}</h6>
+                    </div>
+                    <div class="row inline-block">
+                        <h6 class="col-6">Registreerimise kuupäev:</h6>
+                        <h6 class="col-6">{{user.register_date}}</h6>
+                    </div>
+                    <div class="row inline-block">
+                        <form id="deleteAccount">
+                            <div class="col-6">
+                                <label for="confirmDelete" class="form-label">Kustuta oma konto: </label>
+                                <input class="form-check-input" type="checkbox" value="yes" id="confirmDelete"
+                                    name="confirmDelete" required>
+                            </div>
+                            <div class="invalid-feedback">
+                                Kasutaja kustutamiseks pead kinnitama.
+                            </div>
+                            <div class="col-6">
+                                <button id="delUser" class="btn btn-danger" data-user-id="{{user._id}}">KUSTUTA</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <form id="changePass">
+                        <div id="passChange" class="alert alert-success d-none" role="alert"></div>
+                        <h5 class="text-primary">Parooli vahetamiseks sisesta kaks korda sama parool</h5>
+                        <div class="mb-3">
+                            <label for="password1" class="form-label">Sisesta parool</label>
+                            <input type="password" class="form-control" id="password1" required>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="password2" class="form-label">Sisesta parool</label>
+                            <input type="password" class="form-control" id="password2" required>
+                            <div class="invalid-feedback invalidPassword">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">MUUDA</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

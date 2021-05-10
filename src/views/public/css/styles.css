@@ -1,13 +1,66 @@
+
 .sidebar-sticky{
+    position: fixed;
     min-height: 100vh;
     max-width: 230px !important;
     min-width: 230px !important;
+    z-index: 1;
+}
+
+.main-content-area{
+    position: relative;
+    margin-left: 230px !important;
+    width:calc(100% - 230px);
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+}
+
+.card{
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+
+.card-body{
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.cardInner{
+    margin: 20px;
+}
+
+#settings{
+    position: absolute;
+    top:95%;
+    left: 20px;
+    color: #fafafa !important;
+    font-size: 15px;
+}
+
+#settings:hover{
+    cursor: pointer;
 }
 
 .sidebar-sticky ul li .nav-link{
     color: #fafafa !important;
     font-size: 20px;
 }
+
+
+.sidebar-sticky ul li .nav-link:hover{
+    color: #009dff !important;
+}
+
+.sidebar-sticky ul li .nav-link:active{
+    color: #bb0c0c !important;
+    border-bottom: 3px #bb0c0c !important;
+}
+
+#reportsAcordion .accordion-body{
+    align-items: center;
+}
+
 
 .compData3 .row{
     min-height: 50px !important;
@@ -32,25 +85,13 @@
     padding: 0px !important;   
 }
 
-.sidebar-sticky ul li .nav-link:hover{
-    color: #009dff !important;
-}
-
-.sidebar-sticky ul li .nav-link:active{
-    color: #bb0c0c !important;
-    border-bottom: 3px #bb0c0c !important;
-}
-
 .companyData label {
     float: left;
 }
 
-
 .companyData .row{
     min-height: 50px !important;
 }
-
-
 
 .navbar-brand img{
     max-height: 30px;
@@ -64,20 +105,44 @@
     padding-right: 15px;
 }
 
-.reports{
-    padding: 30px;
+#reportsAcordion{
+    margin-top: 20px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
 }
 
-.sidebar-sticky p{
-    position: absolute;
-    top:95%;
-    left: 20px;
-    color: #fafafa !important;
-    font-size: 15px;
+.reports, .settingsDiv{
+    padding: 30px;
 }
 
 .reportsTable tbody tr:hover{
     cursor: pointer;
     background-color: #0d6efd;
     color:white;
+}
+
+canvas{
+    max-height: 1000px !important;
+    max-width: 1400px !important;
+}
+
+.userData .row{
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.pictureDiv {
+    position: relative;
+    text-align: center;
+    color: white;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

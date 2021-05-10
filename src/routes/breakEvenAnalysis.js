@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const breakEvenAnalysis = require('../models/BreakEvenAnalysis');
 const Company = require('../models/Company');
-const {apiAuth} = require('../middlewares');
+const {apiAuth,cleanBody} = require('../middlewares');
 require('dotenv').config('../.env');
 
-router.put('/', apiAuth ,async (req, res)=>{
+router.put('/', apiAuth,cleanBody ,async (req, res)=>{
 
     //check if the given company_id is related to user
 
@@ -34,7 +34,7 @@ router.put('/', apiAuth ,async (req, res)=>{
         findBreakEvenAnalysis.expenses=[];
     }
 
-    //push data to break-even point analysis
+    //Push data to break-even point analysis
 
     salesTurnoverArray.forEach(monthTurnover=>{
         let turnOverNum = parseFloat(monthTurnover)
@@ -49,10 +49,32 @@ router.put('/', apiAuth ,async (req, res)=>{
     try{
         if (process.env.DEVELOPEMENT === 'true') return res.status(201).json({success:"Tasuvuspunkti andmed on salvestatud"});
         await findBreakEvenAnalysis.save();
-        res.status(201).json(findBreakEvenAnalysis);
+        res.status(201).json({success:"Tasuvuspunkti andmed on salvestatud"});
     }catch(err){
-        res.status(500).json({success:"Tasuvuspunkti andmed on salvestatud"});
-        console.log(err)
+        res.status(500).json({error:err});
+    }
+})
+
+
+router.post('/', apiAuth,cleanBody ,async (req, res)=>{
+
+    //Check if the given company_id is related to user
+
+    let id = req.body.company_id;
+    if(!id)return res.status(404).json({error:"Ettevõtte ID puudub."});
+    let company = await Company.findOne({_id: id, user_id:req.userId});
+    if(!company) return res.status(404).json({error:"Kasutajaga seotud ettevõtte analüüsi ei leitud!"});
+
+    //Find break-even point analysis document with company document id
+
+    const findBreakEvenAnalysis = await breakEvenAnalysis.findOne({_id:id});
+    if(!findBreakEvenAnalysis) return res.status(404).json({error: "Sellist tasuvuspunkti dokumenti ei leitud!" });
+
+    try{
+        if (process.env.DEVELOPEMENT === 'true') return res.status(201).json({breakEvenData:findBreakEvenAnalysis});
+        res.status(200).json({breakEvenData:findBreakEvenAnalysis});
+    }catch(err){
+        res.status(500).json({error:err});
     }
 })
 
