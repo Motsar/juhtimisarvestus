@@ -261,9 +261,9 @@ function getBreakEvenData(x) {
                 breakEvenPointMonths.push('Kuu ' + e);
                 profitData.push(salesTurnoverArr[i] - expensesArr[i])
                 $('#breakEvenPointTable thead tr').append(`<th class="text-end">Kuu ${e}</th>`)
-                $('#salesTurnover').append(`<td class="text-end">${salesTurnoverArr[i]}</td>`)
-                $('#expenses').append(`<td class="text-end">${expensesArr[i]}</td>`)
-                $('#profit').append(`<td class="text-end">${salesTurnoverArr[i] - expensesArr[i]}</td>`)
+                $('#salesTurnover').append(`<td class="text-end">${salesTurnoverArr[i].toFixed(2)}</td>`)
+                $('#expenses').append(`<td class="text-end">${expensesArr[i].toFixed(2)}</td>`)
+                $('#profit').append(`<td class="text-end">${(salesTurnoverArr[i] - expensesArr[i]).toFixed(2)}</td>`)
                 e += 1;
             }
 
@@ -1046,7 +1046,7 @@ function getReportResults(x) {
                 $.each(data.stBiologicalAssets, function (i, stBiologicalAssets) {
                     let td = `<td class="text-end">${stBiologicalAssets}</td>`
                     if (i === 1) {
-                        td = `<td class="text-end">${stBiologicalAssets}</td>`
+                        td = `<td class="text-end">${stBiologicalAssets}%</td>`
                     }
                     $("#stBiologicalAssetsVa").append(td)
                 })

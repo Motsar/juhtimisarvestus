@@ -1,8 +1,12 @@
+const User = require("./models/User")
 var sanitize = require("mongo-sanitize");
 
-exports.auth = function (req, res, next) {
+exports.auth =async (req, res, next)=>{
     if (req.user) {
+        let findUser = await User.findOne({_id:req.user._id});
+        await findUser.updateOne({last_login: Date.now()});
         let useridJSON = req.user;
+        req.email = useridJSON.email
         req.admin = useridJSON.admin;
         req.userId = useridJSON._id;
         next();

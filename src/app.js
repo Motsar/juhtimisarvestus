@@ -10,8 +10,7 @@ const path = require('path');
 const {auth} = require('./middlewares');
 require('dotenv').config({path:'../src/.env'});
 var flash = require('connect-flash');
-
-const port = process.env.DEVELOPEMENT?3000:process.env.PORT;
+const port = process.env.DEVELOPEMENT===true?3000:process.env.PORT;
 const app = express();
 
 app.use(flash());
@@ -25,7 +24,6 @@ const viewsDirectoryPath = path.join(__dirname, './views');
 app.engine('hbs', hbs({ extname: 'hbs',helpers: require('./config/handlebars-helpers'), defaultLayout: 'dashboard', layoutsDir: __dirname + '/views/layouts/',}));
 app.set('view engine', 'hbs');
 app.set('views', viewsDirectoryPath)
-
 
 //Setup static directory to serv
 
@@ -52,7 +50,7 @@ app.use(session({
         secret: process.env.SESS_SECRET,
         store: new MongoStore({mongooseConnection: mongoose.connection}),
         cookie:{
-            maxAge: 1000 * 60 * 15,
+            maxAge: 1000 * 60 * 120,
             secure: false,
         }
     })
@@ -72,11 +70,6 @@ app.get('/',  function(req, res) {
     res.render('login', {layout: false});
 });
 
-app.get('/home',auth, (req, res)=>{
-    res.render('home', {email: req.user.email});
-});
-
-
 //Import routes
 
 const Users = require('./routes/users');
@@ -87,12 +80,15 @@ const ProfitReports = require('./routes/profitReports');
 const AnalysisResults = require('./routes/analysisResults')
 const BreakEvenAnalysis = require('./routes/breakEvenAnalysis')
 
-
 //Import view routes
+
 const Raportid = require('./view-routes/raportid')
-const newReport = require('./view-routes/newReport')
-const reportResult = require('./view-routes/reportResult')
-const settings = require('./view-routes/settings')
+const NewReport = require('./view-routes/newReport')
+const ReportResult = require('./view-routes/reportResult')
+const Settings = require('./view-routes/settings')
+const Instructions = require('./view-routes/instructions')
+const Dashboard = require('./view-routes/dashboard')
+const Formulas = require('./view-routes/formulas')
 
 //Route middlewares
 
@@ -104,9 +100,12 @@ app.use('/companies', Companies);
 app.use('/users', Users);
 app.use('/', Sessions);
 app.use('/raportid',Raportid)
-app.use('/uusRaport', newReport)
-app.use('/raport',reportResult)
-app.use('/seaded', settings)
+app.use('/uusRaport', NewReport)
+app.use('/raport',ReportResult)
+app.use('/seaded', Settings)
+app.use('/juhend',Instructions)
+app.use('/avaleht', Dashboard)
+app.use('/valemid', Formulas)
 
 //Setup serer
 

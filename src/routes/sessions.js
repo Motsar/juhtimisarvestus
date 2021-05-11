@@ -18,13 +18,13 @@ router.get('/auth/google/callback',
     passport.authenticate('google', {failureRedirect: '/error'}),
     function (req, res) {
         // Successful authentification, redirect success
-        res.redirect('/home' );
+        res.redirect('/avaleht' );
     });
 
 //Localauth
 
 router.post('/auth/login',
-    passport.authenticate('local', { successRedirect: '/home',
+    passport.authenticate('local', { successRedirect: '/avaleht',
         failureRedirect: '/',
         failureFlash: true })
 );

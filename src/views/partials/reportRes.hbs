@@ -74,21 +74,34 @@
                                     <p class="col-6">Ettevõtte tegevusaasta pikkus:</p>
                                     <p class="col-6" id="yearLength">{{comp_data.yearLength}}</p>
                                 </div>
+                                <div class="row yearLength">
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-primary changeCompData">MUUDA</button>
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="button" id="getPDF" class="btn btn-primary">VÄLJASTA PDF</button>
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="button" id="delRaport" class="btn btn-danger">KUSTUTA</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                 </div>
                 <div class="card-footer">
-                    <button type="button" class="btn btn-primary changeCompData">MUUDA</button>
-                    <button type="button" id="returReport" class="btn btn-primary">RAPORTID</button>
-                    <button type="button" id="kasumiaruanne" data-bs-toggle="modal" data-bs-target="#kasumiAruandeModal"
-                        class="btn btn-primary">KASUMIARUANNE</button>
-                    <button type="button" id="bilanss" data-bs-toggle="modal" data-bs-target="#balanceModal"
-                        class="btn btn-primary">BILANSS</button>
-                    <button type="button" id="tasuvuspunkt" data-bs-toggle="modal" data-bs-target="#breakEvenModal"
-                        class="btn btn-primary">TASUVUSPUNKT</button>
-                    <button type="button" id="delRaport" class="btn btn-primary">KUSTUTA</button>
+                    <div>
+                        <button type="button" id="returReport" class="btn btn-primary">RAPORTID</button>
+                    </div>
+                    <div>
+                        <button type="button" id="kasumiaruanne" data-bs-toggle="modal"
+                            data-bs-target="#kasumiAruandeModal" class="btn btn-primary">KASUMIARUANNE</button>
+                        <button type="button" id="bilanss" data-bs-toggle="modal" data-bs-target="#balanceModal"
+                            class="btn btn-primary">BILANSS</button>
+                        <button type="button" id="tasuvuspunkt" data-bs-toggle="modal" data-bs-target="#breakEvenModal"
+                            class="btn btn-primary">TASUVUSPUNKT</button>
+                    </div>
                 </div>
             </div>
         </div>

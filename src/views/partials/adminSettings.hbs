@@ -1,27 +1,27 @@
 <div class="card shadow">
     <div class="card-body">
         <div class="cardInner">
-            <h1 class="text-primary">Administreeriva kasutaja seaded</h1>
+            <h1>Administreeriva kasutaja seaded</h1>
             <hr>
             <div class="row">
                 <div id="currentUser" class="alert alert-success d-none" role="alert"></div>
-                <h5 class="text-primary">Sisselogitud Kasutaja</h5>
+                <h5>Sisselogitud Kasutaja</h5>
                 <div class="col-6 userData">
                     <div class="row inline-block">
-                        <h6 class="col-6">Eesnimi:</h6>
-                        <h6 class="col-6">{{user.firstName}}</h6>
+                        <p class="col-6">Eesnimi:</p>
+                        <p class="col-6">{{user.firstName}}</p>
                     </div>
                     <div class="row inline-block">
-                        <h6 class="col-6">Perenimi:</h6>
-                        <h6 class="col-6">{{user.lastName}}</h6>
+                        <p class="col-6">Perenimi:</p>
+                        <p class="col-6">{{user.lastName}}</p>
                     </div>
                     <div class="row inline-block">
-                        <h6 class="col-6">E-mail:</h6>
-                        <h6 class="col-6">{{user.email}}</h6>
+                        <p class="col-6">E-mail:</p>
+                        <p class="col-6">{{user.email}}</p>
                     </div>
                     <div class="row inline-block">
-                        <h6 class="col-6">Registreerimise kuupäev:</h6>
-                        <h6 class="col-6">{{user.register_date}}</h6>
+                        <p class="col-6">Registreerimise kuupäev:</p>
+                        <p class="col-6">{{user.register_date}}</p>
                     </div>
                     <div class="row inline-block">
                         <form id="deleteAccount">
@@ -45,7 +45,7 @@
                 <div class="col-6">
                     <form id="changePass">
                         <div id="passChange" class="alert alert-success d-none" role="alert"></div>
-                        <h5 class="text-primary">Parooli vahetamiseks sisesta kaks korda sama parool</h5>
+                        <h5>Parooli vahetamiseks sisesta kaks korda sama parool</h5>
                         <div class="mb-3">
                             <label for="password1" class="form-label">Sisesta parool</label>
                             <input type="password" class="form-control" id="password1" required>
@@ -61,7 +61,7 @@
                     </form>
                 </div>
                 <div class="col-6">
-                    <h5 class="text-primary">Anna kasutajale administraatori õigused</h5>
+                    <h5>Anna kasutajale administraatori õigused</h5>
                     <form id="addAdmin">
                         <div id="adminAddAlert" class="alert alert-success d-none" role="alert"></div>
                         <div class="mb-3">
@@ -73,7 +73,7 @@
                 </div>
             </div>
             <hr>
-            <h5 class="text-primary">Registreeritud kasutajad</h5>
+            <h5 >Registreeritud kasutajad</h5>
             <div id="usersTableAlert" class="alert alert-success d-none" role="alert"></div>
             <table class="table usersTable">
                 <thead>
@@ -82,6 +82,7 @@
                         <th scope="col">Perekonnanimi</th>
                         <th scope="col">Email</th>
                         <th scope="col">Registreerimis kuupäev</th>
+                        <th scope="col">Viimane sisselogimine</th>
                         <th scope="col">Kasutaja tüüp</th>
                         <th scope="col">Kustuta kasutaja</th>
                     </tr>
@@ -100,6 +101,9 @@
                         </td>
                         <td>
                             {{changeDate register_date}}
+                        </td>
+                        <td>
+                            {{changeDate last_login}}
                         </td>
                         <td>
                             {{#if admin}}

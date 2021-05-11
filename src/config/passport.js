@@ -12,7 +12,7 @@ const passport = require('passport')
 passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: process.env.DEVELOPEMENT?"http://localhost:3000/auth/google/callback":process.env.CALLBACKURL
+        callbackURL: process.env.DEVELOPEMENT===true?"http://localhost:3000/auth/google/callback":process.env.CALLBACKURL
     }, (accessToken, refreshToken, profile, done) => {
         // passport callback function
         //check if user already exists in our db with the given profile ID

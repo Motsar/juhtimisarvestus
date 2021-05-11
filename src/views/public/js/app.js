@@ -39,7 +39,8 @@ $(document).ready(function () {
         let thisCard = $(this).closest('.card')
         $('.reportResultsContainer #reportResultsView .card .alert-success').addClass('d-none').text("")
         thisCard.find('input,textarea').prop("disabled", false)
-        $(this).closest('.card-footer').prepend('<button type="submit" class="btn btn-primary salvesta">SALVESTA</button>')
+        let thisDiv = $(this).closest('div')
+        thisDiv.prepend('<button type="submit" class="btn btn-primary salvesta">SALVESTA</button>')
         $(this).remove();
     })
 
@@ -258,7 +259,8 @@ $(document).ready(function () {
 
     //Update company data to backend
 
-    $('#reportResultsView .card-footer').on("click", ".salvesta", function () {
+    $('#reportResultsView .card').on("click", ".salvesta", function () {
+        let thisDiv = $(this).closest('div');
         let compdata = {
             _id: "" + $('.card').attr('data-comp-id'),
             compName: $('#compName').val(),
@@ -281,7 +283,7 @@ $(document).ready(function () {
                 $('#compName').removeClass('is-invalid')
                 $('#reportResultsView .card .alert-success').removeClass('d-none').text(data.success)
                 $('.card .salvesta').remove();
-                $('#reportResultsView .card .card-footer').prepend('<button type="submit" class="btn btn-primary changeCompData">MUUDA</button>');
+                thisDiv.prepend('<button type="submit" class="btn btn-primary changeCompData">MUUDA</button>');
                 fields.prop("disabled", true);
                 $('#reportHead').text(compdata.compName);
             },

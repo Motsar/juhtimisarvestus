@@ -1,0 +1,209 @@
+<div class="col text-primary settingsDiv">
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="cardInner ">
+                <h1>Kasutusjuhend</h1>
+                <hr>
+                <h3 id="sisukord">Sisukord</h3>
+                <div class="row">
+                    <div class="col-4">
+                        <ol class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#createUser">Kasutaja registreerimine</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#changePass">Parooli vahetamine</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#createNewReport">Uue raporti koostamine</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " href="#addProfitReports">Kasumiaruande andmete lisamine</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#addBalances">Bilansi andmete lisamine</a>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="col-4">
+                        <ol class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#addBreakEvenData">Tasuvuspunkti graafiku andmete lisamine</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#checkOutReport">Loodud raporti vaatamine</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#changeReports">Loodud raporti andmete muutmine</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#generatePdf">Raporti PDF-i väljastamine</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#deleteReport">Loodud raporti kustutamine</a>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="col-4">
+                        <ol class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#deleteAccount">Kasutaja kustutamine</a>
+                            </li>
+                            {{#if user.admin}}
+                            <li class="nav-item">
+                                <a class="nav-link" href="#deleteUsers">Kasutajate kustutamine</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#addAdmin">Kasutajale administraatori õiguste andmin</a>
+                            </li>
+                            {{/if}}
+                        </ol>
+                    </div>
+                </div>
+                <hr>
+                <div id="createUser" class="row">
+                    <h3 class="center">Kasutaja registreerimine</h3>
+                    <div class="iframeDiv col-md-6">
+                        <video width="640" height="480" controls>
+                            <source src="http://juhtimisarvestus.ikt.khk.ee/videos/KontoLoomine.mp4" type="video/mp4">
+                            <source src="movie.ogg" type="video/ogg">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="juhend col-md-6">
+                        <ol>
+                            <li>Kasutaja registreerimiseks liikuge Juhtimisarvestuse & Finantsanalüüsi lehele</li>
+                            <li>Vajutage nupule logi sisse Google´i kaudu</li>
+                            <li>Peale Google autoriseerimis lehele suunamist valige kooli meili aadress</li>
+                            <li>Suunatakse Juhtimisarvestuse & Finantsanalüüsi rakenduse lehele</li>
+                            <li>Kasutaja konto on registreeritud</li>
+                        </ol>
+                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                    </div>
+                    <hr>
+                </div>
+                <div id="changePass" class="row">
+                    <h3>Parooli vahetamine</h3>
+                    <div class="iframeDiv col-md-6">
+
+                    </div>
+                    <div class="juhend col-md-6">
+                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                    </div>
+                </div>
+                <hr>
+                <div id="createNewReport" class="row">
+                    <h3>Uue raporti koostamine</h3>
+                    <div class="iframeDiv col-md-6">
+
+                    </div>
+                    <div class="juhend col-md-6">
+                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                    </div>
+                </div>
+                <hr>
+                <div id="addProfitReports" class="row">
+                    <h3>Kasumiaruande andmete lisamine</h3>
+                    <div class="iframeDiv col-md-6">
+
+                    </div>
+                    <div class="juhend col-md-6">
+                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                    </div>
+                </div>
+                <hr>
+                <div id="addBalances" class="row">
+                    <h3>Bilansi andmete lisamine</h3>
+                    <div class="iframeDiv col-md-6">
+
+                    </div>
+                    <div class="juhend col-md-6">
+                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                    </div>
+                </div>
+                <hr>
+                <div id="addBreakEvenData" class="row">
+                    <h3>Tasuvuspunkti graafiku andmete lisamine</h3>
+                    <div class="iframeDiv col-md-6">
+
+                    </div>
+                    <div class="juhend col-md-6">
+                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                    </div>
+                </div>
+                <hr>
+                <div id="checkOutReport" class="row">
+                    <h3>Loodud raporti vaatamine</h3>
+                    <div class="iframeDiv col-md-6">
+
+                    </div>
+                    <div class="juhend col-md-6">
+                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                    </div>
+                </div>
+                <hr>
+                <div id="changeReports" class="row">
+                    <h3>Loodud raporti andmete muutmine</h3>
+                    <div class="iframeDiv col-md-6">
+
+                    </div>
+                    <div class="juhend col-md-6">
+                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                    </div>
+                </div>
+                <hr>
+                <div id="generatePdf" class="row">
+                    <h3>Raporti PDF-i väljastamine</h3>
+                    <div class="iframeDiv col-md-6">
+
+                    </div>
+                    <div class="juhend col-md-6">
+                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                    </div>
+                </div>
+                <hr>
+                <div id="deleteReport" class="row">
+                    <h3>Loodud raporti kustutamine</h3>
+                    <div class="iframeDiv col-md-6">
+
+                    </div>
+                    <div class="juhend col-md-6">
+                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                    </div>
+                </div>
+                <hr>
+                <div id="deleteAccount" class="row">
+                    <h3>Kasutaja kustutamine</h3>
+                    <div class="iframeDiv col-md-6">
+
+                    </div>
+                    <div class="juhend col-md-6">
+                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                    </div>
+                </div>
+                <hr>
+                {{#if user.admin}}
+                <div id="deleteUsers" class="row">
+                    <h3>Kasutajate kustutamine</h3>
+                    <div class="iframeDiv col-md-6">
+
+                    </div>
+                    <div class="juhend col-md-6">
+                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                    </div>
+                </div>
+                <hr>
+                <div id="addAdmin" class="row">
+                    <h3>Kasutajale administraatori õiguste andmine</h3>
+                    <div class="iframeDiv col-md-6">
+
+                    </div>
+                    <div class="juhend col-md-6">
+                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                    </div>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>

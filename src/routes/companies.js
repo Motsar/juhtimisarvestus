@@ -16,14 +16,15 @@ router.post('/', apiAuth,cleanBody, async (req, res) => {
     //Checking if the company is already in database
 
     const compExists = await Company.findOne({ compName: req.body.compName, user_id: req.userId });
-    if (compExists) return res.status(401).json({ "error": "Sellise nimega ettevõte on juba olemas." });
+    if (compExists) return res.status(400).json({ "error": "Sellise nimega ettevõte on juba olemas." });
 
     let email = req.body.comp_email
 
-    //Check if document limit has not been reached()
+    //Check how many comanies user has
 
-    let userCompanies = await Company.find({user_id:req.userId})
-    if(userCompanies>=11) return res.status(401).json({ "error": "Kasutjal liiga palju koostatud raporteid" });
+    const companies = await Company.find({user_id: req.userId });
+    if(companies.length>10) return res.status(403).json({ "error": "Kasutajal on analüüside limiit ületatud." });
+
 
     //create a new comnpany
 

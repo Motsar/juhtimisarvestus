@@ -57,8 +57,18 @@
     border-bottom: 3px #bb0c0c !important;
 }
 
+h1,h2,h3,h4,h5,h6{
+    color: #bb0c0c !important;
+}
+
 #reportsAcordion .accordion-body{
     align-items: center;
+}
+
+#reportResultsView .card-footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 
@@ -145,4 +155,22 @@ canvas{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.iframeDiv{
+    width:640px !important;
+    height:480px !important;
+}
+
+.accordion-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.juhend{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

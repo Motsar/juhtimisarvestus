@@ -12,7 +12,7 @@ router.post('/', apiAuth,cleanBody, async (req, res) => {
     //Check if request body has company id
 
     let id = req.body.company_id;
-    if (!id) return res.status(404).json({ error: "Ettevõtte ID puudub." });
+    if (!id) return res.status(400).json({ error: "Ettevõtte ID puudub." });
 
     //check if searched company belongs to user
 
@@ -58,7 +58,7 @@ router.put('/', apiAuth,cleanBody, async (req, res) => {
 
     //Check length of documents
     
-    if(years.length>=6) return res.status(404).json({ error: "Ettevõtte kohta saab sisestada 5 aasta andmed" })
+    if(years.length>=6) return res.status(403).json({ error: "Ettevõtte kohta saab sisestada 5 aasta andmed" })
 
     years.forEach(year => {
         profitReports.push(JSON.parse(year))
