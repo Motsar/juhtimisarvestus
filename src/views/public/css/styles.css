@@ -92,7 +92,10 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .compDataCard{
-    padding: 0px !important;   
+    padding: 0 !important;
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .companyData label {
@@ -101,6 +104,7 @@ h1,h2,h3,h4,h5,h6{
 
 .companyData .row{
     min-height: 50px !important;
+    margin-bottom: 10px;
 }
 
 .navbar-brand img{
@@ -173,4 +177,22 @@ canvas{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.form-group {
+    margin-top: 10px;
+    min-height: 50px !important;
+    margin-bottom: 10px;
+}
+
+.form-right-column-group {
+    padding-bottom: 1px;
+}
+
+.floating {
+    float: right;
+}
+
+.checkbox-right {
+    margin-left: 45px !important;
 }

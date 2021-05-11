@@ -7,122 +7,130 @@
                     <div class="cardInner">
                         <div class="alert alert-success d-none" role="alert"></div>
                         <div class="row">
-                            <div class="col-lg-4 companyData">
-                                <div class="row">
-                                    <label for="compName">Ettevõtte nimi:</label>
-                                    <input type="text" class="form-control" id="compName" name="compName"
-                                        placeholder="Ettevõtte nimi" aria-label="Ettevõtte nimi" required>
-                                    <div id="compDataErr" class="invalid-feedback">
-                                        Lisage ettevõtte nimi!
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label for="regNum">Registri number:</label>
-                                    <input type="text" class="form-control" id="regNum" name="regNum"
-                                        placeholder="Registri number" aria-label="Ettevõtte nimi" required>
-                                    <div class="invalid-feedback">
-                                        Lisage ettevõtte registrinumber!
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label for="adress">Aadress:</label>
-                                    <input type="text" class="form-control" id="adress" name="adress"
-                                        placeholder="Aadress" aria-label="Aadress" required>
-                                    <div class="invalid-feedback">
-                                        Lisage ettevõtte aadress!
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label for="comp_email">Email:</label>
-                                    <input type="email" class="form-control" id="comp_email" name="comp_email"
-                                        placeholder="Email" aria-label="Email" required>
-                                    <div class="invalid-feedback">
-                                        Lisage ettevõtte email!
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label for="phone">Telefon:</label>
-                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="Telefon"
-                                        aria-label="Telefon" required>
-                                    <div class="invalid-feedback">
-                                        Lisage ettevõtte telefon!
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <label for="additional_info">Lisainfo:</label>
-                                <textarea class="form-control" id="additional_info" name="additional_info"
-                                    rows="3"></textarea>
-                            </div>
-                            <div class="col-lg-4 compData3">
-                                <div class="row schemaSelect">
-                                    <p>Vali kasumiaruande skeem:</p>
-                                    <div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="Profit_report_schema"
-                                                id="Profit_report_schema1" value=1 checked>
-                                            <label class="form-check-label" for="Profit_report_schema1">
-                                                Skeem 1
-                                            </label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="compName" name="compName"
+                                               placeholder="Ettevõtte nimi" aria-label="Ettevõtte nimi" required>
+                                        <div id="compDataErr" class="invalid-feedback">
+                                            Lisage ettevõtte nimi!
                                         </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="Profit_report_schema"
-                                                id="Profit_report_schema2" value=2>
-                                            <label class="form-check-label" for="Profit_report_schema2">
-                                                Skeem 2
-                                            </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="regNum" name="regNum"
+                                               placeholder="Registrinumber" aria-label="Registrinumber" required>
+                                        <div class="invalid-feedback">
+                                            Lisage ettevõtte registrinumber!
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="adress" name="adress"
+                                               placeholder="Aadress" aria-label="Aadress" required>
+                                        <div class="invalid-feedback">
+                                            Lisage ettevõtte aadress!
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" id="comp_email" name="comp_email"
+                                               placeholder="E-posti aadress" aria-label="Email" required>
+                                        <div class="invalid-feedback">
+                                            Lisage ettevõtte e-posti aadress!
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="tel" class="form-control" id="phone" name="phone"
+                                               placeholder="Telefon"
+                                               aria-label="Telefon" required>
+                                        <div class="invalid-feedback">
+                                            Lisage ettevõtte telefon!
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <label for="vat_obligatory">Käibemaksukohustuslane:</label>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="yes" id="vat_obligatory"
-                                            name="vat_obligatory">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="additional_info" name="additional_info"
+                                                  rows="3" aria-label="Lisainfo" placeholder="Lisainfo"></textarea>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <p>Vali ettevõtte tegevusaasta pikkus:</p>
-                                    <div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="yearLength"
-                                                id="yearLength1" value=360 checked>
-                                            <label class="form-check-label" for="yearLength1">
-                                                360
-                                            </label>
+                                    <div class="form-right-column-group">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-5 col-md-5 col-sm-2">Kasumiaruanne:</label>
+                                            <div class="col-lg-7 col-md-7 col-sm-10 floating">
+                                                <input class="form-check-input" type="radio" name="Profit_report_schema"
+                                                       id="Profit_report_schema1" value=1 checked>
+                                                <label class="form-check-label" for="Profit_report_schema1">
+                                                    Skeem 1
+                                                </label>
+                                            </div>
+                                            <div class="col-lg-7 col-md-7 col-sm-10 floating">
+                                                <input class="form-check-input" type="radio" name="Profit_report_schema"
+                                                       id="Profit_report_schema2" value=2>
+                                                <label class="form-check-label" for="Profit_report_schema2">
+                                                    Skeem 2
+                                                </label>
+                                            </div>
                                         </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="yearLength"
-                                                id="yearLength2" value=365>
-                                            <label class="form-check-label" for="yearLength2">
-                                                365
-                                            </label>
+                                    </div>
+                                    <div class="form-right-column-group">
+                                        <div class="form-group">
+                                                <label class="control-label col-lg-4 col-sm-4"
+                                                       for="vat_obligatory">Käibemaksukohuslane:</label>
+                                                <div class="col-lg-8 col-sm-8 floating">
+                                                    <input class="form-check-input position-static checkbox-right"
+                                                           type="checkbox" value="yes"
+                                                           id="vat_obligatory"
+                                                           name="vat_obligatory">
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-right-column-group">
+                                        <div class="form-group">
+                                            <label class="control-label col-lg-5 col-md-5 col-sm-2">Aruandeaasta
+                                                pikkus:</label>
+                                            <div class="col-lg-7 col-md-7 col-sm-10 floating">
+                                                <input class="form-check-input" type="radio" name="yearLength"
+                                                       id="yearLength1" value=360 checked>
+                                                <label class="form-check-label" for="yearLength1">
+                                                    360
+                                                </label>
+                                            </div>
+                                            <div class="col-lg-7 col-md-7 col-sm-10 floating">
+                                                <input class="form-check-input" type="radio" name="yearLength"
+                                                       id="yearLength2" value=365>
+                                                <label class="form-check-label" for="yearLength2">
+                                                    365
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
                 </div>
+
                 <div class="card-footer">
                     <button type="submit" id="Salvesta" class="btn btn-primary">SALVESTA</button>
+
+                    <button type="button" id="kasumiaruanne" data-bs-toggle="modal" data-bs-target="#kasumiAruandeModal"
+                            class="btn btn-primary disabled" disabled>KASUMIARUANNE
+                    </button>
+                    <button type="button" id="bilanss" data-bs-toggle="modal" data-bs-target="#balanceModal"
+                            class="btn btn-primary disabled" disabled>BILANSS
+                    </button>
+                    <button type="button" id="tasuvuspunkt" data-bs-toggle="modal" data-bs-target="#breakEvenModal"
+                            class="btn btn-primary disabled" disabled>TASUVUSPUNKT
+                    </button>
+                </div>
             </form>
-            <button type="button" id="kasumiaruanne" data-bs-toggle="modal" data-bs-target="#kasumiAruandeModal"
-                class="btn btn-primary disabled" disabled>KASUMIARUANNE</button>
-            <button type="button" id="bilanss" data-bs-toggle="modal" data-bs-target="#balanceModal"
-                class="btn btn-primary disabled" disabled>BILANSS</button>
-            <button type="button" id="tasuvuspunkt" data-bs-toggle="modal" data-bs-target="#breakEvenModal"
-                class="btn btn-primary disabled" disabled>TASUVUSPUNKT</button>
         </div>
+        <!--Kasumiaruande modal-->
+        {{>kasumiAruandeModal}}
+
+        <!--bilansi modal-->
+        {{>balanceModal}}
+
+        <!--tasuvuspunkti modal-->
+        {{>breakEvenModal}}
     </div>
-    <!--Kasumiaruande modal-->
-    {{>kasumiAruandeModal}}
-
-    <!--bilansi modal-->
-    {{>balanceModal}}
-
-    <!--tasuvuspunkti modal-->
-    {{>breakEvenModal}}
 </div>
