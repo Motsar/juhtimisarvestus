@@ -196,3 +196,15 @@ canvas{
 .checkbox-right {
     margin-left: 45px !important;
 }
+
+.sisukord {
+    text-align: center;
+}
+
+.formula-info {
+    margin: auto;
+}
+
+.long-formula {
+    font-size: 0.6em;
+}
