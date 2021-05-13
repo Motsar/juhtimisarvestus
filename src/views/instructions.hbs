@@ -18,10 +18,10 @@
                                 <a class="nav-link" href="#createNewReport">Uue raporti koostamine</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link " href="#addProfitReports">Kasumiaruande andmete lisamine</a>
+                                <a class="nav-link " href="#addProfitReports">Kasumiaruannete lisamine</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#addBalances">Bilansi andmete lisamine</a>
+                                <a class="nav-link" href="#addBalances">Bilansi lisamine</a>
                             </li>
                         </ol>
                     </div>
@@ -47,15 +47,15 @@
                     <div class="col-4">
                         <ol class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#deleteAccount">Kasutaja kustutamine</a>
+                                <a class="nav-link " href="#deleteAccount">Kasutajakonto kustutamine</a>
                             </li>
                             {{#if user.admin}}
-                            <li class="nav-item">
-                                <a class="nav-link" href="#deleteUsers">Kasutajate kustutamine</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#addAdmin">Kasutajale administraatori õiguste andmin</a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#deleteUsers">Kasutajate kustutamine</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#addAdmin">Kasutajale administraatori õiguste andmine</a>
+                                </li>
                             {{/if}}
                         </ol>
                     </div>
@@ -65,143 +65,291 @@
                     <h3 class="center">Kasutaja registreerimine</h3>
                     <div class="iframeDiv col-md-6">
                         <video width="640" height="480" controls>
-                            <source src="http://juhtimisarvestus.ikt.khk.ee/videos/KontoLoomine.mp4" type="video/mp4">
+                            <source src="http://juhtimisarvestus.ikt.khk.ee/videos/kontoLoomine.mp4" type="video/mp4">
                             <source src="movie.ogg" type="video/ogg">
                             Your browser does not support the video tag.
                         </video>
                     </div>
                     <div class="juhend col-md-6">
                         <ol>
-                            <li>Kasutaja registreerimiseks liikuge Juhtimisarvestuse & Finantsanalüüsi lehele</li>
-                            <li>Vajutage nupule logi sisse Google´i kaudu</li>
-                            <li>Peale Google autoriseerimis lehele suunamist valige kooli meili aadress</li>
-                            <li>Suunatakse Juhtimisarvestuse & Finantsanalüüsi rakenduse lehele</li>
-                            <li>Kasutaja konto on registreeritud</li>
+                            <li>Kasutaja registreerimiseks liigu Juhtimisarvestuse ja Finantsanalüüsi lehele.</li>
+                            <li>Vajuta nupule "Logi sisse Google´i kaudu".</li>
+                            <li>Peale Google'i autoriseerimislehele suunamist vali kooliga seotud e-posti aadress.</li>
+                            <li>Sind suunatakse Juhtimisarvestuse ja Finantsanalüüsi rakenduse lehele.</li>
+                            <li>Kasutajakonto on registreeritud.</li>
                         </ol>
-                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+
                     </div>
+                    <a class="nav-link sisukord" href="#sisukord"><span class="badge bg-success">Sisukord</span></a>
                     <hr>
                 </div>
                 <div id="changePass" class="row">
-                    <h3>Parooli vahetamine</h3>
+                    <h3 class="center">Parooli vahetamine</h3>
                     <div class="iframeDiv col-md-6">
-
+                        <video width="640" height="480" controls>
+                            <source src="http://juhtimisarvestus.ikt.khk.ee/videos/parooliMuutmine.mp4"
+                                    type="video/mp4">
+                            <source src="movie.ogg" type="video/ogg">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
                     <div class="juhend col-md-6">
-                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                        <ol>
+                            <li>Parooli vahetamiseks vajuta oma e-posti aadressile.</li>
+                            <li>Mõlemasse "Sisesta parool" kasti trüki uus parool.</li>
+                            <li>Parool peab sisaldama vähemalt ühte suurt tähte, ühte numbrit ja ühte erimärki.</li>
+                            <li>Pärast nupu "Muuda" vajutamist on parool vahetatud.</li>
+                        </ol>
                     </div>
+                    <a class="nav-link sisukord" href="#sisukord"><span class="badge bg-success">Sisukord</span></a>
+                    <hr>
                 </div>
-                <hr>
                 <div id="createNewReport" class="row">
                     <h3>Uue raporti koostamine</h3>
                     <div class="iframeDiv col-md-6">
-
+                        <div class="iframeDiv col-md-6">
+                            <video width="640" height="480" controls>
+                                <source src="http://juhtimisarvestus.ikt.khk.ee/videos/uusRaport.mp4" type="video/mp4">
+                                <source src="movie.ogg" type="video/ogg">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
                     </div>
                     <div class="juhend col-md-6">
-                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                        <ol>
+                            <li>Uue raporti koostamiseks vajuta menüüs nuppu "Uus raport".</li>
+                            <li>Täida ettevõttega seotud andmed. Lisainfo lisamine on valikuline.</li>
+                            <li>Vali kasumiaruande skeem.</li>
+                            <li>Kui ettevõte on käibemaksukohuslane, tee kasti linnuke.</li>
+                            <li>Vali ettevõtte tegevusaasta pikkus.</li>
+                            <li>Ettevõtte andmete salvestamiseks vajuta nuppu "Salvesta".</li>
+                        </ol>
                     </div>
+                    <a class="nav-link sisukord" href="#sisukord"><span class="badge bg-success">Sisukord</span></a>
+                    <hr>
                 </div>
-                <hr>
                 <div id="addProfitReports" class="row">
                     <h3>Kasumiaruande andmete lisamine</h3>
                     <div class="iframeDiv col-md-6">
-
+                        <div class="iframeDiv col-md-6">
+                            <video width="640" height="480" controls>
+                                <source src="http://juhtimisarvestus.ikt.khk.ee/videos/kasumiaruanne.mp4" type="video/mp4">
+                                <source src="movie.ogg" type="video/ogg">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
                     </div>
                     <div class="juhend col-md-6">
-                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                        <ol>
+                            <li>Pärast ettevõtte salvestamist saad hakata lisama kasumiaruandeid.</li>
+                            <li>Vajuta nuppu "Kasumiaruanne" ja ette tuleb uus tabel.</li>
+                            <li>Täida lahtrid arvudega ning täita tuleb vähemalt kaks veergu.</li>
+                            <li>Uue veeru lisamiseks vajuta nuppu "Lisa veerg".</li>
+                            <li>Lisatud veerge saab kustutada vajutades veeru kohal olevat prügikasti ikooni.</li>
+                            <li>Kasumiaruannete salvestamiseks vajuta nuppu "Salvesta".</li>
+                        </ol>
                     </div>
+                    <a class="nav-link sisukord" href="#sisukord"><span class="badge bg-success">Sisukord</span></a>
+                    <hr>
                 </div>
-                <hr>
                 <div id="addBalances" class="row">
-                    <h3>Bilansi andmete lisamine</h3>
+                    <h3>Bilansi lisamine</h3>
                     <div class="iframeDiv col-md-6">
-
+                        <div class="iframeDiv col-md-6">
+                            <video width="640" height="480" controls>
+                                <source src="http://juhtimisarvestus.ikt.khk.ee/videos/bilanss.mp4" type="video/mp4">
+                                <source src="movie.ogg" type="video/ogg">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
                     </div>
                     <div class="juhend col-md-6">
-                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                        <ol>
+                            <li>Pärast ettevõtte salvestamist saad hakata lisama bilansi andmeid.</li>
+                            <li>Vajuta nuppu "Bilanss" ja ette tuleb uus tabel.</li>
+                            <li>Täida lahtrid arvudega ning täita tuleb vähemalt kaks veergu.</li>
+                            <li>Uue veeru lisamiseks vajuta nuppu "Lisa veerg".</li>
+                            <li>Lisatud veerge saab kustutada vajutades veeru kohal olevat prügikasti ikooni.</li>
+                            <li>Bilansi andmete salvestamiseks vajuta nuppu "Salvesta".</li>
+                        </ol>
                     </div>
+                    <a class="nav-link sisukord" href="#sisukord"><span class="badge bg-success">Sisukord</span></a>
+                    <hr>
                 </div>
-                <hr>
                 <div id="addBreakEvenData" class="row">
                     <h3>Tasuvuspunkti graafiku andmete lisamine</h3>
                     <div class="iframeDiv col-md-6">
-
+                        <div class="iframeDiv col-md-6">
+                            <video width="640" height="480" controls>
+                                <source src="http://juhtimisarvestus.ikt.khk.ee/videos/tasuvuspunkt.mp4" type="video/mp4">
+                                <source src="movie.ogg" type="video/ogg">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
                     </div>
                     <div class="juhend col-md-6">
-                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                        <ol>
+                            <li>Pärast ettevõtte salvestamist saad hakata lisama tasuvuspunkti andmeid.</li>
+                            <li>Vajuta nuppu "Tasuvuspunkt" ja ette tuleb uus tabel.</li>
+                            <li>Täida lahtrid arvudega ning täita tuleb vähemalt kaks veergu.</li>
+                            <li>Uue rea lisamiseks vajuta nuppu "Lisa rida".</li>
+                            <li>Lisatud ridu saab kustutada vajutades rea lõpus olevat prügikasti ikooni.</li>
+                            <li>Andmete salvestamiseks vajuta nuppu "Salvesta".</li>
+                        </ol>
                     </div>
+                    <a class="nav-link sisukord" href="#sisukord"><span class="badge bg-success">Sisukord</span></a>
+                    <hr>
                 </div>
-                <hr>
                 <div id="checkOutReport" class="row">
                     <h3>Loodud raporti vaatamine</h3>
                     <div class="iframeDiv col-md-6">
-
+                        <div class="iframeDiv col-md-6">
+                            <video width="640" height="480" controls>
+                                <source src="http://juhtimisarvestus.ikt.khk.ee/videos/raportiVaatamine.mp4" type="video/mp4">
+                                <source src="movie.ogg" type="video/ogg">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
                     </div>
                     <div class="juhend col-md-6">
-                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                        <ol>
+                            <li>Loodud raportite vaatamiseks vajuta nuppu "Raportid".</li>
+                            <li>Vali sobiv raport ning vajuta sellel.</li>
+                            <li>Kuvatakse ettevõttega seotud andmed.</li>
+                            <li>Allpool kuvatakse andmete põhjal genereeritud analüüsid.</li>
+                            <li>Eelnevalt sisestatud andmeid saab vaadata vajutades vastaval nupul.</li>
+                        </ol>
                     </div>
+                    <a class="nav-link sisukord" href="#sisukord"><span class="badge bg-success">Sisukord</span></a>
+                    <hr>
                 </div>
-                <hr>
                 <div id="changeReports" class="row">
                     <h3>Loodud raporti andmete muutmine</h3>
                     <div class="iframeDiv col-md-6">
-
+                        <div class="iframeDiv col-md-6">
+                            <video width="640" height="480" controls>
+                                <source src="http://juhtimisarvestus.ikt.khk.ee/videos/raportiMuutmine.mp4" type="video/mp4">
+                                <source src="movie.ogg" type="video/ogg">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
                     </div>
                     <div class="juhend col-md-6">
-                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                        <ol>
+                            <li>Raporti muutmiseks vajuta nuppu "Raportid" ja vali vastav ettevõte.</li>
+                            <li>Ettevõttega seotud andmete muutmiseks vajuta nuppu "Muuda" ning nii muudatused sisse.</li>
+                            <li>Kasumiaruande, bilansi ja tasuvuspunkti andmete muutmiseks vajuta vastava nupu peal.</li>
+                            <li>Kuvatakse eelnevalt sisestatud andmed ja nende muutmiseks vajuta nuppu "Muuda".</li>
+                            <li>Pärast korrektuuride tegemist vajuta nuppu "Salvesta".</li>
+                        </ol>
                     </div>
+                    <a class="nav-link sisukord" href="#sisukord"><span class="badge bg-success">Sisukord</span></a>
+                    <hr>
                 </div>
-                <hr>
                 <div id="generatePdf" class="row">
                     <h3>Raporti PDF-i väljastamine</h3>
                     <div class="iframeDiv col-md-6">
-
+                        <div class="iframeDiv col-md-6">
+                            <video width="640" height="480" controls>
+                                <source src="http://juhtimisarvestus.ikt.khk.ee/videos/pdf.mp4" type="video/mp4">
+                                <source src="movie.ogg" type="video/ogg">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
                     </div>
                     <div class="juhend col-md-6">
-                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                        <ol>
+                            <li>Vajuta menüüs nuppu "Raportid" ning vali soovitud raport.</li>
+                            <li>Vajuta nuppu "Pdf".</li>
+                            <li>Sulle pakutakse faili salvestamise võimalust. Salvesta fail endale sobivasse kausta.
+                            </li>
+                        </ol>
                     </div>
+                    <a class="nav-link sisukord" href="#sisukord"><span class="badge bg-success">Sisukord</span></a>
+                    <hr>
                 </div>
-                <hr>
                 <div id="deleteReport" class="row">
                     <h3>Loodud raporti kustutamine</h3>
                     <div class="iframeDiv col-md-6">
-
+                        <div class="iframeDiv col-md-6">
+                            <video width="640" height="480" controls>
+                                <source src="http://juhtimisarvestus.ikt.khk.ee/videos/raportiKustutamine.mp4" type="video/mp4">
+                                <source src="movie.ogg" type="video/ogg">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
                     </div>
                     <div class="juhend col-md-6">
-                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                        <ol>
+                            <li>Raporti kustutamiseks vajuta nuppu "Raportid" ja vali vastav ettevõte.</li>
+                            <li>Vajuta nuppu "Kustuta" ja ettevõte on kustutatud.</li>
+                        </ol>
                     </div>
+                    <a class="nav-link sisukord" href="#sisukord"><span class="badge bg-success">Sisukord</span></a>
+                    <hr>
                 </div>
-                <hr>
                 <div id="deleteAccount" class="row">
-                    <h3>Kasutaja kustutamine</h3>
+                    <h3>Kasutajakonto kustutamine</h3>
                     <div class="iframeDiv col-md-6">
-
+                        <div class="iframeDiv col-md-6">
+                            <video width="640" height="480" controls>
+                                <source src="http://juhtimisarvestus.ikt.khk.ee/videos/kontoKustutamine.mp4" type="video/mp4">
+                                <source src="movie.ogg" type="video/ogg">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
                     </div>
                     <div class="juhend col-md-6">
-                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                        <ol>
+                            <li>Oma konto kustutamiseks vajuta e-posti aadressile.</li>
+                            <li>Tee "Kustuta oma konto" kasti linnuke.</li>
+                            <li>Vajuta nuppu "Kustuta".</li>
+                        </ol>
                     </div>
+                    <a class="nav-link sisukord" href="#sisukord"><span class="badge bg-success">Sisukord</span></a>
+                    <hr>
                 </div>
-                <hr>
                 {{#if user.admin}}
-                <div id="deleteUsers" class="row">
-                    <h3>Kasutajate kustutamine</h3>
-                    <div class="iframeDiv col-md-6">
-
+                    <div id="deleteUsers" class="row">
+                        <h3>Kasutajate kustutamine</h3>
+                        <div class="iframeDiv col-md-6">
+                            <video width="640" height="480" controls>
+                                <source src="http://juhtimisarvestus.ikt.khk.ee/videos/kasutajateKustutamine.mp4"
+                                        type="video/mp4">
+                                <source src="movie.ogg" type="video/ogg">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="juhend col-md-6">
+                            <ol>
+                                <li>Kasutajate kustutamiseks vajuta oma e-posti aadressile.</li>
+                                <li>"Registreeritud kasutajate" sektsioonis kuvatakse platvormi kasutajad.</li>
+                                <li>Soovitud kasutaja eemaldamiseks vajuta nuppu "Kustuta".</li>
+                            </ol>
+                        </div>
+                        <a class="nav-link sisukord" href="#sisukord"><span class="badge bg-success">Sisukord</span></a>
+                        <hr>
                     </div>
-                    <div class="juhend col-md-6">
-                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
+                    <div id="addAdmin" class="row">
+                        <h3>Kasutajale administraatori õiguste andmine</h3>
+                        <div class="iframeDiv col-md-6">
+                            <video width="640" height="480" controls>
+                                <source src="http://juhtimisarvestus.ikt.khk.ee/videos/lisaAdminniks.mp4"
+                                        type="video/mp4">
+                                <source src="movie.ogg" type="video/ogg">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="juhend col-md-6">
+                            <ol>
+                                <li>Kasutajale administraatori õiguste andmiseks vajuta oma e-posti aadressile.</li>
+                                <li>"Anna kasutajale administraatori õigused" sektsioonis lisa kasutaja e-posti aadress.</li>
+                                <li>Vajuta nuppu "Kinnita".</li>
+                            </ol>
+                        </div>
+                        <a class="nav-link sisukord" href="#sisukord"><span class="badge bg-success">Sisukord</span></a>
+                        <hr>
                     </div>
-                </div>
-                <hr>
-                <div id="addAdmin" class="row">
-                    <h3>Kasutajale administraatori õiguste andmine</h3>
-                    <div class="iframeDiv col-md-6">
-
-                    </div>
-                    <div class="juhend col-md-6">
-                        <a class="nav-link" href="#sisukord"><span class="badge bg-success">Sisukord</span></a> 
-                    </div>
-                </div>
                 {{/if}}
             </div>
         </div>
