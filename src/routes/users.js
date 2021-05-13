@@ -5,7 +5,7 @@ const profitReport = require('../models/ProfitReport');
 const Company = require('../models/Company');
 const breakEvenAnalysis = require('../models/BreakEvenAnalysis');
 const bcrypt = require('bcryptjs');
-const { apiAuth, cleanBody } = require('../middlewares');
+const { apiAuth, cleanBody, expire } = require('../middlewares');
 
 router.post('/',cleanBody,async(req,res) => {
 
@@ -17,14 +17,24 @@ router.post('/',cleanBody,async(req,res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-    //create a new user
+    
+    let d = new Date();
+    let year = d.getFullYear();
+    let month = d.getMonth();
+    let day = d.getDate();
+    let expire = new Date(year + 1, month, day);
+
+
+    //Create a new user
+
+    
     const user = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        password: hashedPassword
+        password: hashedPassword,
+        expiry_date: expire
     });
-
 
     try{
         await user.save();
@@ -47,7 +57,7 @@ router.patch('/',apiAuth, cleanBody, async(req,res)=>{
 
     if(!req.body.type) return res.status(401).json({error: "Päringu tüüp on puudu"});
 
-    if(req.body.type===1){
+    if(req.body.type==="1"){
         if(!req.body.password) return res.status(401).json({error:"Parooli pole edastatud"});
         //Hash the password
         const salt = await bcrypt.genSalt(10);
@@ -55,7 +65,7 @@ router.patch('/',apiAuth, cleanBody, async(req,res)=>{
         userId=req.userId;
         updateData = {password:hashedPassword};
         updateMessage =" Parool on vahetatud";
-    }else if(req.body.type===2){
+    }else if(req.body.type==="2"){
         if(req.admin===false) return res.status(401).json({error:"Kasutajal puuduvad õigused administraatori määramiseks"});
         if(!req.body.email) return res.status(401).json({error:"Sisestage kasutaja email"});
         let user = await User.findOne({email:req.body.email});
@@ -64,7 +74,6 @@ router.patch('/',apiAuth, cleanBody, async(req,res)=>{
         updateData = {admin:true};
         updateMessage = "Kasutajale anti administraatori õigused";
     }
-
     let findUser = await User.findOne({_id:userId});
     if(!findUser) return res.status(401).json({error:"Sellise id-ga kasutajat ei leitud"});
 
@@ -154,7 +163,6 @@ router.delete('/',apiAuth,cleanBody, async(req,res)=>{
                 });
             }
 
-            
             //delete user
 
             await User.findOneAndDelete({_id:req.body.user_id})

@@ -5,7 +5,7 @@ const profitReportChildren1 = require('../models/ProfitReportChildren1');
 const profitReportChildren2 = require('../models/ProfitReportChildren2');
 const { apiAuth,cleanBody } = require('../middlewares');
 
-//Get request for balance data
+//Get request for profit report
 
 router.post('/', apiAuth,cleanBody, async (req, res) => {
 
@@ -149,7 +149,6 @@ router.put('/', apiAuth,cleanBody, async (req, res) => {
         });
     }
     try {
-        if (process.env.DEVELOPEMENT === 'true') return res.status(201).json({ success: "Kasumiaruanded on salvestatud" });
         await findProfitReports.save();
         res.status(201).json({ success: "Kasumiaruanded on salvestatud" });
     } catch (err) {

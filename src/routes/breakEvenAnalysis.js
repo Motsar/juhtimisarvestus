@@ -47,7 +47,6 @@ router.put('/', apiAuth,cleanBody ,async (req, res)=>{
     })
 
     try{
-        if (process.env.DEVELOPEMENT === 'true') return res.status(201).json({success:"Tasuvuspunkti andmed on salvestatud"});
         await findBreakEvenAnalysis.save();
         res.status(201).json({success:"Tasuvuspunkti andmed on salvestatud"});
     }catch(err){
@@ -71,7 +70,6 @@ router.post('/', apiAuth,cleanBody ,async (req, res)=>{
     if(!findBreakEvenAnalysis) return res.status(404).json({error: "Sellist tasuvuspunkti dokumenti ei leitud!" });
 
     try{
-        if (process.env.DEVELOPEMENT === 'true') return res.status(201).json({breakEvenData:findBreakEvenAnalysis});
         res.status(200).json({breakEvenData:findBreakEvenAnalysis});
     }catch(err){
         res.status(500).json({error:err});

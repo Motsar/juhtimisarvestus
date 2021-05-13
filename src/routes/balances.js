@@ -162,7 +162,6 @@ router.put('/', apiAuth,cleanBody, async (req, res) => {
         findBalance.dates.push(newBalanceChild);
     });
     try {
-        if (process.env.DEVELOPEMENT === 'true') return res.status(201).json({ success: "Bilansi andmed on salvestatud" });
         await findBalance.save();
         res.status(200).json({ success: "Bilansi andmed on salvestatud" });
     } catch (err) {

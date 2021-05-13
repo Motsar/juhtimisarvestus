@@ -64,15 +64,15 @@ $(document).ready(function () {
 
     //current user account delete
 
-    $('#deleteAccount').on("submit",function(e){
+    $('#deleteAccount').on("submit", function (e) {
         e.preventDefault();
-        if(!$(this).find("#confirmDelete").prop('checked')){
+        if (!$(this).find("#confirmDelete").prop('checked')) {
             $('#confirmDelete').addClass('is-invalid')
         }
 
         let userId = $(this).find("button").attr("data-user-id")
 
-        let reqBody={ user_id : userId }
+        let reqBody = { user_id: userId }
 
         $.ajax({
             url: "/users",
@@ -85,9 +85,9 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data)
                 $("#currentUser").removeClass("d-none").text(data.message)
-                setTimeout(function() {
-                    window.location = "/logout";
-                   }, 3000);
+                setTimeout(function () {
+                    window.location = "/";
+                }, 3000);
             },
             error: function (data) {
                 console.log(data)
@@ -98,47 +98,47 @@ $(document).ready(function () {
 
     //Add admin
 
-    $("#addAdmin").on("submit",function(e){
+    $("#addAdmin").on("submit", function (e) {
         e.preventDefault();
-            $(this).find(".alert").addClass("d-none")
-            let newAdminEmail=$("#neweAdminEmail").val();
-            let reqBody = {type:2, email:newAdminEmail}
-            $.ajax({
-                url: "/users",
-                type: 'PATCH',
-                dataType: "json",
-                data: reqBody,
-                xhrFields: {
-                    withCredentials: true
-                },
-                success: function (data) {
-                    console.log(data)
-                    $("#adminAddAlert").removeClass("d-none").text(data.message);
-                },
-                error: function (data) {
-                    console.log(data)
-                }
-            });
+        $(this).find(".alert").addClass("d-none")
+        let newAdminEmail = $("#neweAdminEmail").val();
+        let reqBody = { type: 2, email: newAdminEmail }
+        $.ajax({
+            url: "/users",
+            type: 'PATCH',
+            dataType: "json",
+            data: reqBody,
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function (data) {
+                console.log(data)
+                $("#adminAddAlert").removeClass("d-none").text(data.message);
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        });
     })
 
     //change pass
 
-    $("#changePass").on("submit",function(e){
+    $("#changePass").on("submit", function (e) {
         $(this).find(".alert").addClass("d-none")
         e.preventDefault();
         $(this).find("input").removeClass("is-invalid")
         $(".invalidPassword").text("")
         let pass1 = $("#password1").val()
         let pass2 = $("#password2").val()
-        if(pass1!==pass2){
+        if (pass1 !== pass2) {
             $("#password2").addClass("is-invalid")
             $(".invalidPassword").text("Paroolid ei ole samaväärsed!")
-        }else if(!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(pass1)){
+        } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})/.test(pass1)) {
             $(this).find("input").addClass("is-invalid")
             $(".invalidPassword").text("Parool peab olema vähemalt 8 tähmärki pikk, sisaldama suuri ja väikseid tähti ning sisaldama ühte tähemärki!")
-        }else{
-            
-            let reqBody = {type:1,password:pass1}
+        } else {
+
+            let reqBody = { type: 1, password: pass1 }
             $.ajax({
                 url: "/users",
                 type: 'PATCH',
@@ -164,13 +164,13 @@ $(document).ready(function () {
 
     //Admin user delete
 
-    $('.delUser').on("click",function(e){
+    $('.delUser').on("click", function (e) {
         e.preventDefault();
 
         let userId = $(this).attr("data-user-id")
         let thisRow = $(this).closest('tr')
-        let reqBody={ user_id : userId }
-        
+        let reqBody = { user_id: userId }
+
 
         $.ajax({
             url: "/users",
@@ -197,6 +197,10 @@ $(document).ready(function () {
     $('.newProfitCol').on('click', function () {
         let thisFormTable = $(this).parent().find('form table');
         addColumn(thisFormTable)
+    })
+
+    $('#getPDF').on('click', function () {
+        downloadPDF();
     })
 
     $("table thead tr").on("click", ".delCol", function () {
@@ -289,8 +293,8 @@ $(document).ready(function () {
             },
             error: function (data) {
                 console.log(data.responseJSON)
-                    $('#reportResultsView #compDataErr').text(data.responseJSON.error)
-                    $('#reportResultsView #compName').addClass('is-invalid')
+                $('#reportResultsView #compDataErr').text(data.responseJSON.error)
+                $('#reportResultsView #compName').addClass('is-invalid')
             }
         });
     })
@@ -333,6 +337,7 @@ $(document).ready(function () {
             success: function (data) {
                 $('#compName').removeClass('is-invalid')
                 $("#compData input,#compData textarea,#compData button").prop("disabled", true);
+                $(".alert-danger").addClass("d-none").text("")
                 $('#compData .alert-success').removeClass('d-none').text(data.success)
                 $('#kasumiaruanne, #bilanss ,#tasuvuspunkt').prop('disabled', false);
                 $('#kasumiaruanne, #bilanss ,#tasuvuspunkt').removeClass('disabled');
@@ -346,15 +351,16 @@ $(document).ready(function () {
                 }
             },
             error: function (data) {
-                console.log(data.responseJSON)
-                if (data.status === 401) {
+                console.log(data)
+                if (data.status === 400) {
                     $('#compDataErr').text(data.responseJSON.error)
                     $('#compName').addClass('is-invalid')
+                } else if (data.status === 403) {
+                    $(".alert-danger").removeClass("d-none").text(data.responseJSON.error)
                 }
             }
         });
     })
-
     //Send profitreports data to backend
 
     $('#kasumiAruandeModal').on("click", ".salvesta", function (e) {
@@ -440,8 +446,11 @@ $(document).ready(function () {
                     tdValue = 0;
                     thisRowTd.find('input').val(tdValue)
                 } else if (tdKey === 'date') {
-                    let date = thisRowTd.find('.date').val().split("-")
-                    tdValue = "" + date[0].toString() + date[1].toString() + date[2].toString() + ""
+                    if (thisRowTd.find('.date').val().length === 0) {
+                        thisRowTd.find('.date').val("1990-01-01")
+                    }
+                        let date = thisRowTd.find('.date').val().split("-")
+                        tdValue = "" + date[0].toString() + date[1].toString() + date[2].toString() + ""
                 } else {
                     tdValue = thisRowTd.find('input').val();
                 }

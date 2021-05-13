@@ -1,4 +1,8 @@
-
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Calibri, sans-serif !important;
+}
 .sidebar-sticky{
     position: fixed;
     min-height: 100vh;
@@ -92,7 +96,10 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .compDataCard{
-    padding: 0px !important;   
+    padding: 0 !important;
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .companyData label {
@@ -101,6 +108,7 @@ h1,h2,h3,h4,h5,h6{
 
 .companyData .row{
     min-height: 50px !important;
+    margin-bottom: 10px;
 }
 
 .navbar-brand img{
@@ -123,6 +131,12 @@ h1,h2,h3,h4,h5,h6{
 
 .reports, .settingsDiv{
     padding: 30px;
+}
+
+.reports-width {
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .reportsTable tbody tr:hover{
@@ -149,6 +163,9 @@ canvas{
     padding-right: 30px;
 }
 
+.pictureDiv img {
+    opacity: 0.2;
+}
 
 .centered {
     position: absolute;
@@ -173,4 +190,42 @@ canvas{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-top: 10px;
+    min-height: 50px !important;
+    margin-bottom: 10px;
+}
+
+.form-right-column-group {
+    padding-bottom: 1px;
+}
+
+.floating {
+    float: right;
+}
+
+.checkbox-right {
+    margin-left: 45px !important;
+}
+
+.sisukord {
+    text-align: center;
+}
+
+.formula-info {
+    margin: auto;
+}
+
+.long-formula {
+    font-size: 0.6em;
+}
+
+
+
+#privacyAterms{
+    text-decoration: none;
+    margin-top: 30vh;
 }

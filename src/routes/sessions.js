@@ -1,13 +1,6 @@
 const router = require('express').Router();
-const {auth, notAuth} = require('../middlewares')
+const {auth} = require('../middlewares')
 const passport = require('../config/passport.js');
-
-
-
-router.get('/home',notAuth, (req, res)=> {
-    return res.render('home', {layout:'dashboard'})
-});
-
 
 
 //Google auth
@@ -28,6 +21,7 @@ router.post('/auth/login',
         failureRedirect: '/',
         failureFlash: true })
 );
+
 
 //Logout
 

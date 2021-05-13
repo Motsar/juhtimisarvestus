@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const {expire} = require('../middlewares')
 require('dotenv').config('../.env');
 const passport = require('passport')
     , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
@@ -12,7 +13,7 @@ const passport = require('passport')
 passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: process.env.DEVELOPEMENT===true?"http://localhost:3000/auth/google/callback":process.env.CALLBACKURL
+        callbackURL: process.env.DEVELOPEMENT=="true"?"http://localhost:3000/auth/google/callback":process.env.CALLBACKURL
     }, (accessToken, refreshToken, profile, done) => {
         // passport callback function
         //check if user already exists in our db with the given profile ID
@@ -28,7 +29,8 @@ passport.use(new GoogleStrategy({
                     lastName: profile.name.familyName,
                     googleId:   profile.id,
                     email: profile.emails[0].value,
-                    user_type: "user"
+                    user_type: "user",
+                    expiry_date : expire
                 }).save().then((newUser) =>{
                     done(null, newUser);
                 });
@@ -48,10 +50,10 @@ passport.use('local',new LocalStrategy({
             try {
                 if (err) { return done(err);}
                 if (!user) {
-                    return done(null, false, { message: 'Incorrect username.' });
+                    return done(null, false, { message: 'Vale emaili aadress!' });
                 }
                 if (await bcrypt.compare(password, user.password)===false){
-                    return done(null, false, { message: 'Incorrect password.' });
+                    return done(null, false, { message: 'Vale parool!' });
                 }
                 return done(null, user);
             } catch (e) {

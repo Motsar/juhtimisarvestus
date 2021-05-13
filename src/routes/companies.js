@@ -42,7 +42,6 @@ router.post('/', apiAuth,cleanBody, async (req, res) => {
     });
 
     try {
-        if (process.env.DEVELOPEMENT === 'true') return res.status(201).json({ _id: company._id, vat_obligatory: company.vat_obligatory, Profit_report_schema: company.Profit_report_schema, success: "Ettevõtte andmed on salvestatud" });
         const savedCompany = await company.save();
         //create a new profitreport and save it with empty values
 

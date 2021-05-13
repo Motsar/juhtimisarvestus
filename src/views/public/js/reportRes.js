@@ -92,7 +92,9 @@ function changeDateFormat(x) {
     return dateArr[2] + "." + dateArr[1] + "." + dateArr[0];
 }
 
-function getBalanceData(x){
+// function to get balance data with AJAX
+
+function getBalanceData(x) {
     let reqBody = { "company_id": x };
     $.ajax({
         url: "/balances",
@@ -134,6 +136,8 @@ function getBalanceData(x){
     });
 }
 
+// function to get profit reports data with AJAX
+
 function getProfitReportData(x) {
     let reqBody = { "company_id": x };
     $.ajax({
@@ -173,6 +177,185 @@ function getProfitReportData(x) {
         }
     });
 }
+
+// Download PDF
+
+function downloadPDF(){
+    var canvas = ctx;
+    var canvasImg = canvas.get(0).toDataURL("image/png", 1.0);
+    var doc = new jsPDF('portrait');
+
+    doc.setFontSize(20);
+    doc.text(60, 15, "Lühiajalised maksevõime suhtarvud");
+    doc.autoTable({  
+        html: '#stSolvencyRatios', 
+        theme: 'grid', 
+        styles: {
+            minCellWidth: 8,
+            minCellHeight: 6,
+            fontSize:5
+        },
+        headStyles:{
+            fillColor: [41, 128, 185]
+        },
+        margin: { 
+                top:30,
+                bottom : 20 
+            }
+    })
+    var lastPosY = doc.lastAutoTable.finalY;
+    doc.text(73, lastPosY+10, "Efektiivsuse suhtarvud");
+    doc.autoTable({  
+        html: '#efficiencyRatios', 
+        theme: 'grid', 
+        styles: {
+            minCellWidth: 8,
+            minCellHeight: 6,
+            fontSize:5
+        },
+        headStyles:{
+            fillColor: [41, 128, 185]
+        },
+        margin: { 
+                top:10,
+                bottom : 20
+            },
+        startY : lastPosY+20
+    })
+    var lastPosY2 = doc.lastAutoTable.finalY;
+    doc.text(75, lastPosY2+10, "Tasuvuse suhtarvud");
+    doc.autoTable({  
+        html: '#profitabilityRatios', 
+        theme: 'grid', 
+        styles: {
+            minCellWidth: 8,
+            minCellHeight: 6,
+            fontSize:5
+        },
+        headStyles:{
+            fillColor: [41, 128, 185]
+        },
+        margin: { 
+                top:10,
+                bottom : 20
+            },
+            startY : lastPosY2+20
+    })
+    var lastPosY3 = doc.lastAutoTable.finalY;
+    doc.text(60, lastPosY3+10, "Pikaajalised maksevõime suhtarvud");
+    doc.autoTable({  
+        html: '#ltSolvencyRatios', 
+        theme: 'grid', 
+        styles: {
+            minCellWidth: 8,
+            minCellHeight: 6,
+            fontSize:5
+        },
+        headStyles:{
+            fillColor: [41, 128, 185]
+        },
+        margin: { 
+                top:40,
+                bottom : 10 
+            },
+        startY : lastPosY3+20
+    })
+    doc.addPage();
+    doc.text(65, 15, "Bilansi horisontaalanalüüs");
+    doc.autoTable({  
+        html: '#balanceHorizontal', 
+        theme: 'grid', 
+        styles: {
+            minCellWidth: 8,
+            minCellHeight: 6,
+            fontSize:5
+        },
+        headStyles:{
+            fillColor: [41, 128, 185]
+        },
+        margin: { 
+                top:30,
+                bottom : 10 
+            }
+    })
+    doc.addPage();
+    doc.text(60, 15, "Kasumiaruande horisontaalanalüüs");
+    doc.autoTable({  
+        html: '#profReportsHorizontal', 
+        theme: 'grid', 
+        styles: {
+            minCellWidth: 8,
+            minCellHeight: 6,
+            fontSize:5
+        },
+        headStyles:{
+            fillColor: [41, 128, 185]
+        },
+        margin: { 
+                top:30,
+                bottom : 10 
+            }
+    }) 
+    doc.addPage();
+    doc.text(65, 15, "Bilansi vertikaalanalüüs");
+    doc.autoTable({  
+        html: '#balanceVertical', 
+        theme: 'grid', 
+        styles: {
+            minCellWidth: 8,
+            minCellHeight: 6,
+            fontSize:5
+        },
+        headStyles:{
+            fillColor: [41, 128, 185]
+        },
+        margin: { 
+                top:30,
+                bottom : 10 
+            }
+    })
+    doc.addPage();
+    doc.text(60, 15, "Kasumiaruande vertikaalanalüüs");
+    doc.autoTable({  
+        html: '#profReportsVertical', 
+        theme: 'grid', 
+        styles: {
+            minCellWidth: 8,
+            minCellHeight: 6,
+            fontSize:5
+        },
+        headStyles:{
+            fillColor: [41, 128, 185]
+        },
+        margin: { 
+                top:30,
+                bottom : 10 
+            }
+    }) 
+    doc.addPage();
+    doc.text(70, 15, "Tasuvuspunkti tabel");
+    doc.autoTable({  
+        html: '#breakEvenPointTable', 
+        theme: 'grid', 
+        styles: {
+            minCellWidth: 8,
+            minCellHeight: 6,
+            fontSize:5
+        },
+        headStyles:{
+            fillColor: [41, 128, 185]
+        },
+        margin: { 
+                top:30,
+                bottom : 10 
+            }
+
+    }) 
+    doc.text(70, 75 , "Tasuvuspunkti graafik");
+    doc.addImage(canvasImg, 'PNG', 10 , 90, 189, 120);
+    doc.save('Finantsanalüüs.pdf');
+}
+
 
 //Break evenpoint data to breakeven modal
 

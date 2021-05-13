@@ -7,10 +7,10 @@ const hbs  = require('express-handlebars');
 const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 const path = require('path');
-const {auth} = require('./middlewares');
+const {notAuth,checkExpire} = require('./middlewares');
 require('dotenv').config({path:'../src/.env'});
 var flash = require('connect-flash');
-const port = process.env.DEVELOPEMENT===true?3000:process.env.PORT;
+const port = process.env.DEVELOPEMENT=="true"?3000:process.env.PORT;
 const app = express();
 
 app.use(flash());
@@ -50,7 +50,7 @@ app.use(session({
         secret: process.env.SESS_SECRET,
         store: new MongoStore({mongooseConnection: mongoose.connection}),
         cookie:{
-            maxAge: 1000 * 60 * 120,
+            maxAge: 1000 * 60 * 60,
             secure: false,
         }
     })
@@ -66,8 +66,12 @@ app.use(passport.session());
 
 //views
 
-app.get('/',  function(req, res) {
-    res.render('login', {layout: false});
+app.get('/', notAuth,  function(req, res) {
+    let errMsg = req.flash("error");
+    let falsePass = errMsg[0]==="Vale parool!"?true:false;
+    let falseEmail = errMsg[0]==="Vale emaili aadress!"?true:false;
+
+    res.render('login', {layout: false, password: falsePass, email: falseEmail});
 });
 
 //Import routes
@@ -89,6 +93,8 @@ const Settings = require('./view-routes/settings')
 const Instructions = require('./view-routes/instructions')
 const Dashboard = require('./view-routes/dashboard')
 const Formulas = require('./view-routes/formulas')
+const PrivacyPolicy = require('./view-routes/privacyPolicy')
+const TermsConditions = require('./view-routes/termsConditions')
 
 //Route middlewares
 
@@ -106,9 +112,14 @@ app.use('/seaded', Settings)
 app.use('/juhend',Instructions)
 app.use('/avaleht', Dashboard)
 app.use('/valemid', Formulas)
+app.use('/privaatsuspoliitika', PrivacyPolicy)
+app.use('/kasutustingimused', TermsConditions)
+
+checkExpire();
 
 //Setup serer
 
 app.listen(port, ()=>{
-    console.log('Server is up and running');
+    console.log('Server is up and running on port :' + port);
 });
+
