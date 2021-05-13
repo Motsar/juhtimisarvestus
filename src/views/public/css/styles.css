@@ -1,7 +1,8 @@
+
 body {
     margin: 0;
     padding: 0;
-    font-family: Calibri, sans-serif !important;
+    font-family: Calibri, sans-serif;
 }
 .sidebar-sticky{
     position: fixed;
@@ -221,11 +222,4 @@ canvas{
 
 .long-formula {
     font-size: 0.6em;
-}
-
-
-
-#privacyAterms{
-    text-decoration: none;
-    margin-top: 30vh;
 }
