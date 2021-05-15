@@ -50,7 +50,7 @@ passport.use('local',new LocalStrategy({
             try {
                 if (err) { return done(err);}
                 if (!user) {
-                    return done(null, false, { message: 'Vale emaili aadress!' });
+                    return done(null, false, { message: 'Vale e-posti aadress!' });
                 }
                 if (await bcrypt.compare(password, user.password)===false){
                     return done(null, false, { message: 'Vale parool!' });

@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon src/app.js",
+    "cypress": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -37,5 +38,8 @@
     "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "cypress": "^7.3.0"
   }
 }
