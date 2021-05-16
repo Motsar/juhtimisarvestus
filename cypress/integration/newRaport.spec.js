@@ -1,14 +1,17 @@
 describe("Ettevõtte loomine", () => {
 
-    beforeEach(() => {
+    before(() => {
         const email = "andre.eli@khk.ee";
         const password = "Te$tija1";
-
         cy.visit("/");
         cy.get("input[name=email").type(email);
         cy.get("input[name=password").type(password);
         cy.get(".btn-primary").click();
         cy.contains("See lehekülg on loodud");
+    });
+
+    beforeEach(() => {
+        Cypress.Cookies.preserveOnce('sid');
     });
 
     it("Kasutaja saab sisestada ettevõtte andmed", () => {
@@ -32,11 +35,13 @@ describe("Ettevõtte loomine", () => {
         cy.get("input[name=vat_obligatory").click();
         cy.get(".form-check-label").contains("365").click();
         cy.get(".btn-primary").contains("Salvesta", { matchCase: false }).click();
-        cy.wait(2000).contains("Ettevõtte andmed on salvestatud");
+        cy.waitUntil(() => cy.contains("Ettevõtte andmed on salvestatud"));
         cy.wait(500);
+    });
 
-        // Kasumiaruannete lisamine
+    // Kasumiaruannete lisamine
 
+    it("Kasutaja saab kasumiaruandeid lisada", () => {
         cy.get(".btn-primary").contains("Kasumiaruanne", { matchCase: false }).click();
         cy.wait(1000);
         cy.get("#kasumiAruandeModal > div > div > div.modal-body > button").click();
@@ -46,12 +51,14 @@ describe("Ettevõtte loomine", () => {
             cy.get('td').eq(2).type("2021")
         });
         cy.get(".modal-footer").contains("Salvesta", { matchCase: false}).click();
-        cy.wait(1000).contains("Kasumiaruanded on salvestatud");
+        cy.waitUntil(() => cy.contains("Kasumiaruanded on salvestatud"));
         cy.get(".btn-secondary").contains("Sulge", { matchCase: false}).click();
         cy.wait(500);
+    });
 
-        // Bilansside lisamine
+    // Bilansside lisamine
 
+    it("Kasutaja saab lisada bilansse", () => {
         cy.get(".btn-primary").contains("Bilanss", { matchCase: false }).click();
         cy.wait(1000);
         cy.contains("Bilanss");
@@ -62,18 +69,20 @@ describe("Ettevõtte loomine", () => {
             cy.get('td').eq(2).type("2021-01-01")
         });
         cy.get(".modal-footer").contains("Salvesta", { matchCase: false}).click();
-        cy.wait(1000).contains("Bilansi andmed on salvestatud");
+        cy.waitUntil(() => cy.contains("Bilansi andmed on salvestatud"));
         cy.get("#balanceModal > div > div > div.modal-footer > button.btn.btn-secondary").click();
         cy.wait(500);
+    });
 
-        // Tasuvuspunktide lisamine
+    // Tasuvuspunktide lisamine
 
+    it("Kasutaja saab lisada tasuvuspunkte", () => {
         cy.get(".btn-primary").contains("Tasuvuspunkt", { matchCase: false }).click();
         cy.wait(1000);
         cy.contains("Tasuvuspunkti graafiku andmed");
         cy.get(".addRow").contains("Lisa rida", { matchCase: false}).click();
         cy.get(".modal-footer").contains("Salvesta", { matchCase: false}).click();
-        cy.wait(1000).contains("Tasuvuspunkti andmed on salvestatud");
+        cy.waitUntil(() => cy.contains("Tasuvuspunkti andmed on salvestatud"));
         cy.get("#breakEvenModal > div > div > div.modal-footer > button.btn.btn-secondary").click();
     });
 });

@@ -30,7 +30,7 @@ app.set('views', viewsDirectoryPath)
 app.use(express.static(viewsDirectoryPath))
 
 //Connect to db
-mongoose.connect(process.env.DB_CONNECT2,
+mongoose.connect(process.env.DB_CONNECT,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,
