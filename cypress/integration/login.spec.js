@@ -1,12 +1,9 @@
 describe("Sisselogimise testimine", () => {
 
-    const email = "andre.eli@khk.ee";
-    const password = "Te$tija1";
-
     it("Kasutaja saab sisse logida e-posti ja parooli kaudu", () => {
         cy.visit("/");
-        cy.get("input[name=email").type(email);
-        cy.get("input[name=password").type(password);
+        cy.get("input[name=email]").type(Cypress.env('CYPRESS_email'));
+        cy.get("input[name=password]").type(Cypress.env('CYPRESS_password'), { log: false });
         cy.get(".btn-primary").click();
         cy.contains("See lehekülg on loodud");
     });

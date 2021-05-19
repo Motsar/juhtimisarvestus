@@ -1,11 +1,9 @@
 describe("Koostatud raportite vaatamine", () => {
 
     before(() => {
-        const email = "andre.eli@khk.ee";
-        const password = "Te$tija1";
         cy.visit("/");
-        cy.get("input[name=email").type(email);
-        cy.get("input[name=password").type(password);
+        cy.get("input[name=email]").type(Cypress.env('CYPRESS_email'));
+        cy.get("input[name=password]").type(Cypress.env('CYPRESS_password'), { log: false });
         cy.get(".btn-primary").click();
         cy.contains("See lehekülg on loodud");
     });
@@ -13,7 +11,6 @@ describe("Koostatud raportite vaatamine", () => {
     beforeEach(() => {
         Cypress.Cookies.preserveOnce('sid');
     });
-
 
     it("Kasutaja saab loodud raportit vaadata", () => {
 
