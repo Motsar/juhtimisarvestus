@@ -69,7 +69,7 @@ app.use(passport.session());
 app.get('/', notAuth,  function(req, res) {
     let errMsg = req.flash("error");
     let falsePass = errMsg[0]==="Vale parool!"?true:false;
-    let falseEmail = errMsg[0]==="Vale emaili aadress!"?true:false;
+    let falseEmail = errMsg[0]==="Vale e-posti aadress!"?true:false;
 
     res.render('login', {layout: false, password: falsePass, email: falseEmail});
 });
