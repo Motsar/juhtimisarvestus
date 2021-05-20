@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon src/app.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -15,6 +16,12 @@
     "juhtimisarvestus",
     "loputoo"
   ],
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
   "author": "Martin Motsar, Andre Eli",
   "license": "ISC",
   "bugs": {
@@ -37,5 +44,8 @@
     "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
   }
 }
