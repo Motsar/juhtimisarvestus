@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "test": "jest"
+    "test": "jest",
     "cypress": "cypress open"
   },
   "repository": {
@@ -51,3 +51,4 @@
     "cypress": "^7.3.0",
     "cypress-wait-until": "^1.7.1"
   }
+}
