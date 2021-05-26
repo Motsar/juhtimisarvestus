@@ -1,6 +1,5 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
-const {expire} = require('../middlewares')
 require('dotenv').config('../.env');
 const passport = require('passport')
     , GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
@@ -23,6 +22,13 @@ passport.use(new GoogleStrategy({
                 
                 done(null, currentUser);
             } else{
+
+                let d = new Date();
+                let year = d.getFullYear();
+                let month = d.getMonth();
+                let day = d.getDate();
+                let expire = new Date(year + 1, month, day);
+
                 //if not, create a new user
                 new User({
                     firstName:  profile.name.givenName,

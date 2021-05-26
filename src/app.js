@@ -117,6 +117,12 @@ app.use('/kasutustingimused', TermsConditions)
 
 checkExpire();
 
+app.get('*',(req,res)=>{
+    res.render('404', {
+        content: "Lehte ei leitud!"
+    })
+})
+
 //Setup serer
 
 app.listen(port, ()=>{
