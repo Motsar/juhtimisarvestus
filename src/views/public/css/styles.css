@@ -218,8 +218,25 @@ canvas{
 
 .formula-info {
     margin: auto;
+    padding-bottom: 20px;
 }
 
-.long-formula {
-    font-size: 0.6em;
+.title-center {
+    text-align: center;
+    margin-bottom: 0 !important;
+}
+
+.center {
+    text-align: center;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    padding-bottom: 20px;
+}
+
+.smaller-font {
+    font-size: 80%;
+}
+
+h1 {
+    text-align: center;
 }
