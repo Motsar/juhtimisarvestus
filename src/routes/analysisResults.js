@@ -38,7 +38,7 @@ router.post('/', apiAuth,cleanBody, async (req, res) => {
     if (!id) return res.status(404).json({ error: "Ettevõtte ID puudub." });
     
     let company = await Company.findOne({ _id: id, user_id: req.userId });
-    if (!company) return res.status(401).json({ error: "kasutajaga seotud ettevõtte analüüsi ei leitud." });
+    if (!company) return res.status(404).json({ error: "kasutajaga seotud ettevõtte analüüsi ei leitud." });
 
     let findBalance = await balance.findOne({ _id: id });
     if (!findBalance) return res.status(404).json({ error: "Bilanssi ei leitud" });

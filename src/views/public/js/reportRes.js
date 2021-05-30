@@ -9,6 +9,19 @@ let chartData;
 let ctx = $('.myChart');
 let counter = 0;
 
+//Round calculation results
+
+let roundOff = (num, places) => {
+    const x = Math.pow(10, places);
+    return Math.round(num * x) / x;
+}
+
+//Enable tooltips
+
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+})
 
 //Empty chart obj data
 
@@ -446,7 +459,7 @@ function getBreakEvenData(x) {
                 $('#breakEvenPointTable thead tr').append(`<th class="text-end">Kuu ${e}</th>`)
                 $('#salesTurnover').append(`<td class="text-end">${salesTurnoverArr[i].toFixed(2)}</td>`)
                 $('#expenses').append(`<td class="text-end">${expensesArr[i].toFixed(2)}</td>`)
-                $('#profit').append(`<td class="text-end">${(salesTurnoverArr[i] - expensesArr[i]).toFixed(2)}</td>`)
+                $('#profit').append(`<td class="text-end">${roundOff(salesTurnoverArr[i] - expensesArr[i],2)}</td>`)
                 e += 1;
             }
 
@@ -455,9 +468,9 @@ function getBreakEvenData(x) {
             let profitTotal = totalSum(profitData);
 
             $('#breakEvenPointTable thead tr').append(`<th class="text-end">Total</th>`)
-            $('#salesTurnover').append(`<td class="text-end">${salesTurnoverTotal}</td>`)
-            $('#expenses').append(`<td class="text-end">${expensesTotal}</td>`)
-            $('#profit').append(`<td class="text-end">${profitTotal}</td>`)
+            $('#salesTurnover').append(`<td class="text-end">${roundOff(salesTurnoverTotal,2)}</td>`)
+            $('#expenses').append(`<td class="text-end">${roundOff(expensesTotal,2)}</td>`)
+            $('#profit').append(`<td class="text-end">${roundOff(profitTotal,2)}</td>`)
 
             if (BreakEvenChart == null) {
                 BreakEvenChart = new Chart(ctx, chartData);

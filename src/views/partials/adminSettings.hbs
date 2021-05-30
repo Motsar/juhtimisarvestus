@@ -5,8 +5,8 @@
             <hr>
             <div class="row">
                 <div id="currentUser" class="alert alert-success d-none" role="alert"></div>
-                <h5>Sisselogitud Kasutaja</h5>
                 <div class="col-6 userData">
+                <h5>Sisselogitud Kasutaja</h5>
                     <div class="row inline-block">
                         <p class="col-6">Eesnimi:</p>
                         <p class="col-6">{{user.firstName}}</p>
@@ -26,7 +26,7 @@
                     <div class="row inline-block">
                         <form id="deleteAccount">
                             <div class="col-6">
-                                <label for="confirmDelete" class="form-label">Kustuta oma konto: </label>
+                                <label for="confirmDelete" class="form-label">Kustuta oma konto:<i class="fas fa-question-circle text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="KUSTUTA nupu aktiveerimiseks vajuta linnukese kastile"></i></label>
                                 <input class="form-check-input" type="checkbox" value="yes" id="confirmDelete"
                                     name="confirmDelete" required>
                             </div>
@@ -34,43 +34,29 @@
                                 Kasutaja kustutamiseks pead kinnitama.
                             </div>
                             <div class="col-6">
-                                <button id="delUser" class="btn btn-danger" data-user-id="{{user._id}}">KUSTUTA</button>
+                                <button id="delUser" class="btn btn-danger" data-user-id="{{user._id}}" disabled>KUSTUTA</button>
                             </div>
                         </form>
                     </div>
                 </div>
-            </div>
-            <hr>
-            <div class="row">
                 <div class="col-6">
-                    <form id="changePass">
-                        <div id="passChange" class="alert alert-success d-none" role="alert"></div>
-                        <h5>Parooli vahetamiseks sisesta kaks korda sama parool</h5>
-                        <div class="mb-3">
-                            <label for="password1" class="form-label">Sisesta parool</label>
-                            <input type="password" class="form-control" id="password1" required>
+                                    <form id="changePass">
+                                        <div id="passChange" class="alert alert-success d-none" role="alert"></div>
+                                        <h5>Loo kasutajale uus parool, või muuda parooli:<i class="fas fa-question-circle text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Parooli loomiseks ja muutmiseks"></i></h5>
+                                        <div class="mb-3">
+                                            <label for="password1" class="form-label">Sisesta parool</label>
+                                            <input type="password" class="form-control" id="password1" required>
 
-                        </div>
-                        <div class="mb-3">
-                            <label for="password2" class="form-label">Sisesta parool</label>
-                            <input type="password" class="form-control" id="password2" required>
-                            <div class="invalid-feedback invalidPassword">
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">MUUDA</button>
-                    </form>
-                </div>
-                <div class="col-6">
-                    <h5>Anna kasutajale administraatori õigused</h5>
-                    <form id="addAdmin">
-                        <div id="adminAddAlert" class="alert alert-success d-none" role="alert"></div>
-                        <div class="mb-3">
-                            <label for="neweAdminEmail" class="form-label">Sisesta kasutaja email</label>
-                            <input type="email" class="form-control" id="neweAdminEmail">
-                        </div>
-                        <button type="submit" class="btn btn-primary">KINNITA</button>
-                    </form>
-                </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="password2" class="form-label">Sisesta parool</label>
+                                            <input type="password" class="form-control" id="password2" required>
+                                            <div class="invalid-feedback invalidPassword">
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">MUUDA</button>
+                                    </form>
+                                </div>
             </div>
             <hr>
             <h5 >Registreeritud kasutajad</h5>
@@ -84,12 +70,13 @@
                         <th scope="col">Registreerimis kuupäev</th>
                         <th scope="col">Viimane sisselogimine</th>
                         <th scope="col">Kasutaja tüüp</th>
-                        <th scope="col">Kustuta kasutaja</th>
+                        <th colspan="2" scope="col">Kustuta kasutaja<i class="fas fa-question-circle text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="KUSTUTA nupu aktiveerimiseks vajuta nupu kõrval olevale linnukese kastile"></i></th>
+                        <th colspan="2" scope="col">Administraatoriks<i class="fas fa-question-circle text-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="LISA nupu aktiveerimiseks vajuta nupu kõrval olevale linnukese kastile"></i></th>
                     </tr>
                 </thead>
                 <tbody>
                     {{#each users}}
-                    <tr>
+                    <tr data-user-id="{{_id}}">
                         <td>
                             {{firstName}}
                         </td>
@@ -105,15 +92,23 @@
                         <td>
                             {{changeDate last_login}}
                         </td>
-                        <td>
+                        <td class="user-type">
                             {{#if admin}}
                             Administraator
                             {{else}}
                             Kasutaja
                             {{/if}}
                         </td>
-                        <td>
-                            <button class="btn btn-danger delUser" data-user-id="{{_id}}">KUSTUTA</button>
+                        <td colspan="2">
+                            <input class="form-check-input confirmDeleteUser" type="checkbox" value="yes" name="confirmDelete" required>
+                            <button class="btn btn-danger openDelUserModal" data-bs-toggle="modal" data-bs-target="#delUserModal" data-user-id="{{_id}}" disabled>KUSTUTA</button>
+                        </td>
+                        <td colspan="2">
+                            {{#if admin}}
+                            {{else}}
+                                <input class="form-check-input confirmToAdmin" type="checkbox" value="yes" name="confirmToAdmin" required>
+                                <button class="btn btn-danger addAdmin" data-user-email="{{email}}" disabled>LISA</button>
+                            {{/if}}
                         </td>
                     </tr>
                     {{/each}}
@@ -122,3 +117,6 @@
         </div>
     </div>
 </div>
+
+<!--delete user modal-->
+{{>delUserModal}}

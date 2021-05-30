@@ -83,7 +83,6 @@ $(document).ready(function () {
                 withCredentials: true
             },
             success: function (data) {
-                console.log(data)
                 $("#currentUser").removeClass("d-none").text(data.message)
                 setTimeout(function () {
                     window.location = "/";
@@ -95,13 +94,14 @@ $(document).ready(function () {
         });
     })
 
-
     //Add admin
 
-    $("#addAdmin").on("submit", function (e) {
-        e.preventDefault();
-        $(this).find(".alert").addClass("d-none")
-        let newAdminEmail = $("#neweAdminEmail").val();
+    $(".addAdmin").on("click", function () {
+        $(this).closest("div").find(".alert").addClass("d-none")
+        let newAdminEmail = $(this).attr("data-user-email");
+        let thisRow = $(this).closest("tr");
+        let thisbutton =$(this);
+        let thisTd = $(this).closest("td")
         let reqBody = { type: 2, email: newAdminEmail }
         $.ajax({
             url: "/users",
@@ -112,8 +112,10 @@ $(document).ready(function () {
                 withCredentials: true
             },
             success: function (data) {
-                console.log(data)
-                $("#adminAddAlert").removeClass("d-none").text(data.message);
+                $("#usersTableAlert").removeClass("d-none").text(data.message);
+                thisRow.find(".user-type").text("Administraator")
+                thisTd.find("input").remove();
+                thisbutton.remove();
             },
             error: function (data) {
                 console.log(data)
@@ -148,7 +150,6 @@ $(document).ready(function () {
                     withCredentials: true
                 },
                 success: function (data) {
-                    console.log(data)
                     $(this).find("input").addClass("is-valid");
                     $("#passChange").removeClass("d-none").text(data.message);
                     $("#password1").val("")
@@ -161,16 +162,36 @@ $(document).ready(function () {
         }
     })
 
+    //Enable KUSTUTA button and ADMINISTRAATORIKS button
 
-    //Admin user delete
+    $(".confirmDeleteUser , .confirmToAdmin").on("change", function (){
+        if($(this).prop("checked")==true){
+            $(this).closest("td").find("button").prop("disabled",false);
+        }else{
+            $(this).closest("td").find("button").prop("disabled",true);
+        }
+    })
 
-    $('.delUser').on("click", function (e) {
+
+    $("#confirmDelete").on("change", function (){
+        if($(this).prop("checked")==true){
+            $(this).closest("form").find("button").prop("disabled",false);
+        }else{
+            $(this).closest("form").find("button").prop("disabled",true);
+        }
+    })
+
+    $(".openDelUserModal").on("click", function (){
+        let userID = $(this).attr("data-user-id")
+        $("#delUserModal").find("#delUser").attr("data-user-id",userID)
+    })
+
+    //Delete user by admin
+
+    $('#delUserModal #delUser').on("click", function (e) {
         e.preventDefault();
-
         let userId = $(this).attr("data-user-id")
-        let thisRow = $(this).closest('tr')
         let reqBody = { user_id: userId }
-
 
         $.ajax({
             url: "/users",
@@ -181,9 +202,9 @@ $(document).ready(function () {
                 withCredentials: true
             },
             success: function (data) {
-                console.log(data)
                 $("#usersTableAlert").removeClass("d-none").text(data.message)
-                thisRow.remove();
+                $('#delUserModal').modal('toggle');
+                $(".usersTable tbody").find("[data-user-id='" + userId + "']").remove();
             },
             error: function (data) {
                 console.log(data)
@@ -192,15 +213,15 @@ $(document).ready(function () {
 
     })
 
+    $('#getPDF').on('click', function () {
+        downloadPDF();
+    })
+
     //Add remove columns table handling
 
     $('.newProfitCol').on('click', function () {
         let thisFormTable = $(this).parent().find('form table');
         addColumn(thisFormTable)
-    })
-
-    $('#getPDF').on('click', function () {
-        downloadPDF();
     })
 
     $("table thead tr").on("click", ".delCol", function () {
@@ -251,7 +272,6 @@ $(document).ready(function () {
                 withCredentials: true
             },
             success: function (data) {
-                console.log(data)
                 window.location.replace("/raportid")
             },
             error: function (data) {
@@ -594,9 +614,9 @@ $(document).ready(function () {
                         breakEvenPointMonths.push('Kuu ' + e);
                         profitData.push(salesTurnoverArr[i] - expensesArr[i])
                         $('#breakEvenPointTable thead tr').append(`<th class="text-end">Kuu ${e}</th>`)
-                        $('#salesTurnover').append(`<td class="text-end">${salesTurnoverArr[i]}</td>`)
-                        $('#expenses').append(`<td class="text-end">${expensesArr[i]}</td>`)
-                        $('#profit').append(`<td class="text-end">${salesTurnoverArr[i] - expensesArr[i]}</td>`)
+                        $('#salesTurnover').append(`<td class="text-end">${roundOff(salesTurnoverArr[i],2)}</td>`)
+                        $('#expenses').append(`<td class="text-end">${roundOff(expensesArr[i],2)}</td>`)
+                        $('#profit').append(`<td class="text-end">${roundOff(salesTurnoverArr[i] - expensesArr[i],2)}</td>`)
                         e += 1;
                     }
 
@@ -605,9 +625,9 @@ $(document).ready(function () {
                     let profitTotal = totalSum(profitData);
 
                     $('#breakEvenPointTable thead tr').append(`<th class="text-end">Total</th>`)
-                    $('#salesTurnover').append(`<td class="text-end">${salesTurnoverTotal}</td>`)
-                    $('#expenses').append(`<td class="text-end">${expensesTotal}</td>`)
-                    $('#profit').append(`<td class="text-end">${profitTotal}</td>`)
+                    $('#salesTurnover').append(`<td class="text-end">${roundOff(salesTurnoverTotal,2)}</td>`)
+                    $('#expenses').append(`<td class="text-end">${roundOff(expensesTotal,2)}</td>`)
+                    $('#profit').append(`<td class="text-end">${roundOff(profitTotal,2)}</td>`)
                     removeData(BreakEvenChart)
                     addData(BreakEvenChart, chartData.data.labels, [chartData.data.datasets[0].data, chartData.data.datasets[1].data])
                 }

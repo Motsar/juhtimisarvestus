@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-
 module.exports = mongoose.model('User', mongoose.Schema({
     firstName: { type: 'String', required: true, min: 2, max: 100 },
     lastName: { type: 'String', required: true, min: 2, max: 100 },
@@ -12,7 +11,3 @@ module.exports = mongoose.model('User', mongoose.Schema({
     last_login: {type: Date, default: Date.now},
     admin:{ type: 'Boolean', required: true, default: false}
 }));
-
-
-
-
