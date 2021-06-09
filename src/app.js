@@ -119,7 +119,8 @@ checkExpire();
 
 app.get('*',(req,res)=>{
     res.render('404', {
-        content: "Lehte ei leitud!"
+        content: "Lehte ei leitud!",
+        layout: false
     })
 })
 
